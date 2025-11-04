@@ -1,0 +1,39 @@
+# ===== 核心框架 =====
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-anthropic>=0.1.0
+langchain-community>=0.0.20
+
+# ===== 向量数据库 =====
+chromadb>=0.4.22
+faiss-cpu>=1.8.0  # 自动选择最新兼容版本
+
+# ===== Embedding =====
+sentence-transformers>=2.3.0
+
+# ===== LLM API =====
+openai>=1.10.0
+
+# ===== API框架 =====
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# ===== 环境配置 =====
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# ===== 日志 =====
+loguru>=0.7.0
+
+# ===== 测试 =====
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+httpx>=0.26.0
+
+# ===== 开发工具 =====
+ipython>=8.20.0
+jupyter>=1.0.0
+black>=24.0.0
+flake8>=7.0.0
