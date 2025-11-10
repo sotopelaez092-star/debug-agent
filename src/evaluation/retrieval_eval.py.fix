@@ -1,0 +1,26 @@
+# 把第175-200行改成正确的顺序
+        """
+        # 输入验证
+        if not times:
+            raise ValueError('times不能为空')
+        
+        # 计算统计量（先计算！）
+        avg_time = sum(times) / len(times)
+        min_time = min(times)
+        max_time = max(times)
+        std_time = statistics.stdev(times) if len(times) > 1 else 0.0
+        
+        # 日志（后打印！）
+        logger.info(
+            f"Time stats: avg={avg_time:.3f}s, "
+            f"min={min_time:.3f}s, max={max_time:.3f}s, "
+            f"std={std_time:.3f}s"
+        )
+        
+        # 返回结果
+        return {
+            'avg_time': avg_time,
+            'min_time': min_time,
+            'max_time': max_time,
+            'std_time': std_time
+        }

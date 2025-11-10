@@ -1,0 +1,16 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "query": "AttributeError: 'NoneType' object has no attribute 'get'",
+      "ground_truth": [2, 15, 23],
+      "category": "AttributeError"
+    },
+    {
+      "id": 2,
+      "query": "TypeError: can only concatenate str (not 'int') to str",
+      "ground_truth": [5, 12, 28],
+      "category": "TypeError"
+    }
+  ]
+}
