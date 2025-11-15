@@ -22,7 +22,7 @@ class VectorStore:
         # 获取或创建collection
         self.collection = self.client.get_or_create_collection(
             name=collection_name,
-            metadata={"description": "Stack Overflow QA embeddings"}
+            metadata={"hnsw:space": "cosine"} 
         )
         
         print(f"✅ 向量数据库初始化完成")

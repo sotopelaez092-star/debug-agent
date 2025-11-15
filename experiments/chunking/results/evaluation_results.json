@@ -1,0 +1,110 @@
+{
+  "S0": {
+    "recall": {
+      "1": 0.16293650793650796,
+      "3": 0.41555555555555557,
+      "5": 0.4667460317460318,
+      "10": 0.6874206349206349
+    },
+    "mrr": 0.8555555555555556,
+    "avg_retrieval_time": 0.03053917090098063,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S0",
+    "strategy_name": "Full Document",
+    "vectorstore": "chroma_s0",
+    "doc_count": 99
+  },
+  "S1": {
+    "recall": {
+      "1": 0.10595238095238095,
+      "3": 0.40186507936507937,
+      "5": 0.5874206349206349,
+      "10": 0.7485714285714286
+    },
+    "mrr": 0.7333333333333333,
+    "avg_retrieval_time": 0.02129651705423991,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S1",
+    "strategy_name": "Semantic",
+    "vectorstore": "chroma_s1",
+    "doc_count": 297
+  },
+  "S2": {
+    "recall": {
+      "1": 0.07182539682539682,
+      "3": 0.13888888888888887,
+      "5": 0.13888888888888887,
+      "10": 0.19166666666666668
+    },
+    "mrr": 0.3,
+    "avg_retrieval_time": 0.022321089108784994,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S2",
+    "strategy_name": "Answer-Only",
+    "vectorstore": "chroma_s2",
+    "doc_count": 99
+  },
+  "S3": {
+    "recall": {
+      "1": 0.16293650793650796,
+      "3": 0.29591269841269846,
+      "5": 0.3998809523809524,
+      "10": 0.7360317460317459
+    },
+    "mrr": 0.8833333333333333,
+    "avg_retrieval_time": 0.021340012550354004,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S3",
+    "strategy_name": "Title+Answer",
+    "vectorstore": "chroma_s3",
+    "doc_count": 99
+  },
+  "S4": {
+    "recall": {
+      "1": 0.12043650793650794,
+      "3": 0.3148809523809524,
+      "5": 0.3196428571428571,
+      "10": 0.5865476190476191
+    },
+    "mrr": 0.6677777777777778,
+    "avg_retrieval_time": 0.02231465975443522,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S4",
+    "strategy_name": "Fixed-200",
+    "vectorstore": "chroma_s4",
+    "doc_count": 1099
+  },
+  "S5": {
+    "recall": {
+      "1": 0.11071428571428571,
+      "3": 0.28198412698412695,
+      "5": 0.31412698412698414,
+      "10": 0.45662698412698416
+    },
+    "mrr": 0.638888888888889,
+    "avg_retrieval_time": 0.022324371337890624,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "strategy_id": "S5",
+    "strategy_name": "Fixed-300",
+    "vectorstore": "chroma_s5",
+    "doc_count": 685
+  }
+}

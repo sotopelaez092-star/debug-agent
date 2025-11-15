@@ -20,6 +20,7 @@ class BaseRetriever:
     def __init__(
         self,
         collection: Collection,
+        embedding_function: Any,
         min_similarity: float = 0.5,
         recall_factor: int = 4
     ):
@@ -39,6 +40,7 @@ class BaseRetriever:
             raise ValueError('recall_factor必须大于等于1')
         
         self.collection = collection
+        self.embedding_function = embedding_function
         self.min_similarity = min_similarity
         self.recall_factor = recall_factor
         
@@ -157,36 +159,34 @@ class BaseRetriever:
     ) -> Dict[str, List]:
         """
         向量搜索
-
         Args:
             query: 清理后的查询文档
             n_results: 找回文档数量 (top_k * recall_Factor)
-
         Returns:
             ChromaDB原始返回结果
-            格式：
-            {
-                "id": [['id1', 'id2', ...]],
-                "document": [['doc1', 'doc2', ...]],
-                "metadata": [[{...}, {...}, {...}]],
-                'distance': [[0.2, 0.3, ...]]
-            }
-
         Raises:
             Exception: 当检索失败时
         """
         try:
+            # 1. 生成query的embedding
+            logger.debug("开始生成query embedding...")
+            # FIXED: embedding_function接收列表，返回列表
+            embeddings = self.embedding_function.embed_documents([query])  # 返回列表
+            query_embedding = embeddings[0]  # 取第一个embedding
+            logger.debug(f"Embedding生成完成，维度：{len(query_embedding)}")
+        
+            # 2. 向量检索
             logger.debug(f"开始向量检索，n_results={n_results}")
             results = self.collection.query(
-                query_texts=[query],
+                query_embeddings=[query_embedding],
                 n_results=n_results,
                 include=['documents', 'metadatas', 'distances']
             )
-
+            
             num_results = len(results['ids'][0]) if results['ids'] else 0
             logger.info(f"检索完成，召回{num_results}个文档")
-
-            return results          
+            return results
+            
         except Exception as e:
             logger.error(f"向量搜索失败: {e}", exc_info=True)
             raise
@@ -196,27 +196,21 @@ class BaseRetriever:
         raw_results: Dict[str, List],
         min_similarity: float
     ) -> Dict[str, List]:
-        """
-        过滤低相关度的结果
-
-        Args:
-            raw_results: ChromaDB原始返回结果
-            min_similarity: 最低相似度阈值
-
-        Returns:
-            过滤后的结果（仍然是ChromaDB格式）
-        """
-        # 1. 取出第一批次的数据（因为是嵌套列表）
+        """过滤低相关度的结果"""
+        
+        # 1. 取出数据
         ids = raw_results['ids'][0] if raw_results['ids'] else []
         documents = raw_results['documents'][0] if raw_results['documents'] else []
         metadatas = raw_results['metadatas'][0] if raw_results['metadatas'] else []
         distances = raw_results['distances'][0] if raw_results['distances'] else []
 
+        # 调试信息
         print("\n🔍 调试信息 - 相似度分数：")
-        for i, (id, dist) in enumerate(zip(ids[:5], distances[:5])):  # 只看前5个
-            similarity = 1 - dist
+        for i, (id, dist) in enumerate(zip(ids[:5], distances[:5])):
+            similarity = 1 / (1 + dist)  # ✅ 修复：正确的计算公式
             print(f"  {i+1}. ID={id}: distance={dist:.4f}, similarity={similarity:.4f}")
         print()
+        
         # 2. 过滤
         filtered_ids = []
         filtered_documents = []
@@ -224,7 +218,7 @@ class BaseRetriever:
         filtered_distances = []
 
         for id, doc, meta, dist in zip(ids, documents, metadatas, distances):
-            similarity = 1- dist
+            similarity = 1 / (1 + dist)  # ✅ 修复：正确的计算公式
 
             if similarity >= min_similarity:
                 filtered_ids.append(id)
@@ -234,11 +228,11 @@ class BaseRetriever:
 
         # 3. 日志
         logger.info(
-            f"过滤完成：{len(ids)} -> {len(filtered_ids)}"
+            f"过滤完成：{len(ids)} -> {len(filtered_ids)}，"
             f"相似度阈值：{min_similarity}"
         )
 
-        # 4. 组织返回结果
+        # 4. 返回
         filtered_results = {
             'ids': [filtered_ids],
             'documents': [filtered_documents],
@@ -247,23 +241,15 @@ class BaseRetriever:
         }
 
         return filtered_results
-
+    
     def _format_results(
         self,
         raw_results: Dict[str, List],
         top_k: int
     ) -> List[Dict[str, Any]]:
-        """
-        格式化检索结果
-
-        Args:
-            raw_results: ChromaDB原始返回结果（已过滤）
-            top_k: 最终返回数量
-
-        Returns:
-            格式化的结果列表，按相似度降序排列
-        """
-        # 1. 取出第一批次的数据（因为是嵌套列表）
+        """格式化检索结果"""
+        
+        # 1. 取出数据
         ids = raw_results['ids'][0] if raw_results['ids'] else []
         documents = raw_results['documents'][0] if raw_results['documents'] else []
         metadatas = raw_results['metadatas'][0] if raw_results['metadatas'] else []
@@ -276,11 +262,11 @@ class BaseRetriever:
                 'id': id,
                 'content': doc,
                 'metadata': meta,
-                'similarity': 1 - dist,
+                'similarity': 1 / (1 + dist),  # ✅ 修复：正确的计算公式
                 'distance': dist
             })
 
-        # 3. 排序
+        # 3. 排序（按相似度降序，即distance升序）
         formatted_results.sort(key=lambda x: x['similarity'], reverse=True)
 
         # 4. 限制数量 + 添加rank

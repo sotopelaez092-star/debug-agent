@@ -1,0 +1,3655 @@
+{
+  "status": "in_progress",
+  "annotations": [
+    {
+      "query_id": "test-001",
+      "query": "attributeerror 怎么办",
+      "error_type": "attributeerror",
+      "relevant_docs": [
+        "so-68625748",
+        "so-11685936",
+        "so-8949252",
+        "so-1250103",
+        "so-610883",
+        "so-11174024",
+        "so-19392226",
+        "so-23385003"
+      ],
+      "judgments": [
+        {
+          "score": 2,
+          "reason": "文档提供了AttributeError的具体解决方案，虽然针对的是pandas特定场景，但对理解此类错误有帮助",
+          "is_relevant": true,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对AttributeError错误提供了具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档专门讨论AttributeError: 'NoneType' object has no attribute这一特定错误类型，直接解答用户关于attributeerror的处理方法",
+          "is_relevant": true,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是SQLAlchemy特定场景下的AttributeError，而用户query是通用的AttributeError处理，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的常见原因和解决方案，特别是针对模块导入导致的属性错误",
+          "is_relevant": true,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的成因并提供了多种解决方案，包括hasattr()和try/except等预防方法",
+          "is_relevant": true,
+          "doc_id": "so-610883",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论AttributeError并提供解决方案，但针对的是json.load特定错误而非通用attributeerror处理",
+          "is_relevant": true,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非AttributeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的常见原因和解决方案，针对DataFrame对象属性错误提供了具体修复方法",
+          "is_relevant": true,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是TypeError而非AttributeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接展示了AttributeError的具体案例和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 11,
+      "stage2_count": 11
+    },
+    {
+      "query_id": "test-002",
+      "query": "valueerror 怎么办",
+      "error_type": "valueerror",
+      "relevant_docs": [
+        "so-72511979",
+        "so-36921951",
+        "so-8420143",
+        "so-17839973"
+      ],
+      "judgments": [
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案，虽然错误信息与用户query不完全匹配，但给出了处理类似错误的实用方法",
+          "is_relevant": true,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError的具体场景，提供了错误原因和正确解决方案",
+          "is_relevant": true,
+          "doc_id": "so-36921951",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-23297569",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定sklearn场景下的ValueError，而用户query是通用的ValueError处理，相关性有限",
+          "is_relevant": false,
+          "doc_id": "so-31323499",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError问题而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-33800004",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对ValueError类型错误，提供了具体的问题分析和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定类型的ValueError，而用户query过于宽泛没有提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，且问题场景完全不同",
+          "is_relevant": false,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案和示例代码，对解决用户问题有参考价值",
+          "is_relevant": true,
+          "doc_id": "so-17839973",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ValueError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 16,
+      "stage2_count": 16
+    },
+    {
+      "query_id": "test-003",
+      "query": "valueerror 怎么办",
+      "error_type": "valueerror",
+      "relevant_docs": [
+        "so-36921951",
+        "so-8420143",
+        "so-17839973"
+      ],
+      "judgments": [
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 0,
+          "reason": "用户询问的是通用的ValueError处理方法，而文档针对的是特定BigQuery包安装问题",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError的具体案例，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-36921951",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-23297569",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定sklearn场景下的ValueError，而用户query是通用的ValueError处理，相关性有限",
+          "is_relevant": false,
+          "doc_id": "so-31323499",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-33800004",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对ValueError类型错误，提供了具体的问题分析和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户遇到的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定类型的ValueError，而用户query过于宽泛没有提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是IPython调试器中的NameError问题，而用户询问的是通用的ValueError处理方法",
+          "is_relevant": false,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案和示例代码，对理解如何解决这类错误有帮助",
+          "is_relevant": true,
+          "doc_id": "so-17839973",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是通用的ValueError处理方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 16,
+      "stage2_count": 16
+    },
+    {
+      "query_id": "test-004",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-1250103",
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError相关问题和循环导入的解决方案，对理解ImportError有帮助但未直接匹配用户简单查询",
+          "is_relevant": true,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，与用户泛泛询问的ImportError解决方法仅有领域相关性",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError错误",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论ImportError但针对JSON模块特定问题，与用户泛泛的ImportError查询略有相关",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对ImportError提供了具体的解决方案和安装命令",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，虽然针对PyCharm项目结构，但提供了处理导入错误的通用方法",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10特定版本的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-005",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python中super()与旧式类的特定TypeError，而用户query是泛泛的typeerror处理，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的具体TypeError，而用户query是泛泛询问typeerror的解决方法，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError问题，提供了具体的错误原因和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常的使用场景，而用户需要解决的是TypeError错误，两者属于完全不同的异常类型",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析时的AttributeError，而用户查询的是通用的TypeError，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的成因并提供了解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query是泛泛的TypeError问题",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-006",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户简单的ImportError查询略微相关但不够直接匹配",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及模块导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论ImportError但针对JSON模块特定问题，与用户通用ImportError查询略有相关",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的实用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体案例，与用户泛泛的ImportError问题属于同一领域但解决的是不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-007",
+      "query": "attributeerror 怎么办",
+      "error_type": "attributeerror",
+      "relevant_docs": [
+        "so-11685936",
+        "so-8949252",
+        "so-16589208",
+        "so-1250103",
+        "so-610883",
+        "so-19392226",
+        "so-23385003"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定pandas版本兼容性问题，而用户query是通用的AttributeError处理方法",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对AttributeError错误提供了具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对AttributeError: 'NoneType' object has no attribute这一特定错误类型，提供了原因分析和解决方案，完全匹配用户查询",
+          "is_relevant": true,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了AttributeError的具体场景并解释了错误原因，能提供有用信息但针对的是SQLAlchemy特定问题",
+          "is_relevant": true,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的常见原因和解决方案，特别是针对模块导入导致的属性错误",
+          "is_relevant": true,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的成因并提供了多种解决方案，包括hasattr()和try/except方法",
+          "is_relevant": true,
+          "doc_id": "so-610883",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定AttributeError子类问题，而用户查询的是通用的AttributeError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非AttributeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的常见原因和解决方案，针对DataFrame对象属性不存在的情况提供了具体代码示例",
+          "is_relevant": true,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是TypeError而非AttributeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的原因并提供了解决方案",
+          "is_relevant": true,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 11,
+      "stage2_count": 11
+    },
+    {
+      "query_id": "test-008",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对TypeError问题，提供了具体的错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定模块导入问题，而用户query是通用的typeerror处理",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError错误和BigQuery相关安装问题，而用户询问的是通用的TypeError错误处理方法",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常的使用场景，而用户需要解决的是TypeError异常问题",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-009",
+      "query": "valueerror 怎么办",
+      "error_type": "valueerror",
+      "relevant_docs": [
+        "so-36921951",
+        "so-8420143",
+        "so-17839973"
+      ],
+      "judgments": [
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 0,
+          "reason": "用户询问的是通用的ValueError处理方法，而文档讨论的是特定BigQuery包安装问题",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError的具体案例，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-36921951",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-23297569",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定sklearn场景下的ValueError，而用户query是通用的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-31323499",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 0,
+          "reason": "用户询问ValueError错误，但文档讨论的是KeyError问题",
+          "is_relevant": false,
+          "doc_id": "so-33800004",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError类型错误，提供了具体错误原因和调试方法",
+          "is_relevant": true,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定类型的ValueError，而用户query过于宽泛没有提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，且问题场景完全不同",
+          "is_relevant": false,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案和示例代码，对理解如何解决这类错误有帮助",
+          "is_relevant": true,
+          "doc_id": "so-17839973",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是通用的ValueError处理方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 16,
+      "stage2_count": 16
+    },
+    {
+      "query_id": "test-010",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-011",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python中super()与旧式类的特定TypeError，而用户query是泛泛的typeerror处理，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定模块导入问题，而用户query是通用的typeerror处理",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-012",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python中super()与旧式类的特定TypeError，而用户query过于宽泛未提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定模块导入问题，而用户query是通用的typeerror处理方法",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-013",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对TypeError问题，提供了具体的错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定模块导入问题，而用户query是通用的typeerror处理",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-014",
+      "query": "attributeerror 怎么办",
+      "error_type": "attributeerror",
+      "relevant_docs": [
+        "so-68625748",
+        "so-11685936",
+        "so-8949252",
+        "so-1250103",
+        "so-610883",
+        "so-19392226",
+        "so-23385003"
+      ],
+      "judgments": [
+        {
+          "score": 2,
+          "reason": "文档提供了AttributeError的具体解决方案，但针对的是pandas版本兼容性问题，而用户query没有提供具体错误上下文",
+          "is_relevant": true,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对AttributeError错误提供了具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档专门讨论AttributeError: 'NoneType' object has no attribute的错误，直接解决用户关于AttributeError的问题",
+          "is_relevant": true,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是SQLAlchemy特定场景下的AttributeError，与用户泛泛询问AttributeError解决方法略有相关但针对性不足",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 3,
+          "reason": "文档直接针对AttributeError问题，提供了循环导入的具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的成因并提供了hasattr()和try/except两种解决方案",
+          "is_relevant": true,
+          "doc_id": "so-610883",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError的具体子类错误，与用户泛泛询问AttributeError解决方法略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的AttributeError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的常见原因和解决方案，针对DataFrame对象缺少属性的情况提供了具体代码示例",
+          "is_relevant": true,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是TypeError而非AttributeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了AttributeError的原因并提供了解决方案",
+          "is_relevant": true,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 11,
+      "stage2_count": 11
+    },
+    {
+      "query_id": "test-015",
+      "query": "nameerror 怎么办",
+      "error_type": "nameerror",
+      "relevant_docs": [
+        "so-59348410",
+        "so-14804084",
+        "so-17413502",
+        "so-17557190",
+        "so-57505071",
+        "so-28805028",
+        "so-51164288"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接针对NameError错误，提供了具体的导入语句解决方案",
+          "is_relevant": true,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因并提供了具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-14804084",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的NameError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方案，特别是针对input函数导致的NameError问题",
+          "is_relevant": true,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方法，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-17557190",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的成因和解决方案，针对List未定义的情况提供了导入typing.List的具体方法",
+          "is_relevant": true,
+          "doc_id": "so-57505071",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是调试环境下的特定NameError场景，与用户一般性的NameError问题仅有领域相关性",
+          "is_relevant": false,
+          "doc_id": "so-35151732",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是模块级别的__getattr__实现，与解决NameError无关",
+          "is_relevant": false,
+          "doc_id": "so-2447353",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3中unicode未定义的特定NameError，而用户query是通用的NameError问题",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 3,
+          "reason": "文档直接展示了NameError的具体案例和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-28805028",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的NameError，两者是不同的Python错误类型",
+          "is_relevant": false,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论KeyError的字符串表示问题，而用户需要解决一般NameError错误",
+          "is_relevant": false,
+          "doc_id": "so-24998968",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了NameError的具体案例和调试环境问题，对理解NameError有帮助但未提供通用解决方案",
+          "is_relevant": true,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 13,
+      "stage2_count": 13
+    },
+    {
+      "query_id": "test-016",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的具体TypeError，而用户query是泛泛询问typeerror的解决方法，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-017",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但针对的是JSON模块而非通用的ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的有用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体案例，与用户泛泛的ImportError问题属于同一领域但解决的是不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-018",
+      "query": "valueerror 怎么办",
+      "error_type": "valueerror",
+      "relevant_docs": [
+        "so-36921951",
+        "so-8420143",
+        "so-17839973"
+      ],
+      "judgments": [
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 0,
+          "reason": "用户询问的是通用的ValueError处理方法，而文档讨论的是特定BigQuery包安装问题",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError的具体案例，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-36921951",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-23297569",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定sklearn场景下的ValueError，而用户query是通用的ValueError处理",
+          "is_relevant": false,
+          "doc_id": "so-31323499",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-33800004",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError类型错误，提供了具体错误原因和调试方法",
+          "is_relevant": true,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定类型的ValueError，而用户query过于宽泛没有提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，且问题场景完全不同",
+          "is_relevant": false,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案和示例代码，对理解如何解决此类错误有帮助",
+          "is_relevant": true,
+          "doc_id": "so-17839973",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是通用的ValueError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 16,
+      "stage2_count": 16
+    },
+    {
+      "query_id": "test-019",
+      "query": "nameerror 怎么办",
+      "error_type": "nameerror",
+      "relevant_docs": [
+        "so-59348410",
+        "so-14804084",
+        "so-17413502",
+        "so-17557190",
+        "so-57505071",
+        "so-28805028",
+        "so-51164288"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解答了NameError的常见原因和解决方法，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-14804084",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的NameError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方案，特别是针对input函数导致的NameError问题",
+          "is_relevant": true,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方法，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-17557190",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了NameError的具体原因和解决方案，针对List未定义的情况提供了导入typing.List的方法",
+          "is_relevant": true,
+          "doc_id": "so-57505071",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是调试环境下的特定NameError场景，与用户一般性的NameError问题仅有领域相关性",
+          "is_relevant": false,
+          "doc_id": "so-35151732",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是模块级别的__getattr__实现，与解决Python NameError无关",
+          "is_relevant": false,
+          "doc_id": "so-2447353",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3中unicode未定义的特定NameError，而用户query是通用的NameError问题",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 3,
+          "reason": "文档直接展示了NameError的具体案例和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-28805028",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的NameError，两者是不同的Python错误类型",
+          "is_relevant": false,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论KeyError的字符串表示问题，而用户需要解决一般NameError错误",
+          "is_relevant": false,
+          "doc_id": "so-24998968",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了NameError的具体案例和调试环境下的变量作用域问题，对理解NameError有帮助但未提供通用解决方案",
+          "is_relevant": true,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 13,
+      "stage2_count": 13
+    },
+    {
+      "query_id": "test-020",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但针对的是JSON模块而非通用的ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的有用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体解决方案，而用户query是泛泛的ImportError问题，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-021",
+      "query": "nameerror 怎么办",
+      "error_type": "nameerror",
+      "relevant_docs": [
+        "so-59348410",
+        "so-14804084",
+        "so-17413502",
+        "so-17557190",
+        "so-57505071",
+        "so-28805028",
+        "so-51164288"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接针对NameError问题，提供了具体的导入语句解决方案",
+          "is_relevant": true,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-14804084",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的NameError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方案，特别是针对input函数导致的NameError问题",
+          "is_relevant": true,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了NameError的常见原因和解决方法，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-17557190",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了NameError的具体原因和解决方案，针对List未定义的情况提供了导入typing.List的方法",
+          "is_relevant": true,
+          "doc_id": "so-57505071",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是调试环境下的特定NameError场景，与用户一般性的NameError问题仅有领域相关性",
+          "is_relevant": false,
+          "doc_id": "so-35151732",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是模块级别的__getattr__实现，与解决NameError无关",
+          "is_relevant": false,
+          "doc_id": "so-2447353",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3中unicode未定义的特定NameError，而用户query是通用的NameError问题",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 3,
+          "reason": "文档直接展示了NameError的具体案例和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-28805028",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的NameError，两者是不同的Python错误类型",
+          "is_relevant": false,
+          "doc_id": "so-11685936",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论KeyError的字符串表示问题，而用户需要解决NameError错误",
+          "is_relevant": false,
+          "doc_id": "so-24998968",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了NameError的具体案例和调试环境中的变量作用域问题，对理解NameError有帮助但未提供通用解决方案",
+          "is_relevant": true,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 13,
+      "stage2_count": 13
+    },
+    {
+      "query_id": "test-022",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定模块导入问题，而用户query是通用的typeerror处理",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-023",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但针对的是JSON模块而非通用的ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的有用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体案例，与用户泛泛的ImportError问题属于同一领域但解决的是不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-024",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但用户query过于宽泛，只能提供有限的参考价值",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，是完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的有用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体案例，与用户泛泛的ImportError问题属于同一领域但解决的是不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-025",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但针对的是JSON模块而非通用的ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的实用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python 3.10中collections模块导入错误的具体案例，与用户泛泛的ImportError问题属于同一领域但解决的是不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-026",
+      "query": "importerror 怎么办",
+      "error_type": "importerror",
+      "relevant_docs": [
+        "so-338768",
+        "so-13967428",
+        "so-35950050",
+        "so-59156895",
+        "so-64807163"
+      ],
+      "judgments": [
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError和AttributeError的循环导入问题，与用户的一般ImportError查询略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-1250103",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定编译环境下的ImportError，而用户query是通用的ImportError问题，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-35006614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非ImportError，虽然都涉及导入问题但错误类型不同",
+          "is_relevant": false,
+          "doc_id": "so-23385003",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非ImportError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ImportError的具体案例，但针对的是JSON模块而非通用的ImportError解决方法",
+          "is_relevant": false,
+          "doc_id": "so-11369734",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 3,
+          "reason": "文档直接讨论ImportError并提供具体解决方案",
+          "is_relevant": true,
+          "doc_id": "so-338768",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 3,
+          "reason": "文档直接提供了ImportError的具体解决方案，包括安装缺失模块的方法",
+          "is_relevant": true,
+          "doc_id": "so-13967428",
+          "retrieval_rank": 11
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的ImportError，而用户query是通用的ImportError问题，属于同领域但解决不同具体问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论了ImportError的具体场景和解决方案，提供了处理模块导入问题的有用信息",
+          "is_relevant": true,
+          "doc_id": "so-35950050",
+          "retrieval_rank": 13
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非ImportError，问题类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-50185926",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 2,
+          "reason": "文档讨论的是ImportError的具体类型和解决方案，与用户查询的ImportError问题相关",
+          "is_relevant": true,
+          "doc_id": "so-59156895",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是相对导入错误的具体场景，而用户query是通用的ImportError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11536764",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了ImportError的具体原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-64807163",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是NameError而非ImportError，虽然都是Python错误但问题类型不同",
+          "is_relevant": false,
+          "doc_id": "so-19877306",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定ImportError案例，而用户query是泛泛的ImportError问题",
+          "is_relevant": false,
+          "doc_id": "so-69381312",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 17,
+      "stage2_count": 17
+    },
+    {
+      "query_id": "test-027",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的具体TypeError，而用户query是泛泛询问typeerror的解决方法，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库操作中的TypeError，而用户query是泛泛的TypeError问题，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-028",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定super()使用场景的TypeError，而用户query是通用的TypeError处理",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的TypeError，与用户泛泛询问TypeError处理略有相关但不够直接",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库操作中的TypeError，而用户query是泛泛的typeerror求助，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    },
+    {
+      "query_id": "test-029",
+      "query": "valueerror 怎么办",
+      "error_type": "valueerror",
+      "relevant_docs": [
+        "so-36921951",
+        "so-8420143",
+        "so-17839973"
+      ],
+      "judgments": [
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 0,
+          "reason": "用户询问的是通用的ValueError处理方法，而文档讨论的是特定BigQuery包安装问题",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError的具体案例，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-36921951",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是KeyError而非ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-23297569",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定sklearn场景下的ValueError，而用户query是通用的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-31323499",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是KeyError而非ValueError，虽然都是Python异常处理但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-33800004",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了ValueError类型错误，提供了具体错误原因和调试方法",
+          "is_relevant": true,
+          "doc_id": "so-8420143",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户询问的ValueError",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError，属于完全不同的错误类型",
+          "is_relevant": false,
+          "doc_id": "so-19392226",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定类型的ValueError，而用户query过于宽泛没有提供具体错误信息",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，且涉及IPython调试器特定问题",
+          "is_relevant": false,
+          "doc_id": "so-51164288",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 2,
+          "reason": "文档提供了ValueError的具体解决方案和示例代码，对理解如何解决这类错误有帮助",
+          "is_relevant": true,
+          "doc_id": "so-17839973",
+          "retrieval_rank": 17
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是pandas的KeyError问题，而用户询问的是通用的ValueError处理方法",
+          "is_relevant": false,
+          "doc_id": "so-35831496",
+          "retrieval_rank": 18
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非用户查询的ValueError问题",
+          "is_relevant": false,
+          "doc_id": "so-68625748",
+          "retrieval_rank": 19
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非ValueError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-17413502",
+          "retrieval_rank": 20
+        }
+      ],
+      "stage1_count": 16,
+      "stage2_count": 16
+    },
+    {
+      "query_id": "test-030",
+      "query": "typeerror 怎么办",
+      "error_type": "typeerror",
+      "relevant_docs": [
+        "so-3887381",
+        "so-8220702",
+        "so-11146190",
+        "so-6039605"
+      ],
+      "judgments": [
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的具体类型和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-3887381",
+          "retrieval_rank": 1
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是Python中super()与旧式类的特定TypeError，而用户query是泛泛的typeerror处理，仅略微相关",
+          "is_relevant": false,
+          "doc_id": "so-9698614",
+          "retrieval_rank": 2
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体类型问题，提供了完整的错误分析和修复方案",
+          "is_relevant": true,
+          "doc_id": "so-8220702",
+          "retrieval_rank": 3
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是AttributeError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-16589208",
+          "retrieval_rank": 4
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是timedelta未定义的具体TypeError，而用户query是泛泛询问typeerror的解决方法，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-16782682",
+          "retrieval_rank": 5
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是NameError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-59348410",
+          "retrieval_rank": 6
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解决了TypeError的具体问题，提供了错误原因和解决方案",
+          "is_relevant": true,
+          "doc_id": "so-11146190",
+          "retrieval_rank": 7
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是ValueError而非TypeError，错误类型完全不同",
+          "is_relevant": false,
+          "doc_id": "so-72511979",
+          "retrieval_rank": 8
+        },
+        {
+          "score": 0,
+          "reason": "文档讨论的是LookupError异常而非TypeError异常",
+          "is_relevant": false,
+          "doc_id": "so-49096749",
+          "retrieval_rank": 9
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都属于Python错误类型但解决的是不同问题",
+          "is_relevant": false,
+          "doc_id": "so-8949252",
+          "retrieval_rank": 10
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是JSON解析相关的TypeError，而用户query是泛泛的TypeError问题，属于同领域但解决不同问题",
+          "is_relevant": false,
+          "doc_id": "so-11174024",
+          "retrieval_rank": 12
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是AttributeError而非TypeError，虽然都是Python错误但类型不同",
+          "is_relevant": false,
+          "doc_id": "so-43080583",
+          "retrieval_rank": 14
+        },
+        {
+          "score": 3,
+          "reason": "文档直接解释了TypeError的常见原因和解决方案，与用户查询完全匹配",
+          "is_relevant": true,
+          "doc_id": "so-6039605",
+          "retrieval_rank": 15
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是特定数据库查询场景下的TypeError，而用户query过于宽泛没有提供具体错误上下文",
+          "is_relevant": false,
+          "doc_id": "so-35359969",
+          "retrieval_rank": 16
+        },
+        {
+          "score": 1,
+          "reason": "文档讨论的是ValueError而非TypeError，虽然都是Python错误类型但问题不同",
+          "is_relevant": false,
+          "doc_id": "so-4674473",
+          "retrieval_rank": 18
+        }
+      ],
+      "stage1_count": 15,
+      "stage2_count": 15
+    }
+  ],
+  "stats": {
+    "total_calls": 453,
+    "total_tokens": 153475,
+    "estimated_cost": 0.021486500000000002
+  }
+}

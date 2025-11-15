@@ -54,6 +54,22 @@ class Embedder:
         print(f"✅ 编码完成")
         return embeddings
 
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """
+        LangChain兼容接口：批量编码文档
+        
+        Args:
+            texts: 文本列表
+            
+        Returns:
+            向量列表（每个向量是float列表）
+        """
+        # 使用现有的 encode_batch 方法
+        embeddings = self.encode_batch(texts)
+        
+        # 转换为 List[List[float]] 格式（BaseRetriever期望的格式）
+        return embeddings.tolist()
+
     def process_chunks_with_embeddings(self, chunks: List[Dict]) -> List[Dict]:
         """为文本块生成embeddings
         

@@ -1,0 +1,82 @@
+[
+  {
+    "recall": {
+      "1": 0.10595238095238095,
+      "3": 0.40186507936507937,
+      "5": 0.5874206349206349,
+      "10": 0.7485714285714286
+    },
+    "mrr": 0.7333333333333333,
+    "avg_retrieval_time": 0.026569517453511556,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "model_id": "M1",
+    "model_name": "bge-small-en",
+    "model_full_name": "BAAI/bge-small-en-v1.5",
+    "dimension": 384,
+    "description": "当前基线",
+    "total_eval_time": 0.7978570461273193
+  },
+  {
+    "recall": {
+      "1": 0.11928571428571429,
+      "3": 0.36412698412698413,
+      "5": 0.48376984126984124,
+      "10": 0.6973015873015872
+    },
+    "mrr": 0.7666666666666667,
+    "avg_retrieval_time": 0.02983380953470866,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "model_id": "M2",
+    "model_name": "bge-base-en",
+    "model_full_name": "BAAI/bge-base-en-v1.5",
+    "dimension": 768,
+    "description": "中等模型",
+    "total_eval_time": 0.8958299160003662
+  },
+  {
+    "recall": {
+      "1": 0.0,
+      "3": 0.18555555555555556,
+      "5": 0.3574206349206349,
+      "10": 0.4984920634920635
+    },
+    "mrr": 0.31666666666666665,
+    "avg_retrieval_time": 0.07536708513895671,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "model_id": "M3",
+    "model_name": "bge-m3",
+    "model_full_name": "BAAI/bge-m3",
+    "dimension": 1024,
+    "description": "多语言大模型",
+    "total_eval_time": 2.2619879245758057
+  },
+  {
+    "recall": {
+      "1": 0.05222222222222222,
+      "3": 0.14611111111111114,
+      "5": 0.3431349206349206,
+      "10": 0.5733333333333334
+    },
+    "mrr": 0.47685185185185186,
+    "avg_retrieval_time": 0.01574378808339437,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "model_id": "M4",
+    "model_name": "all-MiniLM",
+    "model_full_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "description": "轻量级基线",
+    "total_eval_time": 0.4731001853942871
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "baseline": {
+    "recall": {
+      "1": 0.10595238095238095,
+      "3": 0.40186507936507937,
+      "5": 0.5874206349206349,
+      "10": 0.7485714285714286
+    },
+    "mrr": 0.7333333333333333,
+    "avg_retrieval_time": 0.026888791720072427,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "method": "BaseRetriever"
+  },
+  "rewrite": {
+    "recall": {
+      "1": 0.22464285714285712,
+      "3": 0.5024603174603175,
+      "5": 0.6354365079365079,
+      "10": 0.788611111111111
+    },
+    "mrr": 1.0,
+    "avg_retrieval_time": 0.02429641087849935,
+    "failure_rate": 0.0,
+    "total_queries": 30,
+    "successful_queries": 30,
+    "failed_queries": 0,
+    "method": "QueryRewriter + BaseRetriever"
+  },
+  "comparison": {
+    "recall_1_change": 0.11869047619047617,
+    "recall_3_change": 0.10059523809523813,
+    "recall_5_change": 0.048015873015872956,
+    "recall_10_change": 0.040039682539682486,
+    "mrr_change": 0.2666666666666667,
+    "time_change_ms": -2.592380841573077
+  }
+}

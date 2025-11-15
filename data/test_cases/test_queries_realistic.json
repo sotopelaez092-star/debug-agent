@@ -1,0 +1,518 @@
+{
+  "version": "2.0",
+  "description": "Realistic user queries (casual, incomplete, diverse styles)",
+  "source": "Rewritten from technical tracebacks",
+  "total": 30,
+  "queries": [
+    {
+      "query_id": "test-001",
+      "query": "attributeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nAttributeError: SomeClass instance has no attribute 'property'How do I tell ifahas the attributepropertybefore using it?",
+      "all_variations": [
+        "attributeerror 怎么办",
+        "How can I check if an object has an attribute",
+        "SomeClass instance has no attribute 'property'How do I tell ifahas the attributepropertybefore using"
+      ],
+      "error_type": "attributeerror",
+      "title": "How can I check if an object has an attribute?",
+      "ground_truth": [
+        "so-610883"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-002",
+      "query": "valueerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ValueError: If using all scalar values, you must pass an indexI tried this also:df2 = (pd.DataFrame({'a':a, 'b':b})).reset_index()This gives the same error message. How do I do what I want?",
+      "all_variations": [
+        "valueerror 怎么办",
+        "Constructing DataFrame from values in variables yi",
+        "If using all scalar values, you must pass an indexI tried this also:df2 = (pd.DataFrame({'a':a, 'b':"
+      ],
+      "error_type": "valueerror",
+      "title": "Constructing DataFrame from values in variables yields \"ValueError: If using all scalar values, you must pass an index\"",
+      "ground_truth": [
+        "so-17839973"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-003",
+      "query": "valueerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
+      "all_variations": [
+        "valueerror 怎么办",
+        "Truth value of a Series is ambiguous. Use a.empty,",
+        "The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+      ],
+      "error_type": "valueerror",
+      "title": "Truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()",
+      "ground_truth": [
+        "so-36921951"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-004",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"core_test.py\", line 3, in <module>\n    from ..components.core import GameLoopEvents\nValueError: Attempted relative import in non-packageSearching around I found \"relative path not working even with __init__.py\" and \"Import a module from a relative path\" but they didn't help.Is there anything I'm missing here?",
+      "all_variations": [
+        "importerror 怎么办",
+        "How to fix \"Attempted relative import in non",
+        "Attempted relative import in non-packageSearching around I found \"relative path not working even wit"
+      ],
+      "error_type": "importerror",
+      "title": "How to fix \"Attempted relative import in non-package\" even with __init__.py",
+      "ground_truth": [
+        "so-11536764"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-005",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"C:\\Users\\Dom\\Desktop\\test\\test.py\", line 7, in <module>\n    p = Pump.getPumps()\nTypeError: getPumps() missing 1 required positional argument: 'self'Why doesn't__init__seem to be called, and what does this exception mean? My understanding is thatselfis passed to the constructor and methods automatically. What am I doing wrong here?SeeWhy do I get 'takes exactly 1 argument (2 given)' when trying to call a method?for the opposite problem.",
+      "all_variations": [
+        "typeerror 怎么办",
+        "Why do I get \"TypeError: Missing 1 required positi",
+        "getPumps() missing 1 required positional argument: 'self'Why doesn't__init__seem to be called, and w"
+      ],
+      "error_type": "typeerror",
+      "title": "Why do I get \"TypeError: Missing 1 required positional argument: 'self'\"?",
+      "ground_truth": [
+        "so-17534345"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-006",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"mountain.py\", line 28, in ?\n    from toolkit.interface import interface\nImportError: No module named toolkit.interfaceI have already checkedsys.pathand there I have the directory/site-packages. Also, I have the file__init__.py.binin the toolkit folder to indicate to Python that this is a package. I also have a__init__.py.binin the examples directory.I do not know why Python cannot find the file when it is insys.path.  Any ideas?  Can it be a permissions problem?  Do I need some execution permission?",
+      "all_variations": [
+        "importerror 怎么办",
+        "Python error \"ImportError: No module named\"",
+        "No module named toolkit.interfaceI have already checkedsys.pathand there I have the directory/site-p"
+      ],
+      "error_type": "importerror",
+      "title": "Python error \"ImportError: No module named\"",
+      "ground_truth": [
+        "so-338768"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-007",
+      "query": "attributeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "AttributeError: 'NoneType' object has no attribute 'something'What general scenarios might cause such anAttributeError, and how can I identify the problem?This is a special case ofAttributeErrors. It merits separate treatment because there are a lot of ways to get an unexpectedNonevalue from the code, so it's typically a different problem; for otherAttributeErrors, the problem might just as easily be the attribute name.See alsoWhat is a None value?andWhat is a 'NoneType' object?for an understanding ofNoneand its type,NoneType.",
+      "all_variations": [
+        "attributeerror 怎么办",
+        "Why do I get AttributeError: 'NoneType' object has",
+        "'NoneType' object has no attribute 'something'What general scenarios might cause such anAttributeErr"
+      ],
+      "error_type": "attributeerror",
+      "title": "Why do I get AttributeError: 'NoneType' object has no attribute 'something'?",
+      "ground_truth": [
+        "so-8949252"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-008",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: Horizontol_drawbox() got multiple values for argument 'fillBox'What does this mean, and how can I fix the problem?",
+      "all_variations": [
+        "typeerror 怎么办",
+        "TypeError: got multiple values for argument",
+        "Horizontol_drawbox() got multiple values for argument 'fillBox'What does this mean, and how can I fi"
+      ],
+      "error_type": "typeerror",
+      "title": "TypeError: got multiple values for argument",
+      "ground_truth": [
+        "so-21764770"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-009",
+      "query": "valueerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ValueError: setting an array element with a sequence.",
+      "all_variations": [
+        "valueerror 怎么办",
+        "ValueError: setting an array element with a sequen",
+        "setting an array element with a sequence."
+      ],
+      "error_type": "valueerror",
+      "title": "ValueError: setting an array element with a sequence",
+      "ground_truth": [
+        "so-4674473"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-010",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: string indices must be integersWhat am I missing here? Which are the \"string indices\"?Here's a bit of my JSON content:{\"issues\": [{\"gravatar_id\": \"44230311a3dcd684b6c5f81bf2ec9f60\", \"position\": 2.0, \"number\": 263...",
+      "all_variations": [
+        "typeerror 怎么办",
+        "Why am I seeing \"TypeError: string indices must be",
+        "string indices must be integersWhat am I missing here? Which are the \"string indices\"?Here's a bit o"
+      ],
+      "error_type": "typeerror",
+      "title": "Why am I seeing \"TypeError: string indices must be integers\"?",
+      "ground_truth": [
+        "so-6077675"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-011",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: why?>>> from  HTMLParser import HTMLParser",
+      "all_variations": [
+        "typeerror 怎么办",
+        "super() raises \"TypeError: must be type, not class",
+        "why?>>> from  HTMLParser import HTMLParser"
+      ],
+      "error_type": "typeerror",
+      "title": "super() raises \"TypeError: must be type, not classobj\" for new-style class",
+      "ground_truth": [
+        "so-9698614"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-012",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "AttributeError: 'dict_keys' object has no attribute 'index'I want to getfoo.same with:keys[0]",
+      "all_variations": [
+        "typeerror 怎么办",
+        "Accessing dict_keys element by index in Python3",
+        "'dict_keys' object has no attribute 'index'I want to getfoo.same with:keys[0]"
+      ],
+      "error_type": "typeerror",
+      "title": "Accessing dict_keys element by index in Python3",
+      "ground_truth": [
+        "so-18552001"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-013",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "AttributeError: 'dict_keys' object has no attribute 'index'I want to getfoo.same with:keys[0]",
+      "all_variations": [
+        "typeerror 怎么办",
+        "Accessing dict_keys element by index in Python3",
+        "'dict_keys' object has no attribute 'index'I want to getfoo.same with:keys[0]"
+      ],
+      "error_type": "typeerror",
+      "title": "Accessing dict_keys element by index in Python3",
+      "ground_truth": [
+        "so-18552001"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-014",
+      "query": "attributeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ImportError: Cannot import name X\" or \"AttributeError: ... (most likely due to a circular import)\"?(16 answers)Closed3 years ago.I have two python modules:a.pyimport b",
+      "all_variations": [
+        "attributeerror 怎么办",
+        "AttributeError: 'module' object has no attribute [",
+        "... (most likely due to a circular import)\"?(16 answers)Closed3 years ago.I have two python modules:"
+      ],
+      "error_type": "attributeerror",
+      "title": "AttributeError: 'module' object has no attribute [duplicate]",
+      "ground_truth": [
+        "so-1250103"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-015",
+      "query": "nameerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"<pyshell#25>\", line 1, in <module>\n    bidi_text = get_display(reshaped_text)\n  File \"C:\\Python33\\lib\\site-packages\\python_bidi-0.3.4-py3.3.egg\\bidi\\algorithm.py\",   line 602, in get_display\n    if isinstance(unicode_or_str, unicode):\nNameError: global name 'unicode' is not definedHow should I re-write this part of the code so it works in Python3?\nAlso if anyone have used bidi package with Python 3 please let me know if they have found similar problems or not. I appreciate your help.",
+      "all_variations": [
+        "nameerror 怎么办",
+        "NameError: global name 'unicode' is not defined",
+        "global name 'unicode' is not definedHow should I re-write this part of the code so it works in Pytho"
+      ],
+      "error_type": "nameerror",
+      "title": "NameError: global name 'unicode' is not defined - in Python 3",
+      "ground_truth": [
+        "so-19877306"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-016",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: 'NoneType' object is not iterablemean? Example:for row in data:  # Gives TypeError!",
+      "all_variations": [
+        "typeerror 怎么办",
+        "TypeError: 'NoneType' object is not iterable",
+        "'NoneType' object is not iterablemean? Example:for row in data:  # Gives TypeError!"
+      ],
+      "error_type": "typeerror",
+      "title": "TypeError: 'NoneType' object is not iterable",
+      "ground_truth": [
+        "so-3887381"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-017",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ImportError: No module named ..., however, if I launch ipython and import the same module in the same way through the interpreter, the module is accepted.What's going on, and how can I fix it?  I've tried to understand how python uses PYTHONPATH but I'm thoroughly confused.  Any help would greatly appreciated.",
+      "all_variations": [
+        "importerror 怎么办",
+        "\"ImportError: No module named\" when trying to run",
+        "No module named ..., however, if I launch ipython and import the same module in the same way through"
+      ],
+      "error_type": "importerror",
+      "title": "\"ImportError: No module named\" when trying to run Python script",
+      "ground_truth": [
+        "so-15514593"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-018",
+      "query": "valueerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ValueError: Input contains NaN, infinity or a value too large for dtype('float64').I have runnp.isnan(mat.any()) #and gets False",
+      "all_variations": [
+        "valueerror 怎么办",
+        "sklearn error ValueError: Input contains NaN, infi",
+        "Input contains NaN, infinity or a value too large for dtype('float64').I have runnp.isnan(mat.any())"
+      ],
+      "error_type": "valueerror",
+      "title": "sklearn error ValueError: Input contains NaN, infinity or a value too large for dtype('float64')",
+      "ground_truth": [
+        "so-31323499"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-019",
+      "query": "nameerror 怎么办",
+      "query_style": "casual",
+      "original_query": "NameError: name 'include' is not definedWhere can I importincludefrom?",
+      "all_variations": [
+        "nameerror 怎么办",
+        "Python NameError: name 'include' is not defined [c",
+        "name 'include' is not definedWhere can I importincludefrom?"
+      ],
+      "error_type": "nameerror",
+      "title": "Python NameError: name 'include' is not defined [closed]",
+      "ground_truth": [
+        "so-34471102"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-020",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\nImportError: No module named mechanizeThe installations I ran previously reported that they had completed successfully, so I expect the import to work.What could be causing this error?See also:pip installs packages successfully, but executables are not found from the command linefor the case where the code can be imported, but executables (or wrapper scripts) included with the package can't be found at the command line. Either way this is fundamentally an environment setup issue.",
+      "all_variations": [
+        "importerror 怎么办",
+        "Unable to import a module that is definitely insta",
+        "No module named mechanizeThe installations I ran previously reported that they had completed success"
+      ],
+      "error_type": "importerror",
+      "title": "Unable to import a module that is definitely installed",
+      "ground_truth": [
+        "so-14295680"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-021",
+      "query": "nameerror 怎么办",
+      "query_style": "casual",
+      "original_query": "NameError.def totalFruit(self, tree: List[int]) -> int:",
+      "all_variations": [
+        "nameerror 怎么办",
+        "NameError: name 'List' is not defined",
+        "nameerror 怎么fix"
+      ],
+      "error_type": "nameerror",
+      "title": "NameError: name 'List' is not defined",
+      "ground_truth": [
+        "so-57505071"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-022",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: not enough arguments for format stringIts 7 for 7 though?",
+      "all_variations": [
+        "typeerror 怎么办",
+        "Python TypeError: not enough arguments for format",
+        "not enough arguments for format stringIts 7 for 7 though?"
+      ],
+      "error_type": "typeerror",
+      "title": "Python TypeError: not enough arguments for format string",
+      "ground_truth": [
+        "so-11146190"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-023",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ImportError: libSM.so.6: cannot open shared object file: No such file or directoryNot sure how to fix this - trying to play around with Google's newColaboratorytool. Notebook is here:https://drive.google.com/file/d/0B7-sJqBiyjCcRmFkMzl6cy1iN0k/view?usp=sharing",
+      "all_variations": [
+        "importerror 怎么办",
+        "ImportError: libSM.so.6: cannot open shared object",
+        "libSM.so.6: cannot open shared object file: No such file or directoryNot sure how to fix this - tryi"
+      ],
+      "error_type": "importerror",
+      "title": "ImportError: libSM.so.6: cannot open shared object file: No such file or directory",
+      "ground_truth": [
+        "so-47113029"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-024",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "AttributeError: 'module' object has no attribute 'extras'Maybe something is dorked in my installation but I have no clue where to start looking. I made some updates with pip, but as far as I know no dependencies ofpsycopg2.",
+      "all_variations": [
+        "importerror 怎么办",
+        "psycopg2: AttributeError: 'module' object has no a",
+        "'module' object has no attribute 'extras'Maybe something is dorked in my installation but I have no"
+      ],
+      "error_type": "importerror",
+      "title": "psycopg2: AttributeError: 'module' object has no attribute 'extras'",
+      "ground_truth": [
+        "so-30940167"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-025",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"openerp-client.py\", line 105, in <module>\n  File \"modules\\__init__.pyo\", line 23, in <module>\n  File \"modules\\gui\\__init__.pyo\", line 22, in <module>\n  File \"modules\\gui\\main.pyo\", line 33, in <module>\n  File \"rpc.pyo\", line 29, in <module>\n  File \"common\\__init__.pyo\", line 22, in <module>\n  File \"common\\common.pyo\", line 26, in <module>\n  File \"tools\\__init__.pyo\", line 28, in <module>\n  File \"dateutil\\relativedelta.pyo\", line 12, in <module>\nImportError: No module named sixCould someone guide what's wrong and how it can be fixed???",
+      "all_variations": [
+        "importerror 怎么办",
+        "ImportError: No module named six",
+        "No module named sixCould someone guide what's wrong and how it can be fixed???"
+      ],
+      "error_type": "importerror",
+      "title": "ImportError: No module named six",
+      "ground_truth": [
+        "so-13967428"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-026",
+      "query": "importerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n File \"D:\\Python\\lib\\runpy.py\", line 162, in _run_module_as_main\n  \"__main__\", fname, loader, pkg_name)\n File \"D:\\Python\\lib\\runpy.py\", line 72, in _run_code \n  exec code in run_globals\n File \"D:\\Python\\Scripts\\pip.exe\\__main__.py\", line 5, in <module>\nImportError: cannot import name main",
+      "all_variations": [
+        "importerror 怎么办",
+        "ImportError: cannot import name main when running",
+        "cannot import name main"
+      ],
+      "error_type": "importerror",
+      "title": "ImportError: cannot import name main when running pip --version command in windows7 32 bit",
+      "ground_truth": [
+        "so-28210269"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-027",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: 'range' object is not an iteratorWhat am I missing here?  I was expecting this to print 0, and to advance to the next value inmyrange.  I'm new to Python, so please accept my apologies for the rather basic question, but I couldn't find a good explanation anywhere else.",
+      "all_variations": [
+        "typeerror 怎么办",
+        "If range() is a generator in Python 3.3, why can I",
+        "'range' object is not an iteratorWhat am I missing here?  I was expecting this to print 0, and to ad"
+      ],
+      "error_type": "typeerror",
+      "title": "If range() is a generator in Python 3.3, why can I not call next() on a range?",
+      "ground_truth": [
+        "so-13092267"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-028",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "Traceback (most recent call last):\n  File \"C:/Users/xxxxx/PycharmProjects/tronc/tronc2.py\", line 48, in <module>\n    clean_Plan_responses.append(fix_Plan(train[\"Plan\"][i]))\n  File \"C:/Users/xxxxx/PycharmProjects/tronc/tronc2.py\", line 22, in fix_Plan\n    location)  # Column and row to search\n  File \"C:\\Users\\xxxxx\\AppData\\Local\\Programs\\Python\\Python36\\lib\\re.py\", line 191, in sub\n    return _compile(pattern, flags).sub(repl, string, count)\nTypeError: expected string or bytes-like object",
+      "all_variations": [
+        "typeerror 怎么办",
+        "re.sub erroring with \"Expected string or bytes",
+        "expected string or bytes-like object"
+      ],
+      "error_type": "typeerror",
+      "title": "re.sub erroring with \"Expected string or bytes-like object\"",
+      "ground_truth": [
+        "so-43727583"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-029",
+      "query": "valueerror 怎么办",
+      "query_style": "casual",
+      "original_query": "ValueError appears.So, python 2 pickle can not load the file dumped by python 3 pickle?If I want it? How to do?",
+      "all_variations": [
+        "valueerror 怎么办",
+        "ValueError: unsupported pickle protocol: 3, python",
+        "valueerror 怎么fix"
+      ],
+      "error_type": "valueerror",
+      "title": "ValueError: unsupported pickle protocol: 3, python2 pickle can not load the file dumped by python 3 pickle?",
+      "ground_truth": [
+        "so-25843698"
+      ],
+      "difficulty": "hard"
+    },
+    {
+      "query_id": "test-030",
+      "query": "typeerror 怎么办",
+      "query_style": "casual",
+      "original_query": "TypeError: unhashable type: 'list'. I know that keys in a dictionary can't be lists but I'm trying to make my value into a list not the key. I'm wondering if I made a mistake somewhere.",
+      "all_variations": [
+        "typeerror 怎么办",
+        "How to overcome TypeError: unhashable type: 'list'",
+        "unhashable type: 'list'. I know that keys in a dictionary can't be lists but I'm trying to make my v"
+      ],
+      "error_type": "typeerror",
+      "title": "How to overcome TypeError: unhashable type: 'list' [duplicate]",
+      "ground_truth": [
+        "so-13675296"
+      ],
+      "difficulty": "hard"
+    }
+  ]
+}

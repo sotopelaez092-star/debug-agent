@@ -22,6 +22,7 @@ class RerankerRetriever(BaseRetriever):
     def __init__(
         self,
         collection,
+        embedding_function: Any, 
         reranker_model_name: str = "BAAI/bge-reranker-base",
         min_similarity: float = 0.5,
         recall_factor: int = 4
@@ -43,7 +44,12 @@ class RerankerRetriever(BaseRetriever):
             raise ValueError("reranker_model_name必须是非空字符串")
         
         # 2. 调用父类初始化
-        super().__init__(collection, min_similarity, recall_factor)
+        super().__init__(
+            collection=collection,
+            embedding_function=embedding_function,  # ← 加上这个！
+            min_similarity=min_similarity,
+            recall_factor=recall_factor
+        )
         
         # 3. 加载Reranker模型
         logger.info(f"加载Reranker模型: {reranker_model_name}")
@@ -92,15 +98,11 @@ class RerankerRetriever(BaseRetriever):
     ) -> List[Dict[str, Any]]:
         """
         使用Reranker重新排序
-        
-        Args:
-            query: 查询文本
-            candidates: 候选文档列表
-            top_k: 返回数量
-            
-        Returns:
-            重新排序后的Top-K结果
+
         """
+        logger.info(f"🔍 Query示例: {query[:100]}")
+        logger.info(f"🔍 第一个文档示例: {candidates[0]['content'][:200]}")
+        logger.info(f"🔍 文档平均长度: {sum(len(doc['content']) for doc in candidates) / len(candidates):.0f} 字符") 
         # 1. 边界检查
         if not candidates:
             logger.warning("没有候选文档需要rerank")
@@ -108,12 +110,22 @@ class RerankerRetriever(BaseRetriever):
         
         logger.info(f"开始Rerank，候选数量：{len(candidates)}")
         
+        # 🔍 调试：打印召回的候选文档信息
+        logger.info(f"召回候选的相似度范围: {candidates[0]['similarity']:.4f} ~ {candidates[-1]['similarity']:.4f}")
+        
         # 2. 准备query-document pairs
         pairs = [[query, doc['content']] for doc in candidates]
         
         # 3. 调用reranker打分
         try:
+            import time
+            start_time = time.time()
+            
             scores = self.reranker.compute_score(pairs)
+            
+            rerank_time = time.time() - start_time
+            logger.info(f"⏱️ Rerank耗时: {rerank_time:.3f}秒 ({len(candidates)}个文档)")
+            
         except Exception as e:
             logger.error(f"Rerank失败：{e}", exc_info=True)
             logger.warning("返回原始排序")
@@ -122,6 +134,9 @@ class RerankerRetriever(BaseRetriever):
         # 4. 如果scores是单个数字（只有一个候选），转成列表
         if not isinstance(scores, list):
             scores = [scores]
+        
+        # 🔍 调试：打印rerank分数
+        logger.info(f"Rerank分数范围: {min(scores):.4f} ~ {max(scores):.4f}")
         
         # 5. 将分数添加到候选文档中
         for doc, score in zip(candidates, scores):
@@ -134,6 +149,11 @@ class RerankerRetriever(BaseRetriever):
             reverse=True
         )
         
+        # 🔍 调试：检查排序变化
+        logger.info(f"排序变化示例:")
+        logger.info(f"  原始Top3: {[c['id'] for c in candidates[:3]]}")
+        logger.info(f"  Rerank Top3: {[r['id'] for r in reranked[:3]]}")
+        
         # 7. 更新rank
         final_results = []
         for rank, doc in enumerate(reranked[:top_k], start=1):
@@ -145,4 +165,4 @@ class RerankerRetriever(BaseRetriever):
             f"最高分：{final_results[0]['rerank_score']:.3f}"
         )
         
-        return final_results
+        return final_results 

@@ -1,0 +1,286 @@
+{
+  "summary": {
+    "total": 30,
+    "baseline_avg": 0.6354365079365079,
+    "reranker_avg": 0.3746825396825397,
+    "improvement": -0.2607539682539682,
+    "improvement_pct": -41.03540873040654,
+    "better_count": 4,
+    "same_count": 3,
+    "worse_count": 23
+  },
+  "baseline_results": [
+    {
+      "query_id": "test-001",
+      "recall_5": 0.375
+    },
+    {
+      "query_id": "test-002",
+      "recall_5": 0.5
+    },
+    {
+      "query_id": "test-003",
+      "recall_5": 0.6666666666666666
+    },
+    {
+      "query_id": "test-004",
+      "recall_5": 0.5
+    },
+    {
+      "query_id": "test-005",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-006",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-007",
+      "recall_5": 0.42857142857142855
+    },
+    {
+      "query_id": "test-008",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-009",
+      "recall_5": 0.6666666666666666
+    },
+    {
+      "query_id": "test-010",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-011",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-012",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-013",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-014",
+      "recall_5": 0.42857142857142855
+    },
+    {
+      "query_id": "test-015",
+      "recall_5": 0.5714285714285714
+    },
+    {
+      "query_id": "test-016",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-017",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-018",
+      "recall_5": 0.6666666666666666
+    },
+    {
+      "query_id": "test-019",
+      "recall_5": 0.5714285714285714
+    },
+    {
+      "query_id": "test-020",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-021",
+      "recall_5": 0.5714285714285714
+    },
+    {
+      "query_id": "test-022",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-023",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-024",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-025",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-026",
+      "recall_5": 0.6
+    },
+    {
+      "query_id": "test-027",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-028",
+      "recall_5": 0.75
+    },
+    {
+      "query_id": "test-029",
+      "recall_5": 0.6666666666666666
+    },
+    {
+      "query_id": "test-030",
+      "recall_5": 0.75
+    }
+  ],
+  "reranker_results": [
+    {
+      "query_id": "test-001",
+      "recall_5": 0.5,
+      "improvement": 0.125
+    },
+    {
+      "query_id": "test-002",
+      "recall_5": 0.5,
+      "improvement": 0.0
+    },
+    {
+      "query_id": "test-003",
+      "recall_5": 0.3333333333333333,
+      "improvement": -0.3333333333333333
+    },
+    {
+      "query_id": "test-004",
+      "recall_5": 0.5,
+      "improvement": 0.0
+    },
+    {
+      "query_id": "test-005",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-006",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-007",
+      "recall_5": 0.2857142857142857,
+      "improvement": -0.14285714285714285
+    },
+    {
+      "query_id": "test-008",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-009",
+      "recall_5": 0.3333333333333333,
+      "improvement": -0.3333333333333333
+    },
+    {
+      "query_id": "test-010",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-011",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-012",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-013",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-014",
+      "recall_5": 0.42857142857142855,
+      "improvement": 0.0
+    },
+    {
+      "query_id": "test-015",
+      "recall_5": 0.7142857142857143,
+      "improvement": 0.1428571428571429
+    },
+    {
+      "query_id": "test-016",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-017",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-018",
+      "recall_5": 0.3333333333333333,
+      "improvement": -0.3333333333333333
+    },
+    {
+      "query_id": "test-019",
+      "recall_5": 0.7142857142857143,
+      "improvement": 0.1428571428571429
+    },
+    {
+      "query_id": "test-020",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-021",
+      "recall_5": 0.7142857142857143,
+      "improvement": 0.1428571428571429
+    },
+    {
+      "query_id": "test-022",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-023",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-024",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-025",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-026",
+      "recall_5": 0.4,
+      "improvement": -0.19999999999999996
+    },
+    {
+      "query_id": "test-027",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-028",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    },
+    {
+      "query_id": "test-029",
+      "recall_5": 0.3333333333333333,
+      "improvement": -0.3333333333333333
+    },
+    {
+      "query_id": "test-030",
+      "recall_5": 0.25,
+      "improvement": -0.5
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "query": "AttributeError: 'NoneType' object has no attribute",
+  "base_retrieval": {
+    "time_ms": 25.0,
+    "results": [
+      {
+        "rank": 1,
+        "id": "so-8949252_chunk_0",
+        "similarity": 0.9413098058846339,
+        "content_preview": "Why do I get AttributeError: 'NoneType' object has no attribute 'something'?"
+      },
+      {
+        "rank": 2,
+        "id": "so-3887381_chunk_0",
+        "similarity": 0.9148314699500789,
+        "content_preview": "TypeError: 'NoneType' object is not iterable"
+      },
+      {
+        "rank": 3,
+        "id": "so-11685936_chunk_0",
+        "similarity": 0.8972363902671882,
+        "content_preview": "Why am I getting AttributeError: Object has no attribute? [closed]"
+      },
+      {
+        "rank": 4,
+        "id": "so-8949252_chunk_1",
+        "similarity": 0.8922254273687225,
+        "content_preview": "I got this error:AttributeError: 'NoneType' object has no attribute 'something'What general scenarios might cause such anAttributeError, and how can I identify the problem?This is a special case ofAtt"
+      },
+      {
+        "rank": 5,
+        "id": "so-1250103_chunk_0",
+        "similarity": 0.8579598440892713,
+        "content_preview": "AttributeError: 'module' object has no attribute [duplicate]"
+      },
+      {
+        "rank": 6,
+        "id": "so-3887381_chunk_1",
+        "similarity": 0.8471432346912529,
+        "content_preview": "What doesTypeError: 'NoneType' object is not iterablemean? Example:for row in data:  # Gives TypeError!\n    print(row)"
+      },
+      {
+        "rank": 7,
+        "id": "so-16589208_chunk_0",
+        "similarity": 0.836299840812472,
+        "content_preview": "AttributeError while querying: Neither 'InstrumentedAttribute' object nor 'Comparator' has an attribute"
+      },
+      {
+        "rank": 8,
+        "id": "so-19392226_chunk_0",
+        "similarity": 0.8295330328587168,
+        "content_preview": "AttributeError: 'DataFrame' object has no attribute [duplicate]"
+      },
+      {
+        "rank": 9,
+        "id": "so-8696322_chunk_0",
+        "similarity": 0.8283562078393374,
+        "content_preview": "Why does this AttributeError in python occur?"
+      },
+      {
+        "rank": 10,
+        "id": "so-68625748_chunk_0",
+        "similarity": 0.8192468426783582,
+        "content_preview": "AttributeError: Can't get attribute 'new_block' on <module 'pandas.core.internals.blocks'>"
+      }
+    ]
+  },
+  "reranked": {
+    "time_ms": 11134.24277305603,
+    "results": [
+      {
+        "rank": 1,
+        "id": "so-8949252_chunk_1",
+        "rerank_score": 6.08203125,
+        "similarity": 0.8922254273687225,
+        "content_preview": "I got this error:AttributeError: 'NoneType' object has no attribute 'something'What general scenarios might cause such anAttributeError, and how can I identify the problem?This is a special case ofAtt"
+      },
+      {
+        "rank": 2,
+        "id": "so-8949252_chunk_0",
+        "rerank_score": 5.734375,
+        "similarity": 0.9413098058846339,
+        "content_preview": "Why do I get AttributeError: 'NoneType' object has no attribute 'something'?"
+      },
+      {
+        "rank": 3,
+        "id": "so-3887381_chunk_0",
+        "rerank_score": 4.66796875,
+        "similarity": 0.9148314699500789,
+        "content_preview": "TypeError: 'NoneType' object is not iterable"
+      },
+      {
+        "rank": 4,
+        "id": "so-11685936_chunk_0",
+        "rerank_score": 3.88671875,
+        "similarity": 0.8972363902671882,
+        "content_preview": "Why am I getting AttributeError: Object has no attribute? [closed]"
+      },
+      {
+        "rank": 5,
+        "id": "so-11685936_chunk_1",
+        "rerank_score": 3.076171875,
+        "similarity": 0.7833776472741055,
+        "content_preview": "Closed.This question isnot reproducible or was caused by typos. It is not currently accepting answers.This question was caused by a typo or a problem that can no longer be reproduced. While similar qu"
+      }
+    ]
+  }
+}
