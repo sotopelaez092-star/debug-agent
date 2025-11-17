@@ -54,7 +54,7 @@ class BaseRetriever:
         query: str,
         top_k: int = 5
     ) -> List[Dict[str, Any]]:
-        f"""
+        """
         检索相关文档
 
         Args:
