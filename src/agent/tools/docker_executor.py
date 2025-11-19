@@ -22,7 +22,7 @@ class DockerExecutor:
     def __init__(
         self,
         image: str = "python:3.11-alpine",
-        timeout: int = 10,
+        timeout: int = 30,
         memory_limit: str = "256m"
         ):
         """

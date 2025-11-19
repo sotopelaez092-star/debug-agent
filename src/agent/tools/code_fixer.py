@@ -5,7 +5,7 @@ CodeFixer - 代码修复器
 
 import os 
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -74,166 +74,163 @@ class CodeFixer:
         self,
         buggy_code: str,
         error_message: str,
-        context: Optional[str] = None,
-        solutions: Optional[List[Dict]] = None
-    ) -> Dict[str, str]:
+        context: Optional[Dict[str, Any]] = None,
+        rag_solutions: Optional[List[Dict]] = None
+    ) -> Dict[str, Any]:
         """
-        修复错误代码
-
+        使用LLM生成代码修复
+        
         Args:
-            buggy_code: 包含错误的代码字符串
-            error_message: 错误信息字符串
-            context: 可选的上下文信息（例如函数定义、类定义等）
-            solutions: 可选的修复方案列表，每个方案包含"code"和"explanation"键
-
+            buggy_code: 包含错误的代码
+            error_message: 错误信息
+            context: ContextManager提供的上下文（包含相关符号定义和import建议）
+            rag_solutions: RAG检索的解决方案列表
+            
         Returns:
-            {
-                "fixed_code": "修复后的代码",
-                "explanation": "恢复说明",
-                "changes": ["改动1", "改动2"]
-            }
-
+            Dict包含:
+                - fixed_code: 修复后的代码
+                - explanation: 修复说明
+                - changes: 变更列表
+                
         Raises:
-            ValueError: 当输入为空时
+            ValueError: 如果输入参数无效
+            RuntimeError: 如果LLM调用失败
         """
         # 1. 输入验证
         if not buggy_code or not isinstance(buggy_code, str):
             raise ValueError("buggy_code必须是非空字符串")
-
+        
         if not error_message or not isinstance(error_message, str):
             raise ValueError("error_message必须是非空字符串")
-
-        # 限制代码长度（防止token超限）
-        if len(buggy_code) > 10000:
-            logger.warning("buggy_code长度超过10000字符，已截断")
-            buggy_code = buggy_code[:10000]
-
-        logger.info(f"修复错误代码，错误信息：{error_message}")
-
-        # 2. 构造Prompt
-        # 2.1 处理solutions
-        solutions_text = ""
-        if solutions and len(solutions) > 0:
-            solutions_text = "\n[参考解决方案]\n"
-            for i, sol in enumerate(solutions[:3], 1):
-                solutions_text += f"\n方案{i}:\n{sol.get('content', '')[:500]}\n"
-        # 2.2 构造完整Prompt
-        prompt = f"""你是一位经验丰富的Python专家
-
-    【任务】
-    分析以下代码的错误，并提供详细的修复方案。
-
-    【错误代码】
-    ```python
-    {buggy_code}
-    ```
-
-    【错误信息】
-    {error_message}
-
-    {solutions_text}
-
-    【要求】
-    1. 找出错误的根本原因
-    2. 提供修复后的完整代码
-    3. 详细解释为什么会出错
-    4. 说明你做了哪些修改
-
-    【输出格式】
-    请严格按照以下格式输出：
-
-    ===FIXED_CODE===
-    （修复后的完整代码，不要包含```python标记）
-    ===END_CODE===
-
-    ===EXPLANATION===
-    （详细解释：错误原因 + 修复方案）
-    ===END_EXPLANATION===
-
-    ===CHANGES===
-    - 改动1
-    - 改动2
-    ===END_CHANGES===
-        """
-
-        logger.debug(f"Prompt构造完成，长度: {len(prompt)}")
-        # 3. 调用API
+        
+        logger.info(f"开始生成修复代码，错误信息: {error_message[:100]}...")
+        
+        # 2. 构建Prompt
+        prompt = self._build_prompt(buggy_code, error_message, context, rag_solutions)
+        
+        # 3. 调用LLM
         try:
-            logger.info("正在调用DeepSeek API...")
-
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                {
-                    "role": "system",
-                    "content": "你是一位经验丰富的Python代码修复专家。"
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
+                    {
+                        "role": "system",
+                        "content": "你是一个专业的Python代码调试专家。"
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
                 ],
-                temperature=self.temperature,
-                max_tokens=self.max_tokens,
-                timeout=30.0
+                temperature=0.3,
+                max_tokens=2000
             )
-
-            # 提取LLM返回的文本
-            llm_response = response.choices[0].message.content
-
-            logger.info(f"LLM返回文本长度：{len(llm_response)}")
-            logger.debug(f"LLM返回原始文本：{llm_response[:200]}...")
-
-        except TimeoutError as e:
-            logger.error(f"API调用超时: {e}")
-            raise RuntimeError("DeepSeek API调用超时，请稍后重试")
-
-        except Exception as e:
-            logger.error(f"API调用失败: {e}", exc_info=True)
-            raise RuntimeError(f"DeepSeek API调用失败: {str(e)}")
-
-        # 4. 解析结果
-        try:
-            # 4.1 提取修复后的代码
-            fixed_code = self._extract_section(
-                llm_response,
-                "===FIXED_CODE===",
-                "===END_CODE==="
-            )
-            # 4.2 提取解释
-            explanation = self._extract_section(
-                llm_response,
-                "===EXPLANATION===",
-                "===END_EXPLANATION==="
-            )
-            # 4.3 提取改动列表
-            changes_text = self._extract_section(
-                llm_response,
-                "===CHANGES===",
-                "===END_CHANGES==="
-            )
-            # 解析changes为列表（按行分割，去除空行）
-            changes = [
-                line.strip("- ")
-                for line in changes_text.splitlines()
-                if line.strip("- ")
-            ]
             
-            logger.info(f"解析成功 - 修复代码长度: {len(fixed_code)}, 改动数: {len(changes)}")
+            response_text = response.choices[0].message.content
+            logger.info("LLM响应成功")
 
         except Exception as e:
-            logger.error(f"解析LLM返回结果失败: {e}", exc_info=True)
-            return {
-                "fixed_code": llm_response,
-                "explanation": "解析失败，以下是LLM原始返回",
-                "changes": ["解析失败"]
-            }
-        # 5. 返回
-        return {
-            "fixed_code": fixed_code.strip(),
-            "explanation": explanation.strip(),
-            "changes": changes
-        }
+            logger.error(f"LLM调用失败: {e}", exc_info=True)
+            raise RuntimeError(f"LLM调用失败: {e}")
+        
+        # 4. 解析响应
+        try:
+            result = self._parse_response(response_text)
+            logger.info("修复代码生成成功")
+            return result
+            
+        except Exception as e:
+            logger.error(f"解析LLM响应失败: {e}", exc_info=True)
+            raise RuntimeError(f"解析LLM响应失败: {e}")
+
+    def _build_prompt(
+        self,
+        buggy_code: str,
+        error_message: str,
+        context: Optional[Dict[str, Any]],
+        rag_solutions: Optional[List[Dict]]
+    ) -> str:
+        """
+        构建完整的修复Prompt
+        
+        Args:
+            buggy_code: 有错误的代码
+            error_message: 错误信息
+            context: 上下文信息
+            rag_solutions: RAG解决方案
+            
+        Returns:
+            完整的Prompt字符串
+        """
+        prompt_parts = []
+        
+        # 1. 错误代码
+        prompt_parts.append("# 当前代码（有错误）")
+        prompt_parts.append("```python")
+        prompt_parts.append(buggy_code)
+        prompt_parts.append("```")
+        prompt_parts.append("")
+        
+        # 2. 错误信息
+        prompt_parts.append("# 错误信息")
+        prompt_parts.append(error_message)
+        prompt_parts.append("")
+        
+        # 3. 上下文信息（如果有）
+        if context and context.get("related_symbols"):
+            prompt_parts.append("# 相关符号定义（项目中找到的）")
+            
+            for symbol_name, symbol_info in context["related_symbols"].items():
+                prompt_parts.append(f"\n## {symbol_name} (来自 {symbol_info['file']})")
+                prompt_parts.append("```python")
+                prompt_parts.append(symbol_info["definition"])
+                prompt_parts.append("```")
+            
+            prompt_parts.append("")
+        
+        # 4. Import建议（如果有）
+        if context and context.get("import_suggestions"):
+            prompt_parts.append("# Import建议")
+            for suggestion in context["import_suggestions"]:
+                prompt_parts.append(f"- {suggestion}")
+            prompt_parts.append("")
+        
+        # 5. RAG解决方案（如果有）
+        if rag_solutions and len(rag_solutions) > 0:
+            prompt_parts.append("# Stack Overflow相关解决方案")
+            
+            for i, solution in enumerate(rag_solutions[:3], 1):  # 只取前3个
+                prompt_parts.append(f"\n## 解决方案 {i}")
+                content = solution.get("content", "")
+                if len(content) > 500:
+                    content = content[:500] + "..."
+                prompt_parts.append(content)
+            
+            prompt_parts.append("")
+        
+        # 6. 任务说明
+        prompt_parts.append("# 请修复代码")
+        prompt_parts.append("""
+    请分析上述错误，并提供修复方案。
+
+    要求：
+    1. 如果有相关符号定义和import建议，优先使用它们
+    2. 提供完整的修复后代码
+    3. 解释修复思路
+    4. 列出具体修改点
+
+    请以JSON格式返回，格式如下：
+    {
+        "fixed_code": "完整的修复后代码",
+        "explanation": "修复思路说明",
+        "changes": ["修改点1", "修改点2", ...]
+    }
+
+    重要：只返回JSON，不要有其他内容。
+    """)
+        
+        return "\n".join(prompt_parts)
+
             
 
     def _extract_section(
@@ -268,6 +265,71 @@ class CodeFixer:
         except Exception as e:
             logger.error(f"提取section失败: {e}")
             return ""
+
+    def _parse_response(self, response_text: str) -> Dict[str, Any]:
+        """
+        解析LLM的JSON响应
+        
+        Args:
+            response_text: LLM返回的文本
+            
+        Returns:
+            包含fixed_code, explanation, changes的字典
+            
+        Raises:
+            RuntimeError: 如果解析失败
+        """
+        import json
+        import re
+        
+        try:
+            # 1. 先尝试提取```json...```代码块
+            json_block_match = re.search(r'```json\s*(.*?)\s*```', response_text, re.DOTALL)
+            if json_block_match:
+                json_str = json_block_match.group(1).strip()
+                logger.info("从```json```代码块中提取JSON")
+                result = json.loads(json_str)
+                
+                # 验证必需字段
+                if 'fixed_code' not in result:
+                    raise ValueError("响应缺少fixed_code字段")
+                
+                # 设置默认值
+                result.setdefault('explanation', '未提供说明')
+                result.setdefault('changes', [])
+                
+                return result
+            
+            # 2. 如果没有代码块，尝试直接解析JSON
+            logger.info("尝试直接解析JSON")
+            result = json.loads(response_text)
+            
+            # 验证必需字段
+            if 'fixed_code' not in result:
+                raise ValueError("响应缺少fixed_code字段")
+            
+            # 设置默认值
+            result.setdefault('explanation', '未提供说明')
+            result.setdefault('changes', [])
+            
+            return result
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON解析失败: {e}")
+            logger.error(f"尝试解析的内容: {response_text[:200]}...")
+            
+            # 3. 最后的fallback：作为纯文本处理
+            logger.warning("无法解析为JSON，作为纯文本处理")
+            return {
+                'fixed_code': response_text,
+                'explanation': '无法解析LLM响应为JSON，返回原始文本',
+                'changes': []
+            }
+        
+        except Exception as e:
+            logger.error(f"解析响应时出错: {e}")
+            raise RuntimeError(f"解析响应失败: {e}")
+
 # 测试代码
 if __name__ == "__main__":
     # 简单测试

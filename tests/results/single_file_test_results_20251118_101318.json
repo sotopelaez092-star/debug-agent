@@ -1,0 +1,202 @@
+[
+  {
+    "test_id": "TC001",
+    "test_name": "NameError - 变量拼写错误",
+    "difficulty": "easy",
+    "success": true,
+    "elapsed_time": 12.36,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "NameError",
+      "error_message": "name 'nme' is not defined",
+      "file": "test.py",
+      "line": 2,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 4, in <module>\n    result = greet(\"Alice\")\n  File \"test.py\", line 2, in greet\n    message = f\"Hello, {nme}!\"\nNameError: name 'nme' is not defined"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:11:00.342818"
+  },
+  {
+    "test_id": "TC002",
+    "test_name": "TypeError - 字符串和数字相加",
+    "difficulty": "easy",
+    "success": true,
+    "elapsed_time": 12.02,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "TypeError",
+      "error_message": "can only concatenate str (not \"int\") to str",
+      "file": "test.py",
+      "line": 2,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 4, in <module>\n    result = calculate_total(\"5\", 10)\n  File \"test.py\", line 2, in calculate_total\n    total = quantity + price\nTypeError: can only concatenate str (not \"int\") to str"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:11:12.358434"
+  },
+  {
+    "test_id": "TC003",
+    "test_name": "AttributeError - NoneType访问属性",
+    "difficulty": "easy",
+    "success": true,
+    "elapsed_time": 13.84,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "AttributeError",
+      "error_message": "'NoneType' object has no attribute 'name'",
+      "file": "test.py",
+      "line": 7,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 9, in <module>\n    print_user_name()\n  File \"test.py\", line 7, in print_user_name\n    print(f\"User name: {user.name}\")\nAttributeError: 'NoneType' object has no attribute 'name'"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:11:26.198700"
+  },
+  {
+    "test_id": "TC004",
+    "test_name": "ZeroDivisionError - 除零错误",
+    "difficulty": "easy",
+    "success": true,
+    "elapsed_time": 12.45,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "ZeroDivisionError",
+      "error_message": "division by zero",
+      "file": "test.py",
+      "line": 4,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 7, in <module>\n    result = calculate_average([])\n  File \"test.py\", line 4, in calculate_average\n    average = total / count\nZeroDivisionError: division by zero"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:11:38.651626"
+  },
+  {
+    "test_id": "TC005",
+    "test_name": "IndexError - 列表索引越界",
+    "difficulty": "easy",
+    "success": true,
+    "elapsed_time": 15.15,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "IndexError",
+      "error_message": "list index out of range",
+      "file": "test.py",
+      "line": 2,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 6, in <module>\n    result = get_first_and_last([])\n  File \"test.py\", line 2, in get_first_and_last\n    first = items[0]\nIndexError: list index out of range"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:11:53.800168"
+  },
+  {
+    "test_id": "TC006",
+    "test_name": "KeyError - 字典key不存在",
+    "difficulty": "medium",
+    "success": true,
+    "elapsed_time": 13.2,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "KeyError",
+      "error_message": "'age'",
+      "file": "test.py",
+      "line": 3,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 8, in <module>\n    info = get_user_info(user)\n  File \"test.py\", line 3, in get_user_info\n    age = user_data['age']\nKeyError: 'age'"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:12:06.997328"
+  },
+  {
+    "test_id": "TC007",
+    "test_name": "ValueError - 类型转换失败",
+    "difficulty": "medium",
+    "success": true,
+    "elapsed_time": 14.8,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "ValueError",
+      "error_message": "invalid literal for int() with base 10: 'twenty'",
+      "file": "test.py",
+      "line": 2,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 9, in <module>\n    result = check_adult(\"twenty\")\n  File \"test.py\", line 6, in check_adult\n    age = parse_age(age_input)\n  File \"test.py\", line 2, in parse_age\n    age = int(age_string)\nValueError: invalid literal for int() with base 10: 'twenty'"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:12:21.799291"
+  },
+  {
+    "test_id": "TC008",
+    "test_name": "ValueError - 空序列的max/min",
+    "difficulty": "medium",
+    "success": true,
+    "elapsed_time": 13.88,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "ValueError",
+      "error_message": "max() arg is an empty sequence",
+      "file": "test.py",
+      "line": 2,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 9, in <module>\n    result_max = find_maximum([])\n  File \"test.py\", line 2, in find_maximum\n    maximum = max(numbers)\nValueError: max() arg is an empty sequence"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:12:35.685224"
+  },
+  {
+    "test_id": "TC009",
+    "test_name": "逻辑错误 - 闰年判断错误",
+    "difficulty": "hard",
+    "success": true,
+    "elapsed_time": 22.43,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "AssertionError",
+      "error_message": "闰年判断逻辑错误",
+      "file": "test.py",
+      "line": 3,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 7, in <module>\n    result = is_leap_year(year)\n  File \"test.py\", line 3, in is_leap_year\n    return year % 4 == 0\nAssertionError: 闰年判断逻辑错误\n预期: is_leap_year(1900) = False\n实际: is_leap_year(1900) = True\n说明: 遗漏了能被100整除但不能被400整除的情况"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:12:58.116449"
+  },
+  {
+    "test_id": "TC010",
+    "test_name": "多重错误 - 文件操作+字典+类型",
+    "difficulty": "hard",
+    "success": true,
+    "elapsed_time": 20.37,
+    "attempts": 0,
+    "original_error": {
+      "error_type": "FileNotFoundError",
+      "error_message": "[Errno 2] No such file or directory: 'user_1.jsn'",
+      "file": "test.py",
+      "line": 5,
+      "full_traceback": "Traceback (most recent call last):\n  File \"test.py\", line 19, in <module>\n    discount = calculate_discount(1)\n  File \"test.py\", line 11, in calculate_discount\n    user = load_user_data(user_id)\n  File \"test.py\", line 5, in load_user_data\n    with open(filename, 'r') as f:\nFileNotFoundError: [Errno 2] No such file or directory: 'user_1.jsn'"
+    },
+    "final_code": "",
+    "explanation": "",
+    "execution_result": {},
+    "all_attempts": [],
+    "timestamp": "2025-11-18T10:13:18.485219"
+  }
+]
