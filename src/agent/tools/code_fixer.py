@@ -176,15 +176,55 @@ class CodeFixer:
         prompt_parts.append(error_message)
         prompt_parts.append("")
         
+        """
         # 3. 上下文信息（如果有）
         if context and context.get("related_symbols"):
             prompt_parts.append("# 相关符号定义（项目中找到的）")
             
+            for symbol_info in context["related_symbols"].items():
+                if isinstance(symbol_info, dict):
+                    symbol_name = symbol_info.get('name', 'unknown')
+                    symbol_file = symbol_info.get('file', 'unknown')
+                    symbol_type = symbol_info.get('type', 'unknown')
+                    
+                    prompt_parts.append(f"\n## {symbol_name} ({symbol_type}, 来自 {symbol_file})")
+                    
+                    # 如果有完整定义，显示出来
+                    if 'definition' in symbol_info and symbol_info['definition']:
+                        prompt_parts.append("```python")
+                        prompt_parts.append(symbol_info["definition"])
+                        prompt_parts.append("```")
+                    else:
+                        prompt_parts.append(f"（位置：第{symbol_info.get('line', '?')}行）")
+                
+                elif isinstance(symbol_info, str):
+                    prompt_parts.append(f"\n## {symbol_info} (unknown)")
+                
+                else:
+                    prompt_parts.append(f"\n## {str(symbol_info)} (unknown)")
+            
+            prompt_parts.append("")
+
+        """
+
+        # 3. 上下文信息（如果有）
+        if context and context.get("related_symbols"):
+            prompt_parts.append("# 相关符号定义（项目中找到的）")
+            
+            # ✅ 修改：正确遍历字典 - .items() 返回 (key, value) 元组
             for symbol_name, symbol_info in context["related_symbols"].items():
-                prompt_parts.append(f"\n## {symbol_name} (来自 {symbol_info['file']})")
-                prompt_parts.append("```python")
-                prompt_parts.append(symbol_info["definition"])
-                prompt_parts.append("```")
+                symbol_type = symbol_info.get('type', 'unknown')
+                symbol_file = symbol_info.get('file', 'unknown')
+                
+                prompt_parts.append(f"\n## {symbol_name} ({symbol_type}, 来自 {symbol_file})")
+                
+                # 如果有完整定义，显示出来
+                if 'definition' in symbol_info and symbol_info['definition']:
+                    prompt_parts.append("```python")
+                    prompt_parts.append(symbol_info["definition"])
+                    prompt_parts.append("```")
+                else:
+                    prompt_parts.append(f"（位置：第{symbol_info.get('line', '?')}行）")
             
             prompt_parts.append("")
         
@@ -199,7 +239,7 @@ class CodeFixer:
         if rag_solutions and len(rag_solutions) > 0:
             prompt_parts.append("# Stack Overflow相关解决方案")
             
-            for i, solution in enumerate(rag_solutions[:3], 1):  # 只取前3个
+            for i, solution in enumerate(rag_solutions[:3], 1):
                 prompt_parts.append(f"\n## 解决方案 {i}")
                 content = solution.get("content", "")
                 if len(content) > 500:
@@ -208,29 +248,36 @@ class CodeFixer:
             
             prompt_parts.append("")
         
-        # 6. 任务说明
+        # 6. ✅ 加强的任务说明
         prompt_parts.append("# 请修复代码")
         prompt_parts.append("""
-    请分析上述错误，并提供修复方案。
+    请仔细分析上述错误，并提供修复方案。
 
-    要求：
-    1. 如果有相关符号定义和import建议，优先使用它们
-    2. 提供完整的修复后代码
-    3. 解释修复思路
-    4. 列出具体修改点
+    ⚠️ 重要检查清单（必须逐项检查）：
+    1. **检查所有未定义的名称**：不只是错误提示的那个，要找出代码中所有未定义的变量、函数、类
+    2. **检查所有需要import的模块**：如果有多个函数/类需要导入，一次性全部导入
+    3. **检查类的方法名**：如果类没有某个方法，查看"相关符号定义"中的类完整定义，找到正确的方法名
+    4. **检查函数参数**：如果函数调用时参数未定义，要先定义参数
+    5. **一次性修复所有问题**：不要只修复第一个错误，要确保代码能完整运行
 
-    请以JSON格式返回，格式如下：
+    修复要求：
+    - 优先使用"相关符号定义"和"Import建议"中提供的信息
+    - 如果类没有某个方法，不要猜测，查看类的完整定义
+    - 提供完整的、可直接运行的修复代码
+    - 清晰解释修复思路
+    - 列出所有具体修改点
+
+    请以JSON格式返回：
     {
-        "fixed_code": "完整的修复后代码",
-        "explanation": "修复思路说明",
-        "changes": ["修改点1", "修改点2", ...]
+        "fixed_code": "完整的修复后代码（确保可以直接运行）",
+        "explanation": "详细说明修复了哪些问题，为什么这样修复",
+        "changes": ["修改1: 具体说明", "修改2: 具体说明", ...]
     }
 
     重要：只返回JSON，不要有其他内容。
     """)
         
         return "\n".join(prompt_parts)
-
             
 
     def _extract_section(

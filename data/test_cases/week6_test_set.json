@@ -1,0 +1,440 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "name": "NameError - 变量拼写错误",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "def greet(name):\n    print(f'Hello, {nme}')\n\ngreet('Tom')"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'nme' is not defined",
+      "expected_fix_type": "拼写纠正",
+      "notes": "nme → name"
+    },
+    {
+      "id": 2,
+      "name": "NameError - 变量未定义",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "x = 10\nprint(y)"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'y' is not defined",
+      "expected_fix_type": "定义变量或纠正名称",
+      "notes": "y未定义"
+    },
+    {
+      "id": 3,
+      "name": "NameError - 函数名拼写错误",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "def calculate(a, b):\n    return a + b\n\nresult = calculte(5, 3)\nprint(result)"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'calculte' is not defined",
+      "expected_fix_type": "函数名纠正",
+      "notes": "calculte → calculate"
+    },
+    {
+      "id": 4,
+      "name": "NameError - 作用域问题",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "def foo():\n    x = 10\n\nfoo()\nprint(x)"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'x' is not defined",
+      "expected_fix_type": "返回变量或全局变量",
+      "notes": "x在函数作用域内"
+    },
+    {
+      "id": 5,
+      "name": "NameError - 使用前未赋值",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "print(total)\ntotal = 0"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'total' is not defined",
+      "expected_fix_type": "调整语句顺序",
+      "notes": "先使用后定义"
+    },
+    {
+      "id": 6,
+      "name": "TypeError - 字符串和整数相加",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "result = '5' + 3\nprint(result)"
+      },
+      "error_file": "main.py",
+      "error_message": "TypeError: can only concatenate str (not 'int') to str",
+      "expected_fix_type": "类型转换",
+      "notes": "需要int() 或 str()"
+    },
+    {
+      "id": 7,
+      "name": "TypeError - 缺少参数",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "def add(a, b):\n    return a + b\n\nresult = add(5)\nprint(result)"
+      },
+      "error_file": "main.py",
+      "error_message": "TypeError: add() missing 1 required positional argument: 'b'",
+      "expected_fix_type": "添加参数",
+      "notes": "缺少参数b"
+    },
+    {
+      "id": 8,
+      "name": "TypeError - 不可哈希类型作为字典key",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "d = {[1, 2]: 'value'}\nprint(d)"
+      },
+      "error_file": "main.py",
+      "error_message": "TypeError: unhashable type: 'list'",
+      "expected_fix_type": "改用tuple",
+      "notes": "list不能作为字典key"
+    },
+    {
+      "id": 9,
+      "name": "AttributeError - None对象",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "user = None\nprint(user.name)"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'NoneType' object has no attribute 'name'",
+      "expected_fix_type": "添加None检查",
+      "notes": "None对象没有属性"
+    },
+    {
+      "id": 10,
+      "name": "AttributeError - 错误的属性名",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "s = 'hello'\nprint(s.uppper())"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'str' object has no attribute 'uppper'",
+      "expected_fix_type": "纠正方法名",
+      "notes": "uppper → upper"
+    },
+    {
+      "id": 11,
+      "name": "AttributeError - 列表没有该方法",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "numbers = [1, 2, 3]\nresult = numbers.add(4)\nprint(result)"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'list' object has no attribute 'add'",
+      "expected_fix_type": "改用append",
+      "notes": "list用append不是add"
+    },
+    {
+      "id": 12,
+      "name": "KeyError - 字典key不存在",
+      "category": "单文件",
+      "error_type": "KeyError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "user = {'name': 'Tom'}\nprint(user['age'])"
+      },
+      "error_file": "main.py",
+      "error_message": "KeyError: 'age'",
+      "expected_fix_type": "使用get()或添加key",
+      "notes": "age键不存在"
+    },
+    {
+      "id": 13,
+      "name": "KeyError - key拼写错误",
+      "category": "单文件",
+      "error_type": "KeyError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "data = {'count': 10}\nprint(data['cont'])"
+      },
+      "error_file": "main.py",
+      "error_message": "KeyError: 'cont'",
+      "expected_fix_type": "纠正key名",
+      "notes": "cont → count"
+    },
+    {
+      "id": 14,
+      "name": "IndexError - 列表索引越界",
+      "category": "单文件",
+      "error_type": "IndexError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "numbers = [1, 2, 3]\nprint(numbers[5])"
+      },
+      "error_file": "main.py",
+      "error_message": "IndexError: list index out of range",
+      "expected_fix_type": "检查索引范围",
+      "notes": "索引5超出范围"
+    },
+    {
+      "id": 15,
+      "name": "IndexError - 空列表访问",
+      "category": "单文件",
+      "error_type": "IndexError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "items = []\nfirst = items[0]\nprint(first)"
+      },
+      "error_file": "main.py",
+      "error_message": "IndexError: list index out of range",
+      "expected_fix_type": "检查列表是否为空",
+      "notes": "空列表无法访问"
+    },
+    {
+      "id": 16,
+      "name": "NameError - 跨文件函数未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "result = calculate(10, 20)\nprint(f'Result: {result}')",
+        "utils.py": "def calculate(a, b):\n    return a + b"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'calculate' is not defined",
+      "expected_fix_type": "添加import",
+      "notes": "需要from utils import calculate"
+    },
+    {
+      "id": 17,
+      "name": "NameError - 跨文件类未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "user = User('Tom')\nprint(user.name)",
+        "models.py": "class User:\n    def __init__(self, name):\n        self.name = name"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'User' is not defined",
+      "expected_fix_type": "添加import",
+      "notes": "需要from models import User"
+    },
+    {
+      "id": 18,
+      "name": "NameError - 多个函数未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "x = add(5, 3)\ny = multiply(4, 2)\nprint(x, y)",
+        "utils.py": "def add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'add' is not defined",
+      "expected_fix_type": "添加多个import",
+      "notes": "需要from utils import add, multiply"
+    },
+    {
+      "id": 19,
+      "name": "NameError - 子目录模块未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "result = multiply(3, 4)\nprint(result)",
+        "src/math_utils.py": "def multiply(a, b):\n    return a * b"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'multiply' is not defined",
+      "expected_fix_type": "添加子目录import",
+      "notes": "需要from src.math_utils import multiply"
+    },
+    {
+      "id": 20,
+      "name": "ImportError - 模块名拼写错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "from utls import calculate\nresult = calculate(5, 3)\nprint(result)",
+        "utils.py": "def calculate(a, b):\n    return a + b"
+      },
+      "error_file": "main.py",
+      "error_message": "ModuleNotFoundError: No module named 'utls'",
+      "expected_fix_type": "纠正模块名",
+      "notes": "utls → utils"
+    },
+    {
+      "id": 21,
+      "name": "ImportError - 函数名错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "简单",
+      "project_files": {
+        "main.py": "from utils import calcuate\nresult = calcuate(5, 3)\nprint(result)",
+        "utils.py": "def calculate(a, b):\n    return a + b"
+      },
+      "error_file": "main.py",
+      "error_message": "ImportError: cannot import name 'calcuate' from 'utils'",
+      "expected_fix_type": "纠正函数名",
+      "notes": "calcuate → calculate"
+    },
+    {
+      "id": 22,
+      "name": "ImportError - 子目录路径错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "from math_utils import multiply\nresult = multiply(3, 4)\nprint(result)",
+        "src/math_utils.py": "def multiply(a, b):\n    return a * b"
+      },
+      "error_file": "main.py",
+      "error_message": "ModuleNotFoundError: No module named 'math_utils'",
+      "expected_fix_type": "添加路径前缀",
+      "notes": "需要from src.math_utils"
+    },
+    {
+      "id": 23,
+      "name": "AttributeError - 跨文件类属性错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "from models import User\nuser = User('Tom')\nprint(user.age)",
+        "models.py": "class User:\n    def __init__(self, name):\n        self.name = name"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'User' object has no attribute 'age'",
+      "expected_fix_type": "添加属性或检查",
+      "notes": "User没有age属性"
+    },
+    {
+      "id": 24,
+      "name": "AttributeError - 跨文件方法名错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "from calculator import Calculator\ncalc = Calculator()\nresult = calc.add(5, 3)\nprint(result)",
+        "calculator.py": "class Calculator:\n    def sum(self, a, b):\n        return a + b"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'Calculator' object has no attribute 'add'",
+      "expected_fix_type": "纠正方法名",
+      "notes": "add → sum"
+    },
+    {
+      "id": 25,
+      "name": "AttributeError - import路径错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "project_files": {
+        "main.py": "import utils\nresult = utils.calculte(5, 3)\nprint(result)",
+        "utils.py": "def calculate(a, b):\n    return a + b"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: module 'utils' has no attribute 'calculte'",
+      "expected_fix_type": "纠正函数名",
+      "notes": "calculte → calculate"
+    },
+    {
+      "id": 26,
+      "name": "复杂 - 多层嵌套import",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "project_files": {
+        "main.py": "result = process_data([1, 2, 3])\nprint(result)",
+        "processor.py": "from utils.math_utils import calculate\n\ndef process_data(data):\n    return calculate(sum(data), len(data))",
+        "utils/math_utils.py": "def calculate(total, count):\n    return total / count if count > 0 else 0"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'process_data' is not defined",
+      "expected_fix_type": "多层import",
+      "notes": "需要from processor import process_data"
+    },
+    {
+      "id": 27,
+      "name": "复杂 - 同一文件多个错误",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "project_files": {
+        "main.py": "x = add(5, 3)\ny = multiply(x, 2)\nz = divde(y, 4)\nprint(z)",
+        "utils.py": "def add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    return a / b"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'add' is not defined",
+      "expected_fix_type": "import + 拼写纠正",
+      "notes": "需要import且divde → divide"
+    },
+    {
+      "id": 28,
+      "name": "复杂 - 逻辑错误+类型错误",
+      "category": "复杂",
+      "error_type": "TypeError",
+      "difficulty": "复杂",
+      "project_files": {
+        "main.py": "from calculator import average\nnumbers = ['1', '2', '3']\nresult = average(numbers)\nprint(f'Average: {result}')",
+        "calculator.py": "def average(numbers):\n    return sum(numbers) / len(numbers)"
+      },
+      "error_file": "main.py",
+      "error_message": "TypeError: unsupported operand type(s) for +: 'int' and 'str'",
+      "expected_fix_type": "类型转换",
+      "notes": "字符串列表需要转换为整数"
+    },
+    {
+      "id": 29,
+      "name": "复杂 - 深层子目录",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "project_files": {
+        "main.py": "result = format_data(data)\nprint(result)",
+        "src/utils/formatters/text.py": "def format_data(data):\n    return str(data).upper()"
+      },
+      "error_file": "main.py",
+      "error_message": "NameError: name 'format_data' is not defined",
+      "expected_fix_type": "深层import",
+      "notes": "需要from src.utils.formatters.text import format_data"
+    },
+    {
+      "id": 30,
+      "name": "复杂 - 混合错误类型",
+      "category": "复杂",
+      "error_type": "Multiple",
+      "difficulty": "复杂",
+      "project_files": {
+        "main.py": "from utils import process\ndata = None\nresult = process(data)\nprint(result.upper())",
+        "utils.py": "def process(data):\n    if data is None:\n        return None\n    return data * 2"
+      },
+      "error_file": "main.py",
+      "error_message": "AttributeError: 'NoneType' object has no attribute 'upper'",
+      "expected_fix_type": "None检查",
+      "notes": "process返回None，需要检查"
+    }
+  ]
+}

@@ -318,10 +318,14 @@ class ContextManager:
         logger.info(f"开始提取上下文: {error_file}:{error_line}, 错误类型: {error_type}")
         
         # 2. 准备基础context
+        all_files = self.file_contents.copy()
+        if error_file in all_files:
+            del all_files[error_file]
+
         context = {
             "error_file_content": self.file_contents[error_file],
             "related_symbols": {},
-            "related_files": {},
+            "related_files": all_files,
             "import_suggestions": []
         }
         
@@ -410,7 +414,7 @@ class ContextManager:
         self,
         context: Dict[str, Any],
         error_file: str,
-        module_name: Optional[str]
+        module_name: Optional[Union[str, Dict[str, str]]]
     ) -> None:
         """
         处理ImportError：查找依赖关系
@@ -418,19 +422,101 @@ class ContextManager:
         Args:
             context: 上下文字典（会被修改）
             error_file: 错误文件的绝对路径
-            module_name: 模块名称
+            module_name: 
+                - 字符串：模块名（如'utls'）
+                - 字典：{'function': 'calcuate', 'module': 'utils'}
         """
         logger.info("处理ImportError...")
         
         if not module_name:
             logger.warning("ImportError但未提供module_name，无法提取上下文")
             return
+
+        # ========== 情况1：函数导入错误（新增）==========
+        if isinstance(module_name, dict):
+            function_name = module_name['function']  # 'calcuate'
+            module = module_name['module']           # 'utils'
+            
+            logger.info(f"函数导入错误: from {module} import {function_name}")
+            
+            # 找到模块文件
+            module_file = None
+            for file_path in self.file_contents.keys():
+                file_module_name = os.path.splitext(os.path.basename(file_path))[0]
+                if file_module_name == module:
+                    module_file = file_path
+                    break
+            
+            if not module_file:
+                logger.warning(f"未找到模块文件: {module}.py")
+                return
+            
+            logger.info(f"找到模块文件: {module_file}")
+            
+            # 收集该模块中的所有函数
+            module_functions = []
+            for symbol_name, symbol_info in self.symbol_table.items():
+                if symbol_info['file'] == module_file and symbol_info['type'] == 'function':
+                    module_functions.append(symbol_name)
+            
+            logger.info(f"模块 '{module}' 中的函数: {module_functions}")
+            
+            # 模糊匹配函数名
+            from difflib import get_close_matches
+            matches = get_close_matches(function_name, module_functions, n=1, cutoff=0.6)
+            
+            if matches:
+                correct_function = matches[0]
+                logger.info(f"🔧 函数名纠正: '{function_name}' → '{correct_function}'")
+                
+                # 添加模块文件
+                context["related_files"][module_file] = self.file_contents[module_file]
+                
+                # 生成正确的import建议
+                import_suggestion = f"from {module} import {correct_function}"
+                context["import_suggestions"].append(import_suggestion)
+                
+                logger.info("ImportError上下文提取完成（函数名纠正）")
+            else:
+                logger.warning(f"在模块 '{module}' 中未找到匹配的函数: '{function_name}'")
+            
+            return
         
-        # 查找项目中是否有这个模块
+        # ========== 情况2：模块名错误（原有逻辑）==========
+        # 收集所有可用模块名
+        available_modules = []
+        for file_path in self.file_contents.keys():
+            if file_path.endswith('.py'):
+                # ✅ 用不同的变量名，不要覆盖参数
+                file_module_name = os.path.splitext(os.path.basename(file_path))[0]
+                available_modules.append(file_module_name)
+        
+        logger.info(f"可用模块: {available_modules}")
+        logger.info(f"尝试匹配: '{module_name}'")
+        
+        # 模糊匹配纠正拼写错误
+        from difflib import get_close_matches
+        matches = get_close_matches(
+            module_name,    # ✅ 用module_name（参数）
+            available_modules, 
+            n=1,
+            cutoff=0.6
+        )
+        
+        if matches:
+            corrected = matches[0]
+            logger.info(f"🔧 模块名纠正: '{module_name}' → '{corrected}'")
+            module_name = corrected  # ✅ 更新module_name（后面查找会用到）
+        else:
+            logger.warning(f"未找到匹配的模块: '{module_name}'")
+        # ========== 模糊匹配结束 ==========
+        
+        # 查找项目中是否有这个模块（用纠正后的module_name）
         for file_path in self.file_contents.keys():
             # 检查文件名是否匹配模块名
             file_name = os.path.splitext(os.path.basename(file_path))[0]
-            if file_name == module_name:
+            
+            if file_name == module_name:  # ✅ 现在module_name可能已经纠正过了
                 logger.info(f"找到模块 '{module_name}' 对应文件: {file_path}")
                 
                 # 添加到相关文件
@@ -457,21 +543,114 @@ class ContextManager:
         self,
         context: Dict[str, Any],
         error_file: str,
-        attribute_name: Optional[str]
+        attribute_info: Optional[Union[str, Dict[str, str]]]
     ) -> None:
         """
-        处理AttributeError：查找类定义
+        处理AttributeError：根据不同情况查找
         
         Args:
-            context: 上下文字典（会被修改）
-            error_file: 错误文件的绝对路径
-            attribute_name: 属性名称
+            attribute_info: 
+                - 字符串：简单的属性名
+                - 字典：{'type': 'object_attribute', 'class': 'User', 'attribute': 'age'}
+                    或 {'type': 'module_attribute', 'module': 'utils', 'attribute': 'calculte'}
         """
         logger.info("处理AttributeError...")
         
-        # AttributeError比较复杂，暂时返回基础信息
-        # TODO: 未来可以实现更复杂的类属性查找
-        logger.warning("AttributeError暂不支持智能上下文提取")
+        if not attribute_info:
+            logger.warning("AttributeError但未提供attribute_info")
+            return
+        
+        # 如果是字符串，按NameError处理
+        if isinstance(attribute_info, str):
+            self._handle_name_error(context, error_file, attribute_info)
+            return
+        
+        # ========== 情况1&2：对象属性/方法错误 ==========
+        if attribute_info.get('type') == 'object_attribute':
+            class_name = attribute_info['class']
+            attr_name = attribute_info['attribute']
+            
+            logger.info(f"对象属性错误: {class_name}.{attr_name}")
+            
+            # 在symbol_table中查找类定义
+            if class_name in self.symbol_table:
+                symbol_info = self.symbol_table[class_name]
+                file_path = symbol_info['file']
+                
+                logger.info(f"找到类 '{class_name}' 在文件: {file_path}")
+                
+                # ✅ 新增：提取类的完整定义
+                class_definition = self._extract_definition(file_path, class_name)
+                
+                # 添加类所在的文件
+                context["related_files"][file_path] = self.file_contents[file_path]
+                
+                # 添加符号信息（包含完整定义）
+                context["related_symbols"][class_name] = {
+                    'name': class_name,
+                    'type': symbol_info['type'],
+                    'file': file_path,
+                    'line': symbol_info['line'],
+                    'definition': class_definition  # ✅ 新增
+                }
+                
+                # 生成import建议
+                import_suggestion = self._generate_import_suggestion(
+                    error_file,
+                    file_path,
+                    class_name
+                )
+                if import_suggestion:
+                    context["import_suggestions"].append(import_suggestion)
+                
+                logger.info(f"AttributeError上下文提取完成（对象属性）")
+            else:
+                logger.warning(f"未找到类定义: {class_name}")
+            
+            return
+        
+        # ========== 情况3：模块属性错误（函数名拼写） ==========
+        if attribute_info.get('type') == 'module_attribute':
+            module_name = attribute_info['module']
+            attr_name = attribute_info['attribute']
+            
+            logger.info(f"模块属性错误: {module_name}.{attr_name}")
+            
+            # 找到模块文件
+            module_file = None
+            for file_path in self.file_contents.keys():
+                file_module_name = os.path.splitext(os.path.basename(file_path))[0]
+                if file_module_name == module_name:
+                    module_file = file_path
+                    break
+            
+            if not module_file:
+                logger.warning(f"未找到模块文件: {module_name}.py")
+                return
+            
+            logger.info(f"找到模块文件: {module_file}")
+            
+            # 收集该模块的所有函数
+            module_functions = []
+            for symbol_name, symbol_info in self.symbol_table.items():
+                if symbol_info['file'] == module_file and symbol_info['type'] == 'function':
+                    module_functions.append(symbol_name)
+            
+            logger.info(f"模块 '{module_name}' 中的函数: {module_functions}")
+            
+            # 模糊匹配函数名
+            from difflib import get_close_matches
+            matches = get_close_matches(attr_name, module_functions, n=1, cutoff=0.6)
+            
+            if matches:
+                correct_function = matches[0]
+                logger.info(f"🔧 函数名纠正: '{attr_name}' → '{correct_function}'")
+            
+            # 无论是否匹配成功，都添加模块文件
+            context["related_files"][module_file] = self.file_contents[module_file]
+            
+            logger.info("AttributeError上下文提取完成（模块属性）")
+            return
 
 
     def _extract_definition(
@@ -490,6 +669,16 @@ class ContextManager:
             完整的定义代码（包含docstring和函数体）
             如果提取失败返回空字符串
         """
+        # ✅ 加调试
+        if symbol_name == 'Calculator':
+            print(f"🔍 DEBUG _extract_definition:")
+            print(f"  file_path: {file_path}")
+            print(f"  symbol_name: {symbol_name}")
+            symbol_info = self.symbol_table.get(symbol_name)
+            print(f"  symbol_info type: {type(symbol_info)}")
+            print(f"  symbol_info: {symbol_info}")
+
+            
         if file_path not in self.file_contents:
             logger.warning(f"文件不存在: {file_path}")
             return ""

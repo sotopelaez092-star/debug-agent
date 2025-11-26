@@ -213,7 +213,16 @@ class DebugAgent:
             # 5.2 在docker中验证修复
             try:
                 logger.info("开始在docker中验证修复代码...")
-                verification = self.docker_executor.execute(code=fixed_code)
+                related_files = {}
+                if context and 'related_files' in context:
+                    related_files = context['related_files']
+
+                # 调用新方法
+                verification = self.docker_executor.execute_with_context(
+                    main_code=fixed_code,
+                    related_files=related_files,
+                    main_filename="main.py"
+                )
                 logger.info(f"验证完成，成功: {verification['success']}")
 
             except Exception as e:
@@ -333,8 +342,56 @@ class DebugAgent:
         elif error_type in ["ImportError", "ModuleNotFoundError"]:
             # ModuleNotFoundError: No module named 'utils'
             import re
+            
+            # ========== 新增：函数导入错误 ==========
+            # ImportError: cannot import name 'calcuate' from 'utils'
+            match = re.search(r"cannot import name '(\w+)' from '(\w+)'", error_message)
+            if match:
+                function_name = match.group(1)  # 'calcuate'
+                module_name = match.group(2)    # 'utils'
+                logger.info(f"提取到函数导入错误: from {module_name} import {function_name}")
+                return {
+                    'function': function_name,
+                    'module': module_name
+                }
+            # ====================================
+            
+            # 原有：模块不存在
+            # ModuleNotFoundError: No module named 'utls'
             match = re.search(r"No module named '(\w+)'", error_message)
             if match:
-                return match.group(1)
+                module_name = match.group(1)
+                logger.info(f"提取到模块名: {module_name}")
+                return module_name
+
+        # ========== 新增：AttributeError ==========
+        elif error_type == "AttributeError":
+            import re
+            
+            # 情况1&2: AttributeError: 'User' object has no attribute 'age'
+            # 情况1&2: AttributeError: 'Calculator' object has no attribute 'add'
+            match = re.search(r"'(\w+)' object has no attribute '(\w+)'", error_message)
+            if match:
+                class_name = match.group(1)
+                attr_name = match.group(2)
+                logger.info(f"提取到对象属性错误: {class_name}.{attr_name}")
+                return {
+                    'type': 'object_attribute',
+                    'class': class_name,
+                    'attribute': attr_name
+                }
+            
+            # 情况3: AttributeError: module 'utils' has no attribute 'calculte'
+            match = re.search(r"module '(\w+)' has no attribute '(\w+)'", error_message)
+            if match:
+                module_name = match.group(1)
+                attr_name = match.group(2)
+                logger.info(f"提取到模块属性错误: {module_name}.{attr_name}")
+                return {
+                    'type': 'module_attribute',
+                    'module': module_name,
+                    'attribute': attr_name
+                }
+                    
         
         return None

@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-11-25T14:10:33.051487",
+  "test_cases": [
+    18,
+    24,
+    29
+  ],
+  "results": [
+    {
+      "case_id": 18,
+      "success": true,
+      "attempts": 1,
+      "elapsed_time": 9.708328247070312,
+      "first_try_success": true
+    },
+    {
+      "case_id": 24,
+      "success": true,
+      "attempts": 1,
+      "elapsed_time": 8.307857990264893,
+      "first_try_success": true
+    },
+    {
+      "case_id": 29,
+      "success": true,
+      "attempts": 1,
+      "elapsed_time": 8.536075115203857,
+      "first_try_success": true
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "success": 3,
+    "first_try_success": 3
+  }
+}

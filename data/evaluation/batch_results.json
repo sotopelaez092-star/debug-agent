@@ -1,0 +1,833 @@
+{
+  "timestamp": "2025-11-25T14:20:26.559913",
+  "total_cases": 30,
+  "results": [
+    {
+      "case_id": 1,
+      "case_name": "NameError - 变量拼写错误",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "def greet(name):\n    print(f'Hello, {name}')\n\ngreet('Tom')",
+          "explanation": "修复了NameError错误。错误原因是函数greet的参数名为'name'，但在f-string中使用了'nme'，这是一个拼写错误。Python解释器无法识别'nme'变量，因为它没有定义。正确的做法是使用函数参数'name'，这样就能正确引用传入的参数值。",
+          "changes": [
+            "修改1: 将f-string中的'nme'改为'name'，使其与函数参数名一致"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Hello, Tom\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.329060077667236,
+      "final_code": "def greet(name):\n    print(f'Hello, {name}')\n\ngreet('Tom')",
+      "error": ""
+    },
+    {
+      "case_id": 2,
+      "case_name": "NameError - 变量未定义",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "x = 10\ny = 20\nprint(y)",
+          "explanation": "原代码中变量y在使用前没有被定义，导致NameError。修复方法是在使用y之前先定义它。这里给y赋值为20，这样print(y)就能正常执行了。同时保留了原有的x=10赋值语句。",
+          "changes": [
+            "修改1: 在print(y)之前添加y的定义和赋值语句 y = 20"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "20\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.350227117538452,
+      "final_code": "x = 10\ny = 20\nprint(y)",
+      "error": ""
+    },
+    {
+      "case_id": 3,
+      "case_name": "NameError - 函数名拼写错误",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "def calculate(a, b):\n    return a + b\n\nresult = calculate(5, 3)\nprint(result)",
+          "explanation": "修复了函数调用时的拼写错误。原代码中定义的是函数'calculate'，但在调用时写成了'calculte'，缺少了字母'a'，导致Python解释器无法找到名为'calculte'的函数定义，从而抛出NameError。将函数调用从'calculte(5, 3)'更正为'calculate(5, 3)'即可解决此问题。",
+          "changes": [
+            "修改1: 将第4行的'calculte(5, 3)'更正为'calculate(5, 3)'，修复函数名拼写错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.801878929138184,
+      "final_code": "def calculate(a, b):\n    return a + b\n\nresult = calculate(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 4,
+      "case_name": "NameError - 作用域问题",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "def foo():\n    global x\n    x = 10\n\nfoo()\nprint(x)",
+          "explanation": "原代码中的变量x是在函数foo的局部作用域中定义的，当函数执行完毕后，x就被销毁了。在函数外部print(x)时，x已经不存在，因此出现NameError。修复方法是在函数内部使用global关键字声明x为全局变量，这样x在函数执行后仍然存在，可以在函数外部访问。",
+          "changes": [
+            "在函数foo内部添加了'global x'声明，使变量x成为全局变量",
+            "这样在函数调用后，x仍然可以在全局作用域中被访问"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "10\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.042839050292969,
+      "final_code": "def foo():\n    global x\n    x = 10\n\nfoo()\nprint(x)",
+      "error": ""
+    },
+    {
+      "case_id": 5,
+      "case_name": "NameError - 使用前未赋值",
+      "category": "单文件",
+      "error_type": "NameError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "total = 0\nprint(total)",
+          "explanation": "修复了变量未定义就使用的错误。在Python中，变量必须先定义后使用。原代码在print(total)时，total变量还没有被定义，导致NameError。修复方法是将变量定义语句total = 0移到print(total)之前，确保变量在使用前已经被正确初始化。",
+          "changes": [
+            "修改1: 将total = 0移到print(total)之前，确保变量先定义后使用"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "0\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.043203115463257,
+      "final_code": "total = 0\nprint(total)",
+      "error": ""
+    },
+    {
+      "case_id": 6,
+      "case_name": "TypeError - 字符串和整数相加",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "result = '5' + str(3)\nprint(result)",
+          "explanation": "修复了类型不匹配的错误。原始代码尝试将字符串 '5' 与整数 3 直接相加，这在Python中是不允许的，因为字符串连接操作只能连接两个字符串。解决方案是将整数 3 转换为字符串类型，使用 str() 函数进行转换，这样两个字符串就可以正确连接了。",
+          "changes": [
+            "修改1: 将整数 3 转换为字符串 str(3)",
+            "修改2: 确保字符串连接操作的两个操作数都是字符串类型"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "53\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.670209646224976,
+      "final_code": "result = '5' + str(3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 7,
+      "case_name": "TypeError - 缺少参数",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "def add(a, b):\n    return a + b\n\nresult = add(5, 3)\nprint(result)",
+          "explanation": "原代码中add函数定义需要两个参数a和b，但在调用时只提供了一个参数5，缺少了第二个参数b。这导致了TypeError。修复方法是在调用add函数时提供第二个参数，这里我添加了参数3作为示例。这样函数就能正常接收两个参数并执行加法运算。",
+          "changes": [
+            "修改1: 在add(5)调用中添加第二个参数，改为add(5, 3)"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.51868200302124,
+      "final_code": "def add(a, b):\n    return a + b\n\nresult = add(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 8,
+      "case_name": "TypeError - 不可哈希类型作为字典key",
+      "category": "单文件",
+      "error_type": "TypeError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "d = {tuple([1, 2]): 'value'}\nprint(d)",
+          "explanation": "修复了TypeError: unhashable type: 'list'错误。在Python中，字典的键必须是可哈希的类型，而列表是可变对象，不可哈希。解决方案是将列表转换为元组，因为元组是不可变对象，可以哈希。",
+          "changes": [
+            "将字典键从列表[1, 2]转换为元组tuple([1, 2])"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "{(1, 2): 'value'}\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.726172924041748,
+      "final_code": "d = {tuple([1, 2]): 'value'}\nprint(d)",
+      "error": ""
+    },
+    {
+      "case_id": 9,
+      "case_name": "AttributeError - None对象",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "user = None\nif user is not None:\n    print(user.name)\nelse:\n    print(\"User is None, cannot access name attribute\")",
+          "explanation": "修复了AttributeError错误。原始代码中user被赋值为None，然后尝试访问user.name属性，但NoneType对象没有name属性。修复方案是添加None检查，在访问属性前先判断user是否为None，如果是None则给出提示信息而不是直接访问属性。",
+          "changes": [
+            "修改1: 添加了if-else条件判断，在访问user.name前检查user是否为None",
+            "修改2: 当user为None时，输出提示信息而不是直接访问name属性",
+            "修改3: 避免了AttributeError异常的发生"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "User is None, cannot access name attribute\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 15.153127908706665,
+      "final_code": "user = None\nif user is not None:\n    print(user.name)\nelse:\n    print(\"User is None, cannot access name attribute\")",
+      "error": ""
+    },
+    {
+      "case_id": 10,
+      "case_name": "AttributeError - 错误的属性名",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "s = 'hello'\nprint(s.upper())",
+          "explanation": "错误信息显示字符串对象没有'uppper'属性。这是因为字符串的转换为大写的方法名是'upper'而不是'uppper'。原代码中拼写错误，多了一个'p'。将'uppper'更正为'upper'即可正确调用字符串的大写转换方法。",
+          "changes": [
+            "修改1: 将s.uppper()更正为s.upper()，修正方法名拼写错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "HELLO\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.27674126625061,
+      "final_code": "s = 'hello'\nprint(s.upper())",
+      "error": ""
+    },
+    {
+      "case_id": 11,
+      "case_name": "AttributeError - 列表没有该方法",
+      "category": "单文件",
+      "error_type": "AttributeError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "numbers = [1, 2, 3]\nnumbers.append(4)\nprint(numbers)",
+          "explanation": "修复了AttributeError错误。Python列表(list)对象没有'add'方法，正确的添加元素方法是'append'。'append'方法会在列表末尾添加新元素，但该方法不返回值(返回None)，所以直接打印列表本身来查看结果。",
+          "changes": [
+            "修改1: 将numbers.add(4)改为numbers.append(4)",
+            "修改2: 将print(result)改为print(numbers)，因为append方法不返回值，需要直接打印列表来查看结果"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "[1, 2, 3, 4]\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.792720794677734,
+      "final_code": "numbers = [1, 2, 3]\nnumbers.append(4)\nprint(numbers)",
+      "error": ""
+    },
+    {
+      "case_id": 12,
+      "case_name": "KeyError - 字典key不存在",
+      "category": "单文件",
+      "error_type": "KeyError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "user = {'name': 'Tom'}\nprint(user.get('age', 'Key not found'))",
+          "explanation": "修复了KeyError错误。原代码试图访问字典中不存在的键'age'，导致KeyError。使用字典的get()方法可以安全地访问键值，如果键不存在，可以返回默认值而不是抛出异常。这里设置默认值为'Key not found'，这样即使键不存在也不会报错。",
+          "changes": [
+            "修改1: 将user['age']改为user.get('age', 'Key not found')，使用get方法安全访问字典键值"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Key not found\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.304293870925903,
+      "final_code": "user = {'name': 'Tom'}\nprint(user.get('age', 'Key not found'))",
+      "error": ""
+    },
+    {
+      "case_id": 13,
+      "case_name": "KeyError - key拼写错误",
+      "category": "单文件",
+      "error_type": "KeyError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "data = {'count': 10}\nprint(data['count'])",
+          "explanation": "修复了KeyError错误。原代码中字典data的键是'count'，但代码中尝试访问的是'cont'，这是一个拼写错误。字典中不存在'cont'这个键，因此抛出KeyError。正确的做法是使用字典中实际存在的键'count'来访问对应的值。",
+          "changes": [
+            "修改1: 将data['cont']改为data['count']，修正键名拼写错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "10\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.65762996673584,
+      "final_code": "data = {'count': 10}\nprint(data['count'])",
+      "error": ""
+    },
+    {
+      "case_id": 14,
+      "case_name": "IndexError - 列表索引越界",
+      "category": "单文件",
+      "error_type": "IndexError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "numbers = [1, 2, 3]\n# 修复：使用有效的索引访问列表元素\nprint(numbers[2])  # 输出最后一个元素3\n# 或者使用安全的索引检查\nif len(numbers) > 5:\n    print(numbers[5])\nelse:\n    print(\"索引超出范围，列表长度为:\", len(numbers))",
+          "explanation": "原始代码试图访问列表numbers的第6个元素（索引5），但列表只有3个元素（索引0-2），导致IndexError。修复方案有两种：1) 使用有效索引（0-2）访问现有元素；2) 添加索引范围检查，确保不会访问超出列表长度的位置。这里提供了两种解决方案的示例代码。",
+          "changes": [
+            "修改1: 将numbers[5]改为numbers[2]以访问有效的列表元素",
+            "修改2: 添加索引范围检查逻辑，防止再次出现索引越界错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "3\n索引超出范围，列表长度为: 3\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 11.832108736038208,
+      "final_code": "numbers = [1, 2, 3]\n# 修复：使用有效的索引访问列表元素\nprint(numbers[2])  # 输出最后一个元素3\n# 或者使用安全的索引检查\nif len(numbers) > 5:\n    print(numbers[5])\nelse:\n    print(\"索引超出范围，列表长度为:\", len(numbers))",
+      "error": ""
+    },
+    {
+      "case_id": 15,
+      "case_name": "IndexError - 空列表访问",
+      "category": "单文件",
+      "error_type": "IndexError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "items = [\"example_item\"]\nfirst = items[0]\nprint(first)",
+          "explanation": "原始代码中，items是一个空列表，当尝试访问items[0]时，由于列表为空，没有第0个元素，因此抛出IndexError: list index out of range错误。修复方法是在访问列表元素之前，确保列表不为空。这里通过在初始化时给items列表添加一个元素来解决这个问题。",
+          "changes": [
+            "修改1: 将items = [] 改为 items = [\"example_item\"]，确保列表不为空",
+            "修改2: 添加了一个示例元素，使代码能够正常运行"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "example_item\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.458420991897583,
+      "final_code": "items = [\"example_item\"]\nfirst = items[0]\nprint(first)",
+      "error": ""
+    },
+    {
+      "case_id": 16,
+      "case_name": "NameError - 跨文件函数未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import calculate\n\nresult = calculate(10, 20)\nprint(f'Result: {result}')",
+          "explanation": "修复了NameError错误。错误原因是代码中调用了calculate函数，但该函数在当前作用域中未定义。根据相关符号定义，calculate函数位于utils.py文件中，因此需要先导入该函数才能使用。按照Import建议，使用'from utils import calculate'语句导入calculate函数，这样代码就能正确识别并调用该函数了。",
+          "changes": [
+            "修改1: 添加导入语句 'from utils import calculate'，确保calculate函数在当前作用域中可用"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Result: 30\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.349583864212036,
+      "final_code": "from utils import calculate\n\nresult = calculate(10, 20)\nprint(f'Result: {result}')",
+      "error": ""
+    },
+    {
+      "case_id": 17,
+      "case_name": "NameError - 跨文件类未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from models import User\n\nuser = User('Tom')\nprint(user.name)",
+          "explanation": "修复了NameError错误。错误原因是代码中使用了User类但没有导入。User类定义在models.py文件中，需要通过'from models import User'语句导入才能使用。修复后代码首先导入User类，然后创建User实例并打印name属性。",
+          "changes": [
+            "修改1: 添加导入语句 'from models import User'",
+            "修改2: 确保User类在创建实例前已正确导入"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Tom\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.8758790493011475,
+      "final_code": "from models import User\n\nuser = User('Tom')\nprint(user.name)",
+      "error": ""
+    },
+    {
+      "case_id": 18,
+      "case_name": "NameError - 多个函数未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import add\nfrom utils import multiply\n\nx = add(5, 3)\ny = multiply(4, 2)\nprint(x, y)",
+          "explanation": "修复了两个主要问题：1. 代码中使用了未定义的函数 'add' 和 'multiply'。根据错误信息和相关符号定义，'add' 函数定义在 utils.py 文件中，但代码中没有导入。同时检查发现 'multiply' 函数也未定义，需要一并导入。2. 虽然错误信息只提示了 'add' 未定义，但 'multiply' 同样需要导入才能使用。因此一次性导入两个函数，确保代码能完整运行。",
+          "changes": [
+            "添加导入语句: from utils import add",
+            "添加导入语句: from utils import multiply"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8 8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 10.08096170425415,
+      "final_code": "from utils import add\nfrom utils import multiply\n\nx = add(5, 3)\ny = multiply(4, 2)\nprint(x, y)",
+      "error": ""
+    },
+    {
+      "case_id": 19,
+      "case_name": "NameError - 子目录模块未import",
+      "category": "跨文件",
+      "error_type": "NameError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from src.math_utils import multiply\n\nresult = multiply(3, 4)\nprint(result)",
+          "explanation": "修复了NameError错误。错误原因是代码中调用了multiply函数，但该函数在当前作用域中未定义。根据相关符号定义，multiply函数位于src/math_utils.py文件中。因此需要先导入该函数才能使用。修复方法是按照Import建议，在代码开头添加from src.math_utils import multiply语句，确保multiply函数在调用前已被正确导入。",
+          "changes": [
+            "添加导入语句: from src.math_utils import multiply"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "12\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.635117769241333,
+      "final_code": "from src.math_utils import multiply\n\nresult = multiply(3, 4)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 20,
+      "case_name": "ImportError - 模块名拼写错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import calculate\nresult = calculate(5, 3)\nprint(result)",
+          "explanation": "修复了模块导入错误。原代码中导入的模块名'utls'拼写错误，应该是'utils'。根据Import建议，将'utls'更正为'utils'，确保能够正确导入calculate函数。",
+          "changes": [
+            "修改1: 将'from utls import calculate'更正为'from utils import calculate'，修正模块名拼写错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.094250917434692,
+      "final_code": "from utils import calculate\nresult = calculate(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 21,
+      "case_name": "ImportError - 函数名错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "简单",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import calculate\nresult = calculate(5, 3)\nprint(result)",
+          "explanation": "修复了导入错误和函数名拼写错误。原代码中从utils模块导入'calcuate'函数时出现拼写错误，正确的函数名应该是'calculate'。根据Import建议，将导入语句中的'calcuate'更正为'calculate'，同时将函数调用处的'calcuate'也相应更正为'calculate'，确保函数名一致。",
+          "changes": [
+            "修改1: 将导入语句 'from utils import calcuate' 更正为 'from utils import calculate'",
+            "修改2: 将函数调用 'calcuate(5, 3)' 更正为 'calculate(5, 3)'"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.62706995010376,
+      "final_code": "from utils import calculate\nresult = calculate(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 22,
+      "case_name": "ImportError - 子目录路径错误",
+      "category": "跨文件",
+      "error_type": "ImportError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "import sys\nimport os\n\n# 添加src目录到Python路径\nsys.path.append(os.path.join(os.path.dirname(__file__), 'src'))\n\nfrom math_utils import multiply\n\nresult = multiply(3, 4)\nprint(result)",
+          "explanation": "修复了ModuleNotFoundError错误。错误原因是Python无法找到math_utils模块。根据Import建议，math_utils模块位于src目录下。解决方案是将src目录添加到Python的系统路径中，这样Python解释器就能找到并导入math_utils模块中的multiply函数。",
+          "changes": [
+            "添加了sys和os模块的导入",
+            "将src目录添加到Python系统路径中",
+            "保持原有的multiply函数导入和使用方式"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "12\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.298388004302979,
+      "final_code": "import sys\nimport os\n\n# 添加src目录到Python路径\nsys.path.append(os.path.join(os.path.dirname(__file__), 'src'))\n\nfrom math_utils import multiply\n\nresult = multiply(3, 4)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 23,
+      "case_name": "AttributeError - 跨文件类属性错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from models import User\n\nuser = User('Tom')\nprint(user.name)",
+          "explanation": "修复了AttributeError错误。原代码试图访问User对象的'age'属性，但根据相关符号定义，User类在__init__方法中只定义了'name'属性，没有定义'age'属性。因此将print(user.age)改为print(user.name)，访问已定义的属性。",
+          "changes": [
+            "修改1: 将print(user.age)改为print(user.name)，因为User类没有age属性，只有name属性"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Tom\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 12.110121011734009,
+      "final_code": "from models import User\n\nuser = User('Tom')\nprint(user.name)",
+      "error": ""
+    },
+    {
+      "case_id": 24,
+      "case_name": "AttributeError - 跨文件方法名错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from calculator import Calculator\ncalc = Calculator()\nresult = calc.sum(5, 3)\nprint(result)",
+          "explanation": "根据错误信息和相关符号定义分析，问题在于Calculator类中没有'add'方法，而是定义了'sum'方法。AttributeError表明对象没有该属性，这是因为方法名不匹配。通过查看calculator.py中Calculator类的完整定义，确认正确的方法名是'sum'而不是'add'。因此将代码中的'add'方法调用改为'sum'方法调用。",
+          "changes": [
+            "修改1: 将calc.add(5, 3)改为calc.sum(5, 3)，因为Calculator类中定义的是sum方法而不是add方法"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.539201021194458,
+      "final_code": "from calculator import Calculator\ncalc = Calculator()\nresult = calc.sum(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 25,
+      "case_name": "AttributeError - import路径错误",
+      "category": "跨文件",
+      "error_type": "AttributeError",
+      "difficulty": "中等",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "import utils\nresult = utils.calculate(5, 3)\nprint(result)",
+          "explanation": "错误信息显示模块'utils'没有'calculte'属性。这是一个拼写错误，正确的函数名应该是'calculate'而不是'calculte'。修复方法是将函数调用中的'calculte'更正为'calculate'。",
+          "changes": [
+            "修改1: 将utils.calculte(5, 3)更正为utils.calculate(5, 3)，修复了函数名的拼写错误"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "8\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 7.583727836608887,
+      "final_code": "import utils\nresult = utils.calculate(5, 3)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 26,
+      "case_name": "复杂 - 多层嵌套import",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from processor import process_data\nfrom processor import calculate\n\nresult = process_data([1, 2, 3])\nprint(result)",
+          "explanation": "修复了两个主要问题：1. 导入了未定义的process_data函数，该函数定义在processor模块中；2. 由于process_data函数内部调用了calculate函数，而calculate函数也未定义，因此需要同时导入calculate函数。这样确保了代码中所有用到的函数都有正确的定义。",
+          "changes": [
+            "修改1: 添加了from processor import process_data导入语句",
+            "修改2: 添加了from processor import calculate导入语句，因为process_data函数内部调用了calculate函数"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "2.0\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.04412293434143,
+      "final_code": "from processor import process_data\nfrom processor import calculate\n\nresult = process_data([1, 2, 3])\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 27,
+      "case_name": "复杂 - 同一文件多个错误",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import add\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    return a / b\n\nx = add(5, 3)\ny = multiply(x, 2)\nz = divide(y, 4)\nprint(z)",
+          "explanation": "修复了三个主要问题：1) 导入add函数，因为它在当前作用域中未定义；2) 定义了multiply函数，因为代码中使用了但未定义；3) 修复了divde函数的拼写错误，改为正确的divide函数名并实现其功能。这样确保所有函数都有定义且拼写正确，代码可以完整运行。",
+          "changes": [
+            "添加了from utils import add导入语句",
+            "定义了multiply函数实现乘法功能",
+            "修复了divde函数的拼写错误，改为divide并实现除法功能"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "4.0\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 11.061683893203735,
+      "final_code": "from utils import add\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    return a / b\n\nx = add(5, 3)\ny = multiply(x, 2)\nz = divide(y, 4)\nprint(z)",
+      "error": ""
+    },
+    {
+      "case_id": 28,
+      "case_name": "复杂 - 逻辑错误+类型错误",
+      "category": "复杂",
+      "error_type": "TypeError",
+      "difficulty": "复杂",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from calculator import average\nnumbers = [1, 2, 3]\nresult = average(numbers)\nprint(f'Average: {result}')",
+          "explanation": "错误信息显示 'TypeError: unsupported operand type(s) for +: 'int' and 'str''，这表明在计算平均值时尝试将整数和字符串相加。问题在于numbers列表中的元素是字符串类型（'1', '2', '3'），而average函数期望的是数值类型。需要将字符串转换为整数，或者直接使用整数列表。",
+          "changes": [
+            "修改1: 将numbers列表中的字符串元素改为整数元素，从['1', '2', '3']改为[1, 2, 3]"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "Average: 2.0\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 9.175556898117065,
+      "final_code": "from calculator import average\nnumbers = [1, 2, 3]\nresult = average(numbers)\nprint(f'Average: {result}')",
+      "error": ""
+    },
+    {
+      "case_id": 29,
+      "case_name": "复杂 - 深层子目录",
+      "category": "复杂",
+      "error_type": "NameError",
+      "difficulty": "复杂",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from src.utils.formatters.text import format_data\n\ndata = \"some data to format\"  # 假设的测试数据\nresult = format_data(data)\nprint(result)",
+          "explanation": "修复了两个主要问题：1. 导入了缺失的format_data函数，因为错误信息显示该函数未定义；2. 添加了data变量的定义，因为原代码中data变量也未定义，虽然错误信息没有直接提示，但这是代码运行的必要条件。",
+          "changes": [
+            "修改1: 添加导入语句 'from src.utils.formatters.text import format_data'",
+            "修改2: 添加data变量的定义 'data = \"some data to format\"' 作为示例数据"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "SOME DATA TO FORMAT\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 8.948748111724854,
+      "final_code": "from src.utils.formatters.text import format_data\n\ndata = \"some data to format\"  # 假设的测试数据\nresult = format_data(data)\nprint(result)",
+      "error": ""
+    },
+    {
+      "case_id": 30,
+      "case_name": "复杂 - 混合错误类型",
+      "category": "复杂",
+      "error_type": "Multiple",
+      "difficulty": "复杂",
+      "success": true,
+      "attempts": [
+        {
+          "attempt_number": 1,
+          "fixed_code": "from utils import process\n\n# 修复1: 为data提供有效的初始值，而不是None\ndata = \"hello world\"\nresult = process(data)\n\n# 修复2: 检查result是否为None，避免对None调用upper()\nif result is not None:\n    print(result.upper())\nelse:\n    print(\"处理结果为空\")",
+          "explanation": "修复了两个主要问题：1) data初始值为None，传递给process函数后可能导致返回None；2) 直接对可能为None的result调用upper()方法会导致AttributeError。修复方案是：为data提供有效的字符串值，并在调用upper()前检查result是否为None。",
+          "changes": [
+            "修改1: 将data从None改为有效字符串值'hello world'",
+            "修改2: 添加None检查，确保result不为None时才调用upper()方法"
+          ],
+          "verification": {
+            "success": true,
+            "stdout": "HELLO WORLDHELLO WORLD\n",
+            "stderr": "",
+            "exit_code": 0
+          }
+        }
+      ],
+      "elapsed_time": 10.989735126495361,
+      "final_code": "from utils import process\n\n# 修复1: 为data提供有效的初始值，而不是None\ndata = \"hello world\"\nresult = process(data)\n\n# 修复2: 检查result是否为None，避免对None调用upper()\nif result is not None:\n    print(result.upper())\nelse:\n    print(\"处理结果为空\")",
+      "error": ""
+    }
+  ]
+}

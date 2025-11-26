@@ -3,9 +3,13 @@ DockerExecutor - Docker代码执行器
 在隔离的Docker容器中安全执行Python代码
 """
 
+from re import fullmatch
 import time
 import docker
 import logging
+import shutil
+import tempfile
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +133,103 @@ class DockerExecutor:
                 "stderr": str(e),
                 "exit_code": -1
             }
+
+
+    def execute_with_context(
+        self,
+        main_code: str,
+        related_files: dict[str, str],
+        main_filename: str = "main.py"
+    ) -> dict:
+        """在Docker中执行多文件代码"""
+        
+        # 输入验证
+        if not main_code or not isinstance(main_code, str):
+            raise ValueError("main_code必须是非空字符串")
+        if not isinstance(related_files, dict):
+            raise ValueError("related_files必须是字典")
+        
+        # 1. 创建临时目录
+        temp_dir = tempfile.mkdtemp(prefix="debug_")
+        logger.info(f"创建临时目录: {temp_dir}")
+        
+        try:
+            # 2. 写入main.py
+            main_path = os.path.join(temp_dir, main_filename)
+            with open(main_path, 'w', encoding='utf-8') as f:
+                f.write(main_code)
+            logger.info(f"写入主文件: {main_filename}")
+            
+            # 3. 写入related_files
+            for file_path, content in related_files.items():
+                full_path = os.path.join(temp_dir, file_path)
+                dir_name = os.path.dirname(full_path)
+                if dir_name:
+                    os.makedirs(dir_name, exist_ok=True)
+                with open(full_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+            logger.info(f"写入{len(related_files)}个相关文件")
+            
+            # 4. 运行Docker
+            container = self.client.containers.run(
+                image=self.image,
+                volumes={
+                    temp_dir: {
+                        'bind': '/workspace',
+                        'mode': 'ro'
+                    }
+                },
+                working_dir='/workspace',
+                command=f"python {main_filename}",
+                mem_limit=self.memory_limit,
+                network_disabled=True,
+                detach=True,
+                remove=False,
+                stdout=True,
+                stderr=True
+            )
+            logger.info("Docker容器已启动")
+            
+            # 5. 获取结果
+            try:
+                result = container.wait(timeout=self.timeout)
+                exit_code = result['StatusCode']
+            except Exception as timeout_err:
+                logger.warning(f"执行超时（>{self.timeout}秒），强制停止容器")
+                try:
+                    container.stop(timeout=1)
+                    container.remove(force=True)
+                except:
+                    pass
+                return {
+                    "success": False,
+                    "stdout": "",
+                    "stderr": f"执行超时（超过{self.timeout}秒限制）",
+                    "exit_code": -1
+                }
+            
+            stdout = container.logs(stdout=True, stderr=False).decode('utf-8')
+            stderr = container.logs(stdout=False, stderr=True).decode('utf-8')
+            logger.info(f"执行完成 - exit_code: {exit_code}")
+            
+            # 手动删除容器
+            container.remove()
+            logger.info("容器已清理")
+            
+            return {
+                "success": exit_code == 0,
+                "stdout": stdout,
+                "stderr": stderr,
+                "exit_code": exit_code
+            }
+            
+        finally:
+            # 6. 清理临时目录（无论成功失败）
+            try:
+                shutil.rmtree(temp_dir)
+                logger.info(f"临时目录已清理: {temp_dir}")
+            except Exception as e:
+                logger.error(f"临时目录删除失败: {e}")
 
 
 if __name__ == "__main__":
