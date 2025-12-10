@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_23_router_run2",
+  "case_id": "constructed_23",
+  "case_name": "AttributeError - 跨文件类属性错误",
+  "agent": "router",
+  "run_num": 2,
+  "source": "constructed",
+  "error_type": "AttributeError",
+  "success": true,
+  "time": 8.34646201133728,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nAttributeError: 'User' object has no attribute 'age'\n",
+  "timestamp": "2025-11-28T23:18:27.085339"
+}

@@ -58,7 +58,8 @@ class RAGSearcher:
 
         # 2. 初始化Embedder
         try:
-            self.embedder = Embedder(
+            from src.rag.embedder import get_embedder_instance
+            self.embedder = get_embedder_instance(
                 model_name="BAAI/bge-small-en-v1.5"
             )
             logger.info("Embedder初始化成功")

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "pandas_108",
+    "project_path": "mock_projects/pandas_108",
+    "error_file": "pandas/core/dtypes/cast.py",
+    "undefined_name": "IntervalDtype",
+    "expected_import": "from .dtypes import IntervalDtype"
+  },
+  {
+    "id": "pandas_114",
+    "project_path": "mock_projects/pandas_114",
+    "error_file": "pandas/core/indexes/base.py",
+    "undefined_name": "extract_array",
+    "expected_import": "from pandas.core.construction import extract_array"
+  },
+  {
+    "id": "pandas_118",
+    "project_path": "mock_projects/pandas_118",
+    "error_file": "pandas/core/reshape/melt.py",
+    "undefined_name": "com",
+    "expected_import": "import pandas.core.common as com"
+  },
+  {
+    "id": "scrapy_9",
+    "project_path": "mock_projects/scrapy_9",
+    "error_file": "scrapy/mail.py",
+    "undefined_name": "arg_to_iter",
+    "expected_import": "from .utils.misc import arg_to_iter"
+  }
+]

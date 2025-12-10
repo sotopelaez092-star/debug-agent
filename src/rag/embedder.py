@@ -4,6 +4,28 @@ from typing import List, Dict
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
+# ============ 全局单例 ============
+_global_embedder_instance = None
+
+def get_embedder_instance(model_name: str = "BAAI/bge-small-en-v1.5") -> 'Embedder':
+    """
+    获取全局Embedder单例
+    
+    Args:
+        model_name: 模型名称
+        
+    Returns:
+        Embedder实例（全局唯一）
+    """
+    global _global_embedder_instance
+    
+    if _global_embedder_instance is None:
+        print(f"🔧 首次创建Embedder单例...")
+        _global_embedder_instance = Embedder(model_name)
+    else:
+        print(f"✅ 复用已有的Embedder实例")
+    
+    return _global_embedder_instance
 class Embedder:
     """初始化Embedding生成器"""
 

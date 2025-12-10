@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_8_router_run1",
+  "case_id": "constructed_8",
+  "case_name": "TypeError - 不可哈希类型作为字典key",
+  "agent": "router",
+  "run_num": 1,
+  "source": "constructed",
+  "error_type": "TypeError",
+  "success": true,
+  "time": 7.6873321533203125,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nTypeError: unhashable type: 'list'\n",
+  "timestamp": "2025-11-28T23:10:42.813860"
+}

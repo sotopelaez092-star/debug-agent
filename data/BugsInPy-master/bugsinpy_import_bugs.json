@@ -1,0 +1,112 @@
+[
+  {
+    "project": "pandas",
+    "bug_id": 108,
+    "modified_files": [
+      "pandas/core/dtypes/cast.py"
+    ],
+    "added_imports": [
+      "from .dtypes import DatetimeTZDtype, ExtensionDtype, IntervalDtype, PeriodDtype"
+    ],
+    "test_command": "pytest pandas/tests/dtypes/cast/test_infer_dtype.py::test_infer_from_interval",
+    "description": "pandas Bug 108 - Missing import"
+  },
+  {
+    "project": "pandas",
+    "bug_id": 113,
+    "modified_files": [
+      "pandas/conftest.py",
+      "pandas/core/arrays/integer.py"
+    ],
+    "added_imports": [
+      "from pandas.core.ops import invalid_comparison"
+    ],
+    "test_command": "pytest pandas/tests/extension/test_integer.py::TestComparisonOps::test_compare_to_string \npytest pandas/tests/extension/test_integer.py::TestComparisonOps::test_compare_to_int",
+    "description": "pandas Bug 113 - Missing import"
+  },
+  {
+    "project": "pandas",
+    "bug_id": 114,
+    "modified_files": [
+      "pandas/core/indexes/base.py"
+    ],
+    "added_imports": [
+      "from pandas.core.construction import extract_array"
+    ],
+    "test_command": "pytest pandas/tests/extension/decimal/test_decimal.py::test_indexing_no_materialize",
+    "description": "pandas Bug 114 - Missing import"
+  },
+  {
+    "project": "pandas",
+    "bug_id": 118,
+    "modified_files": [
+      "pandas/core/reshape/melt.py"
+    ],
+    "added_imports": [
+      "import pandas.core.common as com"
+    ],
+    "test_command": "pytest pandas/tests/reshape/test_melt.py::TestMelt::test_melt_mixed_int_str_id_vars \npytest pandas/tests/reshape/test_melt.py::TestMelt::test_melt_mixed_int_str_value_vars",
+    "description": "pandas Bug 118 - Missing import"
+  },
+  {
+    "project": "fastapi",
+    "bug_id": 7,
+    "modified_files": [
+      "fastapi/exception_handlers.py"
+    ],
+    "added_imports": [
+      "from fastapi.encoders import jsonable_encoder"
+    ],
+    "test_command": "pytest tests/test_multi_body_errors.py::test_jsonable_encoder_requiring_error",
+    "description": "fastapi Bug 7 - Missing import"
+  },
+  {
+    "project": "scrapy",
+    "bug_id": 3,
+    "modified_files": [
+      "scrapy/downloadermiddlewares/redirect.py"
+    ],
+    "added_imports": [
+      "from six.moves.urllib.parse import urljoin, urlparse"
+    ],
+    "test_command": "python -m unittest -q tests.test_downloadermiddleware_redirect.RedirectMiddlewareTest.test_redirect_302_relative",
+    "description": "scrapy Bug 3 - Missing import"
+  },
+  {
+    "project": "scrapy",
+    "bug_id": 7,
+    "modified_files": [
+      "scrapy/http/request/form.py"
+    ],
+    "added_imports": [
+      "import six",
+      "from w3lib.html import strip_html5_whitespace"
+    ],
+    "test_command": "python -m unittest -q tests.test_http_request.FormRequestTest.test_spaces_in_action",
+    "description": "scrapy Bug 7 - Missing import"
+  },
+  {
+    "project": "scrapy",
+    "bug_id": 9,
+    "modified_files": [
+      "scrapy/mail.py"
+    ],
+    "added_imports": [
+      "from .utils.misc import arg_to_iter"
+    ],
+    "test_command": "python -m unittest -q tests.test_mail.MailSenderTest.test_send_single_values_to_and_cc",
+    "description": "scrapy Bug 9 - Missing import"
+  },
+  {
+    "project": "scrapy",
+    "bug_id": 10,
+    "modified_files": [
+      "scrapy/downloadermiddlewares/redirect.py"
+    ],
+    "added_imports": [
+      "from w3lib.url import safe_url_string"
+    ],
+    "test_command": "python -m unittest -q tests.test_downloadermiddleware_redirect.RedirectMiddlewareTest.test_latin1_location\npython -m unittest -q tests.test_downloadermiddleware_redirect.RedirectMiddlewareTest.test_utf8_location",
+    "description": "scrapy Bug 10 - Missing import"
+  }
+]

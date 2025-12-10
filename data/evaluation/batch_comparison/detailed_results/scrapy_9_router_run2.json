@@ -1,0 +1,16 @@
+{
+  "test_id": "scrapy_9_router_run2",
+  "case_id": "scrapy_9",
+  "case_name": "Real: scrapy_9",
+  "agent": "router",
+  "run_num": 2,
+  "source": "bugsinpy",
+  "error_type": "Unknown",
+  "success": true,
+  "time": 22.99849820137024,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"scrapy/mail.py\", line 10, in <module>\n    some_function()\nNameError: name 'arg_to_iter' is not defined\n",
+  "timestamp": "2025-11-28T23:30:26.929813"
+}

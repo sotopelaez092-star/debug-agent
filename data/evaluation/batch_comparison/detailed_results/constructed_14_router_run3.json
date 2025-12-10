@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_14_router_run3",
+  "case_id": "constructed_14",
+  "case_name": "IndexError - 列表索引越界",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "IndexError",
+  "success": true,
+  "time": 8.96238088607788,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nIndexError: list index out of range\n",
+  "timestamp": "2025-11-28T23:13:47.824772"
+}

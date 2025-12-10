@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_10_router_run3",
+  "case_id": "constructed_10",
+  "case_name": "AttributeError - 错误的属性名",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "AttributeError",
+  "success": true,
+  "time": 6.321685075759888,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nAttributeError: 'str' object has no attribute 'uppper'\n",
+  "timestamp": "2025-11-28T23:11:51.581662"
+}

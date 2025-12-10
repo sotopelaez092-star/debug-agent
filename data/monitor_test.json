@@ -1,0 +1,23 @@
+{
+  "executions": [
+    {
+      "error_type": "NameError",
+      "success": true,
+      "attempts": 1,
+      "total_time": 8.865411281585693,
+      "stage_times": {
+        "error_identification": 0.00043487548828125,
+        "rag_search": 0.9070620536804199,
+        "code_fixing": 7.568437814712524,
+        "docker_execution": 0.389117956161499
+      },
+      "total_tokens": 1015,
+      "prompt_tokens": 873,
+      "completion_tokens": 142,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T11:25:33.314261"
+    }
+  ],
+  "start_time": "2025-12-01T11:25:24.448639",
+  "save_time": "2025-12-01T11:25:33.314500"
+}

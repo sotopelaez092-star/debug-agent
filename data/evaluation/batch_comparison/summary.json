@@ -1,0 +1,75 @@
+{
+  "timestamp": "2025-11-28T23:33:13.968613",
+  "config": {
+    "num_runs": 3,
+    "total_cases": 34,
+    "total_tests": 204
+  },
+  "overall": {
+    "router": {
+      "total_runs": 102,
+      "success_count": 102,
+      "success_rate": 100.0,
+      "avg_time": 11.13075279488283,
+      "min_time": 6.294654130935669,
+      "max_time": 44.4593608379364
+    },
+    "react": {
+      "total_runs": 102,
+      "success_count": 101,
+      "success_rate": 99.01960784313727,
+      "avg_time": 47.247891821113285,
+      "min_time": 23.719698190689087,
+      "max_time": 394.9480321407318
+    }
+  },
+  "by_source": {
+    "router": {
+      "constructed": {
+        "total_runs": 90,
+        "success_count": 90,
+        "success_rate": 100.0,
+        "avg_time": 9.082816908094618,
+        "min_time": 6.294654130935669,
+        "max_time": 18.665241718292236
+      },
+      "bugsinpy": {
+        "total_runs": 12,
+        "success_count": 12,
+        "success_rate": 100.0,
+        "avg_time": 26.490271945794422,
+        "min_time": 16.039442777633667,
+        "max_time": 44.4593608379364
+      }
+    },
+    "react": {
+      "constructed": {
+        "total_runs": 90,
+        "success_count": 90,
+        "success_rate": 100.0,
+        "avg_time": 32.77087380886078,
+        "min_time": 23.719698190689087,
+        "max_time": 118.46538305282593
+      },
+      "bugsinpy": {
+        "total_runs": 12,
+        "success_count": 11,
+        "success_rate": 91.66666666666666,
+        "avg_time": 155.8255269130071,
+        "min_time": 62.628840923309326,
+        "max_time": 394.9480321407318
+      }
+    }
+  },
+  "failures": {
+    "router": [],
+    "react": [
+      "pandas_108_react_run1"
+    ]
+  },
+  "failure_by_error_type": {
+    "Unknown": [
+      "pandas_108_react_run1"
+    ]
+  }
+}

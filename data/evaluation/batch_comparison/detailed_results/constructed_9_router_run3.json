@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_9_router_run3",
+  "case_id": "constructed_9",
+  "case_name": "AttributeError - None对象",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "AttributeError",
+  "success": true,
+  "time": 8.09136700630188,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nAttributeError: 'NoneType' object has no attribute 'name'\n",
+  "timestamp": "2025-11-28T23:11:27.628522"
+}

@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_1_router_run1",
+  "case_id": "constructed_1",
+  "case_name": "NameError - 变量拼写错误",
+  "agent": "router",
+  "run_num": 1,
+  "source": "constructed",
+  "error_type": "NameError",
+  "success": true,
+  "time": 14.06142807006836,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nNameError: name 'nme' is not defined\n",
+  "timestamp": "2025-11-28T23:07:56.286770"
+}

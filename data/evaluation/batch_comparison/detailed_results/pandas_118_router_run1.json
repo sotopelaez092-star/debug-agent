@@ -1,0 +1,16 @@
+{
+  "test_id": "pandas_118_router_run1",
+  "case_id": "pandas_118",
+  "case_name": "Real: pandas_118",
+  "agent": "router",
+  "run_num": 1,
+  "source": "bugsinpy",
+  "error_type": "Unknown",
+  "success": true,
+  "time": 44.4593608379364,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"pandas/core/reshape/melt.py\", line 10, in <module>\n    some_function()\nNameError: name 'com' is not defined\n",
+  "timestamp": "2025-11-28T23:28:44.152292"
+}

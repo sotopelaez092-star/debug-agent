@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_11_router_run1",
+  "case_id": "constructed_11",
+  "case_name": "AttributeError - 列表没有该方法",
+  "agent": "router",
+  "run_num": 1,
+  "source": "constructed",
+  "error_type": "AttributeError",
+  "success": true,
+  "time": 8.1616530418396,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nAttributeError: 'list' object has no attribute 'add'\n",
+  "timestamp": "2025-11-28T23:12:07.687301"
+}

@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_24_router_run3",
+  "case_id": "constructed_24",
+  "case_name": "AttributeError - 跨文件方法名错误",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "AttributeError",
+  "success": true,
+  "time": 8.030094146728516,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nAttributeError: 'Calculator' object has no attribute 'add'\n",
+  "timestamp": "2025-11-28T23:18:55.507871"
+}

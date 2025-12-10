@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_16_router_run3",
+  "case_id": "constructed_16",
+  "case_name": "NameError - 跨文件函数未import",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "NameError",
+  "success": true,
+  "time": 8.0400230884552,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nNameError: name 'calculate' is not defined\n",
+  "timestamp": "2025-11-28T23:14:43.657293"
+}

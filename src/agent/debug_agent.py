@@ -8,11 +8,12 @@ from src.agent.tools.error_identifier import ErrorIdentifier
 from src.agent.tools.rag_searcher import RAGSearcher
 from src.agent.tools.code_fixer import CodeFixer
 from src.agent.tools.docker_executor  import DockerExecutor
-
+from src.agent.performance_monitor import PerformanceMonitor
 
 
 from typing import Dict, List, Optional, Any
 
+import time
 import logging
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,8 @@ class DebugAgent:
         self.rag_searcher = RAGSearcher()
         self.code_fixer = CodeFixer(api_key=api_key)
         self.docker_executor = DockerExecutor()
-        
+        self.monitor = PerformanceMonitor()
+      
         logger.info("Debug Agent初始化完成")
 
     def debug(
@@ -83,6 +85,20 @@ class DebugAgent:
             ValueError: 如果输入参数无效
             RuntimeError: 如果修复或执行过程中发生错误
         """
+    
+        # 总开始时间
+        total_start = time.time()
+        
+        # 各阶段时间
+        stage_times = {}
+        code_fixing_time = 0
+        docker_time = 0
+        token_stats = {
+            "total_tokens": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "llm_calls": 0
+        }
 
         # 1. 输入验证
         logger.info("开始Debug流程...")
@@ -100,11 +116,14 @@ class DebugAgent:
         logger.info("步骤1: 识别错误类型...")
 
         try:
+            start = time.time()
             error_info = self.error_identifier.identify(error_traceback)
+            stage_times["error_identification"] = time.time() - start
             logger.info(f"错误识别完成，错误类型: {error_info['error_type']}")
         except Exception as e:
             logger.error(f"错误识别失败: {e}", exc_info=True)
             raise RuntimeError(f"错误识别失败: {e}")
+        
 
         # 3. 提取上下文（如果有ContextManager）
         context = None
@@ -117,12 +136,14 @@ class DebugAgent:
                     error_info['error_message']
                 )
                 
+                start = time.time()
                 context = self.context_manager.get_context_for_error(
                     error_file=error_file,
                     error_line=error_info.get('line', 1),
                     error_type=error_info['error_type'],
                     undefined_name=undefined_name
                 )
+                stage_times["error_identification"] = time.time() - start
                 
                 logger.info(f"找到 {len(context.get('related_symbols', {}))} 个相关符号")
             except Exception as e:
@@ -136,10 +157,12 @@ class DebugAgent:
 
         try:
             query = f"{error_info['error_type']}: {error_info['error_message']}"
+            start = time.time()
             solutions = self.rag_searcher.search(
                 query=query,
                 top_k=10
             )
+            stage_times["rag_search"] = time.time() - start
             logger.info(f"检索到{len(solutions)}个解决方案")
         except Exception as e:
             logger.error(f"RAG检索失败: {e}", exc_info=True)
@@ -178,12 +201,22 @@ class DebugAgent:
 
             # 5.1 调用CodeFixer生成修复（⭐ 始终基于原始代码）
             try:
+                start = time.time()
                 fixed_result = self.code_fixer.fix_code(
                     buggy_code=buggy_code,  # ⭐ 关键：始终是原始代码，不是上次的修复！
                     error_message=current_error,
                     context=context,
                     rag_solutions=solutions if i == 0 else None  # 只在第一次提供RAG方案
                 )
+                code_fixing_time += time.time() - start
+                stage_times["code_fixing"] = code_fixing_time
+
+                # 累计Token ← 关键！
+                if "tokens" in fixed_result:
+                    token_stats["total_tokens"] += fixed_result["tokens"]["total_tokens"]
+                    token_stats["prompt_tokens"] += fixed_result["tokens"]["prompt_tokens"]
+                    token_stats["completion_tokens"] += fixed_result["tokens"]["completion_tokens"]
+                    token_stats["llm_calls"] += 1
 
                 fixed_code = fixed_result["fixed_code"]
                 explanation = fixed_result["explanation"]
@@ -218,11 +251,14 @@ class DebugAgent:
                     related_files = context['related_files']
 
                 # 调用新方法
+                start = time.time()
                 verification = self.docker_executor.execute_with_context(
                     main_code=fixed_code,
                     related_files=related_files,
                     main_filename="main.py"
                 )
+                docker_time += time.time() - start
+                stage_times["docker_execution"] = docker_time
                 logger.info(f"验证完成，成功: {verification['success']}")
 
             except Exception as e:
@@ -280,6 +316,18 @@ class DebugAgent:
             changes = []
             execution_result = attempts[-1].get('execution_result', {}) if attempts else {} 
         
+        # 计算总时间
+        total_time = time.time() - total_start
+
+        # 记录到监控器
+        self.monitor.record_execution({
+            "error_type": error_info["error_type"],
+            "success": success,
+            "attempts": len(attempts),
+            "total_time": total_time,
+            "stage_times": stage_times,
+            **token_stats
+        })
         return {
             "success": success,
             "original_error": error_info,
@@ -288,6 +336,8 @@ class DebugAgent:
             "final_code": final_code,
             "total_attempts": len(attempts)
         }
+
+        
 
     def _format_failure_history(self, failure_history: List[Dict]) -> str:
         """

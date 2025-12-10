@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_6_router_run2",
+  "case_id": "constructed_6",
+  "case_name": "TypeError - 字符串和整数相加",
+  "agent": "router",
+  "run_num": 2,
+  "source": "constructed",
+  "error_type": "TypeError",
+  "success": true,
+  "time": 7.020559072494507,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nTypeError: can only concatenate str (not 'int') to str\n",
+  "timestamp": "2025-11-28T23:09:59.672938"
+}

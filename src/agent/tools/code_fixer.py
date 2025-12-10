@@ -7,8 +7,9 @@ import os
 import logging
 from typing import Dict, List, Optional, Any
 from dotenv import load_dotenv
-from openai import OpenAI
 
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
 # 加载环境变量
 load_dotenv()
 
@@ -56,9 +57,15 @@ class CodeFixer:
         self.max_tokens = max_tokens
 
         # 4. 初始化OpenAI客户端（DeepSeek兼容OpenAI接口）
-        self.client = OpenAI(
+        self.llm = ChatOpenAI(
+            model=model,
             api_key=self.api_key,
-            base_url="https://api.deepseek.com/v1"
+            base_url="https://api.deepseek.com/v1",
+            temperature=temperature,
+            max_tokens=max_tokens,
+            model_kwargs={
+                "response_format": {"type": "json_object"}  # 可选：强制JSON输出
+            }
         )
 
         # 5. 记录日志
@@ -91,6 +98,10 @@ class CodeFixer:
                 - fixed_code: 修复后的代码
                 - explanation: 修复说明
                 - changes: 变更列表
+                - tokens: Token使用统计 
+                    - prompt_tokens: 输入Token数
+                    - completion_tokens: 输出Token数
+                    - total_tokens: 总Token数
                 
         Raises:
             ValueError: 如果输入参数无效
@@ -110,24 +121,18 @@ class CodeFixer:
         
         # 3. 调用LLM
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "你是一个专业的Python代码调试专家。"
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                temperature=0.3,
-                max_tokens=2000
-            )
+            # 构建消息
+            messages = [
+                SystemMessage(content="你是一个专业的Python代码调试专家。"),
+                HumanMessage(content=prompt)
+            ]
             
-            response_text = response.choices[0].message.content
+            # 调用LLM（自动追踪到LangSmith）
+            response = self.llm.invoke(messages)
+            
+            response_text = response.content
             logger.info("LLM响应成功")
+            
 
         except Exception as e:
             logger.error(f"LLM调用失败: {e}", exc_info=True)
@@ -135,13 +140,41 @@ class CodeFixer:
         
         # 4. 解析响应
         try:
+            
             result = self._parse_response(response_text)
-            logger.info("修复代码生成成功")
+
+            # ✅ 修改4: Token信息（LangChain可能有usage_metadata）
+            if hasattr(response, 'usage_metadata') and response.usage_metadata:
+                result["tokens"] = {
+                    "prompt_tokens": response.usage_metadata.get('input_tokens', 0),
+                    "completion_tokens": response.usage_metadata.get('output_tokens', 0),
+                    "total_tokens": response.usage_metadata.get('total_tokens', 0)
+                }
+                logger.info(
+                    f"修复代码生成成功，使用Token: {result['tokens']['total_tokens']}"
+                )
+            elif hasattr(response, 'response_metadata') and 'token_usage' in response.response_metadata:
+                # 备选：有些模型把token信息放在response_metadata中
+                token_usage = response.response_metadata['token_usage']
+                result["tokens"] = {
+                    "prompt_tokens": token_usage.get('prompt_tokens', 0),
+                    "completion_tokens": token_usage.get('completion_tokens', 0),
+                    "total_tokens": token_usage.get('total_tokens', 0)
+                }
+                logger.info(
+                    f"修复代码生成成功，使用Token: {result['tokens']['total_tokens']}"
+                )
+            else:
+                # 如果没有token信息，不报错，只记录
+                result["tokens"] = None
+                logger.info("修复代码生成成功（Token信息不可用）")
+
             return result
             
         except Exception as e:
             logger.error(f"解析LLM响应失败: {e}", exc_info=True)
             raise RuntimeError(f"解析LLM响应失败: {e}")
+            
 
     def _build_prompt(
         self,
@@ -211,7 +244,7 @@ class CodeFixer:
         if context and context.get("related_symbols"):
             prompt_parts.append("# 相关符号定义（项目中找到的）")
             
-            # ✅ 修改：正确遍历字典 - .items() 返回 (key, value) 元组
+            #  ✅ 修改：正确遍历字典 - .items() 返回 (key, value) 元组
             for symbol_name, symbol_info in context["related_symbols"].items():
                 symbol_type = symbol_info.get('type', 'unknown')
                 symbol_file = symbol_info.get('file', 'unknown')
@@ -248,28 +281,58 @@ class CodeFixer:
             
             prompt_parts.append("")
         
-        # 6. ✅ 加强的任务说明
+        # 6. ✅ 加强的任务说明 + 禁止相对导入
         prompt_parts.append("# 请修复代码")
         prompt_parts.append("""
     请仔细分析上述错误，并提供修复方案。
 
     ⚠️ 重要检查清单（必须逐项检查）：
-    1. **检查所有未定义的名称**：不只是错误提示的那个，要找出代码中所有未定义的变量、函数、类
-    2. **检查所有需要import的模块**：如果有多个函数/类需要导入，一次性全部导入
-    3. **检查类的方法名**：如果类没有某个方法，查看"相关符号定义"中的类完整定义，找到正确的方法名
-    4. **检查函数参数**：如果函数调用时参数未定义，要先定义参数
-    5. **一次性修复所有问题**：不要只修复第一个错误，要确保代码能完整运行
+    1. 检查所有未定义的名称：不只是错误提示的那个，要找出代码中所有未定义的变量、函数、类
+    2. 检查所有需要import的模块：如果有多个函数/类需要导入，一次性全部导入
+    3. 检查类的方法名：如果类没有某个方法，查看"相关符号定义"中的类完整定义，找到正确的方法名
+    4. 检查函数参数：如果函数调用时参数未定义，要先定义参数
+    5. 一次性修复所有问题：不要只修复第一个错误，要确保代码能完整运行
 
-    修复要求：
-    - 优先使用"相关符号定义"和"Import建议"中提供的信息
-    - 如果类没有某个方法，不要猜测，查看类的完整定义
+    🚫 关键限制 - 禁止相对导入：
+    - 代码将在独立的Docker容器中执行，**绝对不能使用相对导入**
+    - ❌ 禁止：`from . import xxx` 或 `from .module import xxx`
+    - ❌ 禁止：`from .. import xxx`
+    - ✅ 允许：绝对导入（如果环境中有该模块，如 `import json`）
+    - ✅ 推荐：直接在代码中定义缺失的类/函数（从"相关符号定义"中复制完整实现）
+
+    如果遇到缺失的类/函数：
+    1. 首选：查看"相关符号定义"，如果有完整定义，直接复制到代码开头
+    2. 次选：如果是简单的工具函数（如arg_to_iter、flatten），在代码中自己实现
+    3. 最后：如果必须导入外部模块，使用绝对导入，但要意识到可能失败
+
+    🚫 关键限制 - 禁止第三方库：
+    - Docker环境是最小化Python环境，**没有安装第三方库**
+    - ❌ 禁止：`import numpy`, `import pandas`, `import scipy`, `import requests`, etc.
+    - ❌ 如果buggy_code中有这些导入，必须移除
+    - ✅ 允许：Python标准库（os, sys, json, re, collections, itertools, etc.）
+    - ✅ 推荐：用标准库实现相同功能，或提供简化版本
+
+    如果buggy_code导入了第三方库：
+    1. **移除所有第三方库的import语句**
+    2. 用Python标准库重新实现需要的功能
+    3. 如果功能太复杂，提供能演示修复思路的简化版本
+    4. 在explanation中说明移除了哪些导入，如何替代
+
+    示例：
+    ❌ BAD: import numpy as np; arr = np.array([1,2,3])
+    ✅ GOOD: # 移除numpy导入，使用内置list
+            arr = [1, 2, 3]
+
+    修复策略：
+    - 生成的代码必须能在没有包结构的环境中独立运行
+    - 优先复制"相关符号定义"中的完整实现，而不是尝试导入
     - 提供完整的、可直接运行的修复代码
     - 清晰解释修复思路
     - 列出所有具体修改点
 
     请以JSON格式返回：
     {
-        "fixed_code": "完整的修复后代码（确保可以直接运行）",
+        "fixed_code": "完整的修复后代码（确保可以直接运行，不依赖相对导入）",
         "explanation": "详细说明修复了哪些问题，为什么这样修复",
         "changes": ["修改1: 具体说明", "修改2: 具体说明", ...]
     }

@@ -10,6 +10,9 @@ import ast
 import logging
 from pathlib import Path
 from typing import Dict, List, Set, Optional, Any, Tuple, Union
+import pickle  # 用于序列化缓存
+import hashlib  # 用于生成缓存键
+import time  # 用于记录时间戳
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +41,9 @@ INCLUDE_EXTENSIONS = {'.py'}  # 暂时只处理Python文件
 # 文件大小限制（避免处理过大的文件）
 MAX_FILE_SIZE = 1 * 1024 * 1024  # 1MB
 
+# 缓存配置
+CACHE_DIR = '.ai_debug_cache'  # 缓存目录名
+CACHE_VERSION = 'v1'  # 缓存版本（如果数据结构改变，可以递增）
 
 class ContextManager:
     """
@@ -56,12 +62,13 @@ class ContextManager:
         import_graph: 导入依赖图 {文件: import信息}
     """
     
-    def __init__(self, project_path: str):
+    def __init__(self, project_path: str, use_cache: bool = True):
         """
         初始化上下文管理器
         
         Args:
             project_path: 项目根目录的路径
+            use_cache: 是否使用缓存（默认True）
             
         Raises:
             ValueError: 如果project_path无效
@@ -96,20 +103,43 @@ class ContextManager:
         # 记录扫描过程中的错误
         self.scan_errors: List[Dict[str, str]] = []
         
+        # 缓存配置
+        self.use_cache = use_cache
+        self.cache_key = self._generate_cache_key(self.project_path)
+        self.cache_file = self._get_cache_file_path()
+
         logger.info(f"初始化ContextManager, 项目路径: {self.project_path}")
-        
-        # 自动执行扫描
-        try:
-            self._scan_project()
-            self._build_symbol_table()
-            self._build_import_graph()
-        except Exception as e:
-            logger.error(f"项目扫描失败: {e}", exc_info=True)
-            # 不抛出异常，允许部分失败
-            self.scan_errors.append({
-                'error': 'scan_failed',
-                'message': str(e)
-            })
+
+        # 尝试从缓存加载
+        cache_loaded = False
+        if self.use_cache:
+            cache_loaded = self._load_from_cache()
+
+        # 如果缓存加载失败，执行扫描
+        if not cache_loaded:
+            try:
+                logger.info("开始扫描项目（无可用缓存）")
+                scan_start_time = time.time()
+                
+                self._scan_project()
+                self._build_symbol_table()
+                self._build_import_graph()
+                
+                scan_duration = time.time() - scan_start_time
+                logger.info(f"项目扫描完成，耗时: {scan_duration:.2f}秒")
+                
+                # 保存到缓存
+                self._save_to_cache()
+                
+            except Exception as e:
+                logger.error(f"项目扫描失败: {e}", exc_info=True)
+                # 不抛出异常，允许部分失败
+                self.scan_errors.append({
+                    'error': 'scan_failed',
+                    'message': str(e)
+                })
+        else:
+            logger.info("✅ 使用缓存数据，跳过扫描")
     
     def _is_ignored_dir(self, dir_name: str) -> bool:
         """
@@ -678,7 +708,7 @@ class ContextManager:
             print(f"  symbol_info type: {type(symbol_info)}")
             print(f"  symbol_info: {symbol_info}")
 
-            
+
         if file_path not in self.file_contents:
             logger.warning(f"文件不存在: {file_path}")
             return ""
@@ -1043,3 +1073,115 @@ class ContextManager:
                 }
         
         return summary
+
+
+    # ==================== 缓存相关方法 ====================
+    
+    def _generate_cache_key(self, project_path: str) -> str:
+        """
+        生成项目的缓存键（基于项目路径的MD5）
+        
+        Args:
+            project_path: 项目绝对路径
+            
+        Returns:
+            MD5哈希字符串
+        """
+        # 使用项目路径生成唯一键
+        path_hash = hashlib.md5(project_path.encode('utf-8')).hexdigest()
+        return f"{CACHE_VERSION}_{path_hash}"
+    
+    def _get_cache_file_path(self) -> str:
+        """
+        获取缓存文件的完整路径
+        
+        Returns:
+            缓存文件路径
+        """
+        # 在项目根目录下创建缓存目录
+        cache_dir = os.path.join(self.project_path, CACHE_DIR)
+        return os.path.join(cache_dir, f"{self.cache_key}.pkl")
+    
+    def _load_from_cache(self) -> bool:
+        """
+        从缓存加载数据
+        
+        Returns:
+            True如果成功加载，False如果缓存不存在或加载失败
+        """
+        if not self.use_cache:
+            logger.info("缓存已禁用，跳过加载")
+            return False
+        
+        if not os.path.exists(self.cache_file):
+            logger.info(f"缓存文件不存在: {self.cache_file}")
+            return False
+        
+        try:
+            logger.info(f"尝试从缓存加载: {self.cache_file}")
+            start_time = time.time()
+            
+            with open(self.cache_file, 'rb') as f:
+                cached_data = pickle.load(f)
+            
+            # 恢复数据
+            self.file_contents = cached_data['file_contents']
+            self.symbol_table = cached_data['symbol_table']
+            self.import_graph = cached_data['import_graph']
+            self.scan_stats = cached_data['scan_stats']
+            self.scan_errors = cached_data['scan_errors']
+            
+            load_time = time.time() - start_time
+            logger.info(f"✅ 缓存加载成功，耗时: {load_time:.2f}秒")
+            logger.info(f"   文件数: {len(self.file_contents)}, 符号数: {len(self.symbol_table)}")
+            
+            return True
+            
+        except Exception as e:
+            logger.warning(f"缓存加载失败: {e}")
+            # 删除损坏的缓存文件
+            try:
+                os.remove(self.cache_file)
+                logger.info("已删除损坏的缓存文件")
+            except:
+                pass
+            return False
+    
+    def _save_to_cache(self) -> None:
+        """
+        保存数据到缓存
+        """
+        if not self.use_cache:
+            logger.info("缓存已禁用，跳过保存")
+            return
+        
+        try:
+            # 确保缓存目录存在
+            cache_dir = os.path.dirname(self.cache_file)
+            os.makedirs(cache_dir, exist_ok=True)
+            
+            logger.info(f"保存缓存到: {self.cache_file}")
+            start_time = time.time()
+            
+            # 准备要缓存的数据
+            cached_data = {
+                'file_contents': self.file_contents,
+                'symbol_table': self.symbol_table,
+                'import_graph': self.import_graph,
+                'scan_stats': self.scan_stats,
+                'scan_errors': self.scan_errors,
+                'cache_time': time.time()
+            }
+            
+            # 保存到临时文件，然后重命名（原子操作）
+            temp_file = self.cache_file + '.tmp'
+            with open(temp_file, 'wb') as f:
+                pickle.dump(cached_data, f, protocol=pickle.HIGHEST_PROTOCOL)
+            
+            os.replace(temp_file, self.cache_file)
+            
+            save_time = time.time() - start_time
+            logger.info(f"✅ 缓存保存成功，耗时: {save_time:.2f}秒")
+            
+        except Exception as e:
+            logger.error(f"缓存保存失败: {e}", exc_info=True)

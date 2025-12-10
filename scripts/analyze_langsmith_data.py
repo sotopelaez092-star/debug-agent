@@ -1,0 +1,385 @@
+"""
+从LangSmith导出数据并分析
+
+功能：
+1. 获取Session的所有traces
+2. 提取关键指标（Token、耗时、成本）
+3. 按错误类型、难度、类别统计
+4. 生成可视化图表
+5. 保存分析报告
+"""
+
+import os
+from datetime import datetime
+from typing import List, Dict
+import json
+from collections import defaultdict
+
+from langsmith import Client
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']  # macOS
+# plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows
+plt.rcParams['axes.unicode_minus'] = False
+
+class LangSmithAnalyzer:
+    """LangSmith数据分析器"""
+    
+    def __init__(self, api_key: str = None, project_name: str = "debug-agent-multi-agent"):
+        """
+        初始化
+        
+        Args:
+            api_key: LangSmith API Key (默认从环境变量读取)
+            project_name: 项目名称
+        """
+        self.client = Client(api_key=api_key)
+        self.project_name = project_name
+        self.traces = []
+        self.df = None
+    
+    def fetch_traces_by_session(self, session_id: str):
+        """
+        获取某个Session的所有traces
+        
+        Args:
+            session_id: Session ID，如 "batch_20251202_113047"
+        """
+        print(f"📥 正在从LangSmith获取数据...")
+        print(f"   Project: {self.project_name}")
+        print(f"   Session: {session_id}")
+        
+        # 构建filter
+        filter_str = f'has(tags, "session:{session_id}")'
+        
+        # 获取traces
+        runs = self.client.list_runs(
+            project_name=self.project_name,
+            filter=filter_str,
+            is_root=True  # 只获取根trace
+        )
+        
+        self.traces = list(runs)
+        print(f"✅ 成功获取 {len(self.traces)} 条traces")
+        
+        return self.traces
+    
+    def extract_metrics(self):
+        """提取关键指标"""
+        print("\n📊 提取关键指标...")
+        
+        data = []
+        
+        for run in self.traces:
+            # 基础信息
+            case_id = run.extra.get('metadata', {}).get('case_id', 'Unknown')
+            case_name = run.extra.get('metadata', {}).get('case_name', 'Unknown')
+            category = run.extra.get('metadata', {}).get('category', 'Unknown')
+            difficulty = run.extra.get('metadata', {}).get('difficulty', 'Unknown')
+            error_type = run.extra.get('metadata', {}).get('error_type', 'Unknown')
+            
+            # 性能指标
+            latency = run.latency if run.latency else 0  # 毫秒
+            latency_sec = latency / 1000  # 转秒
+            
+            # Token统计
+            total_tokens = run.total_tokens if run.total_tokens else 0
+            prompt_tokens = run.prompt_tokens if run.prompt_tokens else 0
+            completion_tokens = run.completion_tokens if run.completion_tokens else 0
+            
+            # 成功/失败
+            error = run.error if run.error else None
+            success = error is None
+            
+            # 成本估算（DeepSeek价格）
+            input_cost = prompt_tokens / 1_000_000 * 0.14
+            output_cost = completion_tokens / 1_000_000 * 0.28
+            total_cost = input_cost + output_cost
+            
+            data.append({
+                'case_id': case_id,
+                'case_name': case_name,
+                'category': category,
+                'difficulty': difficulty,
+                'error_type': error_type,
+                'success': success,
+                'latency_sec': round(latency_sec, 2),
+                'total_tokens': total_tokens,
+                'prompt_tokens': prompt_tokens,
+                'completion_tokens': completion_tokens,
+                'total_cost': round(total_cost, 6),
+                'run_id': str(run.id),
+                'trace_url': f"https://smith.langchain.com/public/{run.id}/r"
+            })
+        
+        self.df = pd.DataFrame(data)
+        print(f"✅ 提取完成，共 {len(self.df)} 条记录")
+        
+        return self.df
+    
+    def analyze_statistics(self) -> Dict:
+        """统计分析"""
+        if self.df is None or self.df.empty:
+            print("❌ 没有数据")
+            return {}
+        
+        print("\n📈 统计分析...")
+        
+        stats = {
+            'overall': {
+                'total_cases': len(self.df),
+                'successful': self.df['success'].sum(),
+                'failed': (~self.df['success']).sum(),
+                'success_rate': round(self.df['success'].mean() * 100, 2),
+                'avg_latency': round(self.df['latency_sec'].mean(), 2),
+                'total_tokens': int(self.df['total_tokens'].sum()),
+                'total_cost': round(self.df['total_cost'].sum(), 6)
+            },
+            'by_error_type': {},
+            'by_difficulty': {},
+            'by_category': {}
+        }
+        
+        # 按错误类型统计
+        for error_type in self.df['error_type'].unique():
+            subset = self.df[self.df['error_type'] == error_type]
+            stats['by_error_type'][error_type] = {
+                'total': len(subset),
+                'success_rate': round(subset['success'].mean() * 100, 2),
+                'avg_latency': round(subset['latency_sec'].mean(), 2),
+                'avg_tokens': int(subset['total_tokens'].mean())
+            }
+        
+        # 按难度统计
+        for difficulty in self.df['difficulty'].unique():
+            subset = self.df[self.df['difficulty'] == difficulty]
+            stats['by_difficulty'][difficulty] = {
+                'total': len(subset),
+                'success_rate': round(subset['success'].mean() * 100, 2),
+                'avg_latency': round(subset['latency_sec'].mean(), 2),
+                'avg_tokens': int(subset['total_tokens'].mean())
+            }
+        
+        # 按类别统计
+        for category in self.df['category'].unique():
+            subset = self.df[self.df['category'] == category]
+            stats['by_category'][category] = {
+                'total': len(subset),
+                'success_rate': round(subset['success'].mean() * 100, 2),
+                'avg_latency': round(subset['latency_sec'].mean(), 2),
+                'avg_tokens': int(subset['total_tokens'].mean())
+            }
+        
+        return stats
+    
+    def print_statistics(self, stats: Dict):
+        """打印统计结果"""
+        print("\n" + "="*60)
+        print("📊 LangSmith数据分析报告")
+        print("="*60)
+        
+        # 整体统计
+        overall = stats['overall']
+        print(f"\n【整体统计】")
+        print(f"  总案例数: {overall['total_cases']}")
+        print(f"  成功: {overall['successful']} ✅")
+        print(f"  失败: {overall['failed']} ❌")
+        print(f"  成功率: {overall['success_rate']}%")
+        print(f"  平均耗时: {overall['avg_latency']}秒")
+        print(f"  总Token数: {overall['total_tokens']:,}")
+        print(f"  总成本: ${overall['total_cost']:.6f}")
+        
+        # 按错误类型
+        print(f"\n【按错误类型】")
+        for error_type, data in stats['by_error_type'].items():
+            print(f"  {error_type}:")
+            print(f"    案例数: {data['total']}")
+            print(f"    成功率: {data['success_rate']}%")
+            print(f"    平均耗时: {data['avg_latency']}秒")
+        
+        # 按难度
+        print(f"\n【按难度】")
+        for difficulty, data in stats['by_difficulty'].items():
+            print(f"  {difficulty}:")
+            print(f"    案例数: {data['total']}")
+            print(f"    成功率: {data['success_rate']}%")
+            print(f"    平均耗时: {data['avg_latency']}秒")
+        
+        # 按类别
+        print(f"\n【按类别】")
+        for category, data in stats['by_category'].items():
+            print(f"  {category}:")
+            print(f"    案例数: {data['total']}")
+            print(f"    成功率: {data['success_rate']}%")
+            print(f"    平均耗时: {data['avg_latency']}秒")
+    
+    def visualize(self, output_dir: str = "data/evaluation/langsmith_analysis"):
+        """生成可视化图表"""
+        if self.df is None or self.df.empty:
+            print("❌ 没有数据")
+            return
+        
+        print(f"\n📊 生成可视化图表...")
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # 设置样式
+        sns.set_style("whitegrid")
+        
+        # 1. 按错误类型统计
+        plt.figure(figsize=(12, 6))
+        error_stats = self.df.groupby('error_type')['success'].agg(['count', 'mean'])
+        error_stats['mean'] = error_stats['mean'] * 100
+        
+        ax1 = plt.subplot(1, 2, 1)
+        error_stats['count'].plot(kind='bar', ax=ax1, color='steelblue')
+        plt.title('案例数 - 按错误类型', fontsize=14, fontweight='bold')
+        plt.xlabel('错误类型')
+        plt.ylabel('案例数')
+        plt.xticks(rotation=45, ha='right')
+        
+        ax2 = plt.subplot(1, 2, 2)
+        error_stats['mean'].plot(kind='bar', ax=ax2, color='green')
+        plt.title('成功率 - 按错误类型', fontsize=14, fontweight='bold')
+        plt.xlabel('错误类型')
+        plt.ylabel('成功率 (%)')
+        plt.xticks(rotation=45, ha='right')
+        plt.axhline(y=100, color='r', linestyle='--', alpha=0.3)
+        
+        plt.tight_layout()
+        plt.savefig(f"{output_dir}/by_error_type.png", dpi=300, bbox_inches='tight')
+        print(f"  ✅ {output_dir}/by_error_type.png")
+        plt.close()
+        
+        # 2. 按难度统计
+        plt.figure(figsize=(10, 6))
+        difficulty_stats = self.df.groupby('difficulty').agg({
+            'success': ['count', 'mean'],
+            'latency_sec': 'mean'
+        })
+        
+        ax = plt.subplot(1, 1, 1)
+        x = range(len(difficulty_stats))
+        width = 0.35
+        
+        counts = difficulty_stats['success']['count']
+        success_rates = difficulty_stats['success']['mean'] * 100
+        
+        ax.bar([i - width/2 for i in x], counts, width, label='案例数', color='steelblue')
+        ax2 = ax.twinx()
+        ax2.bar([i + width/2 for i in x], success_rates, width, label='成功率 (%)', color='green')
+        
+        ax.set_xlabel('难度')
+        ax.set_ylabel('案例数', color='steelblue')
+        ax2.set_ylabel('成功率 (%)', color='green')
+        ax.set_xticks(x)
+        ax.set_xticklabels(difficulty_stats.index)
+        
+        plt.title('案例数和成功率 - 按难度', fontsize=14, fontweight='bold')
+        ax.legend(loc='upper left')
+        ax2.legend(loc='upper right')
+        
+        plt.tight_layout()
+        plt.savefig(f"{output_dir}/by_difficulty.png", dpi=300, bbox_inches='tight')
+        print(f"  ✅ {output_dir}/by_difficulty.png")
+        plt.close()
+        
+        # 3. 耗时分布
+        plt.figure(figsize=(12, 5))
+        
+        plt.subplot(1, 2, 1)
+        plt.hist(self.df['latency_sec'], bins=20, color='skyblue', edgecolor='black')
+        plt.axvline(self.df['latency_sec'].mean(), color='red', linestyle='--', 
+                   label=f'平均: {self.df["latency_sec"].mean():.2f}s')
+        plt.xlabel('耗时 (秒)')
+        plt.ylabel('案例数')
+        plt.title('耗时分布', fontsize=14, fontweight='bold')
+        plt.legend()
+        
+        plt.subplot(1, 2, 2)
+        self.df.boxplot(column='latency_sec', by='difficulty', ax=plt.gca())
+        plt.xlabel('难度')
+        plt.ylabel('耗时 (秒)')
+        plt.title('耗时 - 按难度', fontsize=14, fontweight='bold')
+        plt.suptitle('')  # 移除默认标题
+        
+        plt.tight_layout()
+        plt.savefig(f"{output_dir}/latency_distribution.png", dpi=300, bbox_inches='tight')
+        print(f"  ✅ {output_dir}/latency_distribution.png")
+        plt.close()
+        
+        # 4. Token使用
+        plt.figure(figsize=(10, 6))
+        token_data = self.df.groupby('error_type')['total_tokens'].mean().sort_values(ascending=False)
+        token_data.plot(kind='barh', color='coral')
+        plt.xlabel('平均Token数')
+        plt.ylabel('错误类型')
+        plt.title('Token使用 - 按错误类型', fontsize=14, fontweight='bold')
+        plt.tight_layout()
+        plt.savefig(f"{output_dir}/token_usage.png", dpi=300, bbox_inches='tight')
+        print(f"  ✅ {output_dir}/token_usage.png")
+        plt.close()
+        
+        print(f"\n✅ 所有图表已保存到: {output_dir}/")
+    
+    def save_report(self, stats: Dict, output_file: str = "data/evaluation/langsmith_analysis/report.json"):
+        """保存分析报告"""
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        
+        report = {
+            'timestamp': datetime.now().isoformat(),
+            'project': self.project_name,
+            'statistics': stats,
+            'raw_data': self.df.to_dict('records') if self.df is not None else []
+        }
+        
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        print(f"\n💾 分析报告已保存: {output_file}")
+        
+        # 同时保存CSV
+        csv_file = output_file.replace('.json', '.csv')
+        if self.df is not None:
+            self.df.to_csv(csv_file, index=False, encoding='utf-8')
+            print(f"💾 原始数据已保存: {csv_file}")
+
+
+def main():
+    """主函数"""
+    # Session ID（从你的测试结果获取）
+    session_id = "batch_20251202_113047"
+
+    # ✅ 直接硬编码API Key（临时测试用）
+    api_key = "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"
+    
+    # 初始化分析器
+    analyzer = LangSmithAnalyzer()
+    
+    # 1. 获取traces
+    analyzer.fetch_traces_by_session(session_id)
+    
+    # 2. 提取指标
+    df = analyzer.extract_metrics()
+    
+    # 3. 统计分析
+    stats = analyzer.analyze_statistics()
+    
+    # 4. 打印结果
+    analyzer.print_statistics(stats)
+    
+    # 5. 可视化
+    analyzer.visualize()
+    
+    # 6. 保存报告
+    analyzer.save_report(stats)
+    
+    print("\n" + "="*60)
+    print("✅ 分析完成！")
+    print("="*60)
+
+
+if __name__ == "__main__":
+    main()

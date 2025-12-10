@@ -1,0 +1,116 @@
+{
+  "executions": [
+    {
+      "error_type": "NameError",
+      "success": true,
+      "total_time": 7.5,
+      "attempts": 1,
+      "total_tokens": 1250,
+      "prompt_tokens": 800,
+      "completion_tokens": 450,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346374"
+    },
+    {
+      "error_type": "NameError",
+      "success": true,
+      "total_time": 6.2,
+      "attempts": 1,
+      "total_tokens": 1100,
+      "prompt_tokens": 704,
+      "completion_tokens": 396,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346381"
+    },
+    {
+      "error_type": "ImportError",
+      "success": true,
+      "total_time": 8.1,
+      "attempts": 1,
+      "total_tokens": 1400,
+      "prompt_tokens": 896,
+      "completion_tokens": 504,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346386"
+    },
+    {
+      "error_type": "AttributeError",
+      "success": true,
+      "total_time": 7.8,
+      "attempts": 1,
+      "total_tokens": 1300,
+      "prompt_tokens": 832,
+      "completion_tokens": 468,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346391"
+    },
+    {
+      "error_type": "TypeError",
+      "success": false,
+      "total_time": 9.5,
+      "attempts": 3,
+      "total_tokens": 2100,
+      "prompt_tokens": 1344,
+      "completion_tokens": 756,
+      "llm_calls": 3,
+      "timestamp": "2025-12-01T10:46:49.346396"
+    },
+    {
+      "error_type": "NameError",
+      "success": true,
+      "total_time": 6.9,
+      "attempts": 1,
+      "total_tokens": 1150,
+      "prompt_tokens": 736,
+      "completion_tokens": 414,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346401"
+    },
+    {
+      "error_type": "ValueError",
+      "success": true,
+      "total_time": 7.2,
+      "attempts": 1,
+      "total_tokens": 1200,
+      "prompt_tokens": 768,
+      "completion_tokens": 432,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346405"
+    },
+    {
+      "error_type": "KeyError",
+      "success": true,
+      "total_time": 6.5,
+      "attempts": 1,
+      "total_tokens": 1050,
+      "prompt_tokens": 672,
+      "completion_tokens": 378,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346414"
+    },
+    {
+      "error_type": "IndexError",
+      "success": false,
+      "total_time": 10.2,
+      "attempts": 3,
+      "total_tokens": 2300,
+      "prompt_tokens": 1472,
+      "completion_tokens": 828,
+      "llm_calls": 3,
+      "timestamp": "2025-12-01T10:46:49.346420"
+    },
+    {
+      "error_type": "NameError",
+      "success": true,
+      "total_time": 7.1,
+      "attempts": 1,
+      "total_tokens": 1180,
+      "prompt_tokens": 755,
+      "completion_tokens": 424,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T10:46:49.346425"
+    }
+  ],
+  "start_time": "2025-12-01T10:46:49.346369",
+  "save_time": "2025-12-01T10:46:49.346519"
+}

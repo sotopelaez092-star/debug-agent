@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_21_router_run1",
+  "case_id": "constructed_21",
+  "case_name": "ImportError - 函数名错误",
+  "agent": "router",
+  "run_num": 1,
+  "source": "constructed",
+  "error_type": "ImportError",
+  "success": true,
+  "time": 9.699727773666382,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nImportError: cannot import name 'calcuate' from 'utils'\n",
+  "timestamp": "2025-11-28T23:16:59.116861"
+}

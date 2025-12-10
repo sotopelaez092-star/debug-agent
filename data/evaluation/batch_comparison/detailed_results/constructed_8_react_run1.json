@@ -1,0 +1,89 @@
+{
+  "test_id": "constructed_8_react_run1",
+  "case_id": "constructed_8",
+  "case_name": "TypeError - 不可哈希类型作为字典key",
+  "agent": "react",
+  "run_num": 1,
+  "source": "constructed",
+  "error_type": "TypeError",
+  "success": true,
+  "time": 35.12540078163147,
+  "iterations": 6,
+  "fixed_code": "d = {(1, 2): 'value'}\nprint(d)",
+  "react_history": [
+    {
+      "iteration": 1,
+      "llm_response": "Thought: 首先需要分析错误类型，看看是什么错误。从错误信息看是TypeError，具体是\"unhashable type: 'list'\"，说明列表不能作为字典的键。\nAction: analyze_error\nAction Input: {\"traceback\": \"Traceback (most recent call last):\\n  File \\\"main.py\\\", line 1, in <module>\\nTypeError: unhashable type: 'list'\\n\"}",
+      "action": {
+        "type": "action",
+        "tool": "analyze_error",
+        "params": {
+          "traceback": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nTypeError: unhashable type: 'list'\n"
+        }
+      },
+      "observation": "错误分析结果:\n- 错误类型: TypeError\n- 错误信息: unhashable type: 'list'\n- 文件: main.py\n- 行号: 1"
+    },
+    {
+      "iteration": 2,
+      "llm_response": "Thought: 这是TypeError，错误原因是列表不能作为字典的键，因为列表是可变的（mutable）对象，而字典的键必须是不可变的（immutable）和可哈希的（hashable）。我需要搜索相关的解决方案来了解如何修复这个问题。\nAction: search_solutions\nAction Input: {\"query\": \"Python TypeError unhashable type list dictionary key\", \"top_k\": 5}",
+      "action": {
+        "type": "action",
+        "tool": "search_solutions",
+        "params": {
+          "query": "Python TypeError unhashable type list dictionary key",
+          "top_k": 5
+        }
+      },
+      "observation": "找到 5 个相关解决方案:\n\n方案1 (相似度:0.84):\nHow to overcome TypeError: unhashable type: 'list' [duplicate]...\n\n方案2 (相似度:0.82):\nHow do I avoid KeyError when working with dictionaries?...\n\n方案3 (相似度:0.81):\nPython dictionary key error when assigning - how do I get around this?...\n"
+    },
+    {
+      "iteration": 3,
+      "llm_response": "Thought: 让我查看第一个解决方案，了解如何解决\"unhashable type: 'list'\"错误。\nAction: search_solutions\nAction Input: {\"query\": \"How to overcome TypeError: unhashable type: 'list' dictionary key immutable\", \"top_k\": 1}",
+      "action": {
+        "type": "action",
+        "tool": "search_solutions",
+        "params": {
+          "query": "How to overcome TypeError: unhashable type: 'list' dictionary key immutable",
+          "top_k": 1
+        }
+      },
+      "observation": "找到 1 个相关解决方案:\n\n方案1 (相似度:0.89):\nHow to overcome TypeError: unhashable type: 'list' [duplicate]...\n"
+    },
+    {
+      "iteration": 4,
+      "llm_response": "Thought: 现在我需要修复代码。根据TypeError的原因，列表不能作为字典键，我需要将列表转换为不可变类型。常见的解决方案是将列表转换为元组（tuple），因为元组是不可变的，可以作为字典键。\nAction: fix_code\nAction Input: {\n  \"buggy_code\": \"d = {[1, 2]: 'value'}\\nprint(d)\",\n  \"error_message\": \"TypeError: unhashable type: 'list'\"\n}",
+      "action": {
+        "type": "action",
+        "tool": "fix_code",
+        "params": {
+          "buggy_code": "d = {[1, 2]: 'value'}\nprint(d)",
+          "error_message": "TypeError: unhashable type: 'list'"
+        }
+      },
+      "observation": "代码修复完成:\n修复说明: 修复了TypeError: unhashable type: 'list'错误。在Python中，字典的键必须是可哈希的类型，而列表是可变类型，因此不可哈希。解决方案是将列表改为元组，因为元组是不可变类型，可以作为字典的键。\n变更: ['修改1: 将字典键从列表[1, 2]改为元组(1, 2)']\n修复后代码已保存，可以使用execute_code验证"
+    },
+    {
+      "iteration": 5,
+      "llm_response": "Thought: 修复完成，现在必须验证修复是否真的成功。让我执行修复后的代码来验证。\nAction: execute_code\nAction Input: {}",
+      "action": {
+        "type": "action",
+        "tool": "execute_code",
+        "params": {}
+      },
+      "observation": "✅ 执行成功!\n输出: {(1, 2): 'value'}\n"
+    },
+    {
+      "iteration": 6,
+      "llm_response": "Thought: 验证成功！代码已修复。我将列表[1, 2]转换为元组(1, 2)，因为元组是不可变类型，可以作为字典的键，这样就解决了TypeError: unhashable type: 'list'错误。\n\nFinal Answer: {\"fixed_code\": \"d = {(1, 2): 'value'}\\nprint(d)\", \"explanation\": \"修复了TypeError: unhashable type: 'list'错误。将列表[1, 2]改为元组(1, 2)，因为字典的键必须是不可变和可哈希的类型，而列表是可变类型不能作为字典键，元组是不可变类型可以作为字典键。\"}",
+      "action": {
+        "type": "final",
+        "result": {
+          "fixed_code": "d = {(1, 2): 'value'}\nprint(d)",
+          "explanation": "修复了TypeError: unhashable type: 'list'错误。将列表[1, 2]改为元组(1, 2)，因为字典的键必须是不可变和可哈希的类型，而列表是可变类型不能作为字典键，元组是不可变类型可以作为字典键。"
+        }
+      }
+    }
+  ],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nTypeError: unhashable type: 'list'\n",
+  "timestamp": "2025-11-28T23:11:32.132310"
+}

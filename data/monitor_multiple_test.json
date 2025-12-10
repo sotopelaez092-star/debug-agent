@@ -1,0 +1,57 @@
+{
+  "executions": [
+    {
+      "error_type": "NameError",
+      "success": true,
+      "attempts": 1,
+      "total_time": 8.308598041534424,
+      "stage_times": {
+        "error_identification": 0.00012803077697753906,
+        "rag_search": 0.6291279792785645,
+        "code_fixing": 7.447624206542969,
+        "docker_execution": 0.23128581047058105
+      },
+      "total_tokens": 1012,
+      "prompt_tokens": 864,
+      "completion_tokens": 148,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T11:25:41.723083"
+    },
+    {
+      "error_type": "TypeError",
+      "success": true,
+      "attempts": 1,
+      "total_time": 6.183375120162964,
+      "stage_times": {
+        "error_identification": 7.319450378417969e-05,
+        "rag_search": 0.11154389381408691,
+        "code_fixing": 5.861375093460083,
+        "docker_execution": 0.20999693870544434
+      },
+      "total_tokens": 973,
+      "prompt_tokens": 858,
+      "completion_tokens": 115,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T11:25:47.906535"
+    },
+    {
+      "error_type": "ZeroDivisionError",
+      "success": true,
+      "attempts": 1,
+      "total_time": 8.860805988311768,
+      "stage_times": {
+        "error_identification": 6.031990051269531e-05,
+        "rag_search": 0.12889409065246582,
+        "code_fixing": 8.533370733261108,
+        "docker_execution": 0.1979961395263672
+      },
+      "total_tokens": 1110,
+      "prompt_tokens": 912,
+      "completion_tokens": 198,
+      "llm_calls": 1,
+      "timestamp": "2025-12-01T11:25:56.767403"
+    }
+  ],
+  "start_time": "2025-12-01T11:25:33.414370",
+  "save_time": "2025-12-01T11:25:56.767715"
+}

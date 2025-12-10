@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_12_router_run3",
+  "case_id": "constructed_12",
+  "case_name": "KeyError - 字典key不存在",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "KeyError",
+  "success": true,
+  "time": 7.520019054412842,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nKeyError: 'age'\n",
+  "timestamp": "2025-11-28T23:12:48.560581"
+}

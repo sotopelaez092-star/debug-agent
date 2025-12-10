@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_4_router_run2",
+  "case_id": "constructed_4",
+  "case_name": "NameError - 作用域问题",
+  "agent": "router",
+  "run_num": 2,
+  "source": "constructed",
+  "error_type": "NameError",
+  "success": true,
+  "time": 6.294654130935669,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nNameError: name 'x' is not defined\n",
+  "timestamp": "2025-11-28T23:09:03.314578"
+}

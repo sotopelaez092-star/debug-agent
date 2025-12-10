@@ -1,0 +1,16 @@
+{
+  "id": "bugsinpy_fastapi_7",
+  "source": "BugsInPy",
+  "project": "fastapi",
+  "bug_id": 7,
+  "buggy_code": "from fastapi.exceptions import RequestValidationError\nfrom starlette.exceptions import HTTPException\nfrom starlette.requests import Request\nfrom starlette.responses import JSONResponse\nfrom starlette.status import HTTP_422_UNPROCESSABLE_ENTITY\n\n\nasync def http_exception_handler(request: Request, exc: HTTPException) -> JSONResponse:\n    return JSONResponse(\n        status_code=exc.status_code,\n        content={\"detail\": exc.detail},\n    )\n\n\nasync def request_validation_exception_handler(\n    request: Request, exc: RequestValidationError\n) -> JSONResponse:\n    return JSONResponse(\n        status_code=HTTP_422_UNPROCESSABLE_ENTITY,\n        content={\"detail\": jsonable_encoder(exc.errors())},\n    )\n",
+  "error_traceback": "Traceback (most recent call last):\n  File \"fastapi/exception_handlers.py\", line 22, in request_validation_exception_handler\n    content={\"detail\": jsonable_encoder(exc.errors())},\nNameError: name 'jsonable_encoder' is not defined\n",
+  "expected_fix": {
+    "import_to_add": "from fastapi.encoders import jsonable_encoder",
+    "location": "top of file"
+  },
+  "project_structure": {
+    "fastapi/exception_handlers.py": "buggy_code",
+    "fastapi/encoders.py": "# Contains jsonable_encoder function"
+  }
+}

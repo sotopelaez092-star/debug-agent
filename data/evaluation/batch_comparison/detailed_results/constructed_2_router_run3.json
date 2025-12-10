@@ -1,0 +1,16 @@
+{
+  "test_id": "constructed_2_router_run3",
+  "case_id": "constructed_2",
+  "case_name": "NameError - 变量未定义",
+  "agent": "router",
+  "run_num": 3,
+  "source": "constructed",
+  "error_type": "NameError",
+  "success": true,
+  "time": 6.432287931442261,
+  "attempts": 0,
+  "fixed_code": "",
+  "all_attempts": [],
+  "original_error": "Traceback (most recent call last):\n  File \"main.py\", line 1, in <module>\nNameError: name 'y' is not defined\n",
+  "timestamp": "2025-11-28T23:08:18.439737"
+}
