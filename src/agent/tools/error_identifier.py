@@ -20,7 +20,7 @@ class ErrorIdentifier:
     """
 
     # 支持的错误类型
-    SUPPORTED_ERRIR_TYPES = [
+    SUPPORTED_ERROR_TYPES = [
         "AttributeError",
         "TypeError", 
         "NameError",

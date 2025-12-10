@@ -35,7 +35,7 @@ class DockerExecutor:
         参数：
             image: Docker镜像名称
         """
-        logger.info("初始化DockerExcutor...")
+        logger.info("初始化DockerExecutor...")
 
         self.image = image
         self.timeout = timeout
