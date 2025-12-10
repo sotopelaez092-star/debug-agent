@@ -1,0 +1,311 @@
+{
+  "summary": {
+    "total": 30,
+    "ai_fix_rate": 1.0,
+    "run_rate": 1.0,
+    "correct_rate": 1.0,
+    "avg_time": 1.8290857474009197
+  },
+  "results": [
+    {
+      "id": "NE01",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.1357827186584473,
+      "output": "hello",
+      "fixed_code": "print(\"hello\")"
+    },
+    {
+      "id": "NE02",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.7658236026763916,
+      "output": "1",
+      "fixed_code": "def f(x):\n    y = x\n    return y\nprint(f(1))"
+    },
+    {
+      "id": "NE03",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.121720552444458,
+      "output": "10",
+      "fixed_code": "total=0\nfor i in range(5):\n    total+=i\nprint(total)"
+    },
+    {
+      "id": "NE04",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.800313949584961,
+      "output": "Hello Alice",
+      "fixed_code": "name='Alice'\nprint(f'Hello {name}')"
+    },
+    {
+      "id": "NE05",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.2481157779693604,
+      "output": "5",
+      "fixed_code": "x=5\nprint(x)"
+    },
+    {
+      "id": "NE06",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.0634572505950928,
+      "output": "20",
+      "fixed_code": "value = 10\nresult = value * 2\nprint(result)"
+    },
+    {
+      "id": "NE07",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.381138801574707,
+      "output": "6",
+      "fixed_code": "total=0\nnums=[1,2,3]\nfor n in nums:\n    total+=n\nprint(total)"
+    },
+    {
+      "id": "NE08",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.5494463443756104,
+      "output": "Hi",
+      "fixed_code": "message='Hi'\ndef greet():\n    print(message)\ngreet()"
+    },
+    {
+      "id": "NE09",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.5820913314819336,
+      "output": "1",
+      "fixed_code": "count=0\ncount+=1\nprint(count)"
+    },
+    {
+      "id": "NE10",
+      "cat": "NameError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.687169075012207,
+      "output": "3",
+      "fixed_code": "data=[1,2,3]\nlength=len(data)\nprint(length)"
+    },
+    {
+      "id": "TE01",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.4962546825408936,
+      "output": "Price: $100",
+      "fixed_code": "print('Price: $' + str(100))"
+    },
+    {
+      "id": "TE02",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.712609052658081,
+      "output": "Count: 5",
+      "fixed_code": "print('Count: ' + str(5))"
+    },
+    {
+      "id": "TE03",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.749941110610962,
+      "output": "8",
+      "fixed_code": "x='5'\ny=3\nprint(int(x)+y)"
+    },
+    {
+      "id": "TE04",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.984632968902588,
+      "output": "[1, 2, 3]",
+      "fixed_code": "def add(a, b):\n    return a + b\n\nprint(add([1, 2], [3]))"
+    },
+    {
+      "id": "TE05",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.8462159633636475,
+      "output": "2.0",
+      "fixed_code": "nums=[1,2,3]\nprint(sum(nums)/len(nums))"
+    },
+    {
+      "id": "TE06",
+      "cat": "TypeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.58199143409729,
+      "output": "Age: 25",
+      "fixed_code": "age=25\nprint('Age: '+str(age))"
+    },
+    {
+      "id": "AE01",
+      "cat": "AttributeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.5643022060394287,
+      "output": "HELLO",
+      "fixed_code": "print('hello'.upper())"
+    },
+    {
+      "id": "AE02",
+      "cat": "AttributeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.9233794212341309,
+      "output": "[1, 2, 3]",
+      "fixed_code": "nums=[3,1,2]\nnums.sort()\nprint(nums)"
+    },
+    {
+      "id": "AE03",
+      "cat": "AttributeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.580575942993164,
+      "output": "hexxo",
+      "fixed_code": "s='hello'\nprint(s.replace('l','x'))"
+    },
+    {
+      "id": "AE04",
+      "cat": "AttributeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.6295487880706787,
+      "output": "[1, 2, 3, 4]",
+      "fixed_code": "lst=[1,2,3]\nlst.append(4)\nprint(lst)"
+    },
+    {
+      "id": "AE05",
+      "cat": "AttributeError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.457839012145996,
+      "output": "hello",
+      "fixed_code": "s='  hello  '\nprint(s.strip())"
+    },
+    {
+      "id": "IE01",
+      "cat": "IndexError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.6245973110198975,
+      "output": "3",
+      "fixed_code": "print([1,2,3][2])"
+    },
+    {
+      "id": "IE02",
+      "cat": "IndexError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.7406907081604004,
+      "output": "c",
+      "fixed_code": "s='abc'\nprint(s[2])"
+    },
+    {
+      "id": "IE03",
+      "cat": "IndexError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.169006824493408,
+      "output": "3",
+      "fixed_code": "def last(lst):\n    return lst[len(lst) - 1]\nprint(last([1,2,3]))"
+    },
+    {
+      "id": "KE01",
+      "cat": "KeyError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.9062199592590332,
+      "output": "None",
+      "fixed_code": "d={'a':1,'b':2}\nprint(d.get('c'))"
+    },
+    {
+      "id": "KE02",
+      "cat": "KeyError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.7655208110809326,
+      "output": "t@t.com",
+      "fixed_code": "user={'name':'Tom','email':'t@t.com'}\nprint(user['email'])"
+    },
+    {
+      "id": "KE03",
+      "cat": "KeyError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.92173171043396,
+      "output": "8080",
+      "fixed_code": "config={'host':'localhost','port':8080}\nprint(config['port'])"
+    },
+    {
+      "id": "ZE01",
+      "cat": "ZeroDivisionError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.8075382709503174,
+      "output": "除数不能为零",
+      "fixed_code": "try:\n    print(10/0)\nexcept ZeroDivisionError:\n    print(\"除数不能为零\")"
+    },
+    {
+      "id": "ZE02",
+      "cat": "ZeroDivisionError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 1.8352317810058594,
+      "output": "0",
+      "fixed_code": "def avg(lst):\n    return sum(lst)/len(lst) if lst else 0\nprint(avg([]))"
+    },
+    {
+      "id": "RE01",
+      "cat": "RecursionError",
+      "ai": true,
+      "runs": true,
+      "correct": true,
+      "time": 2.23968505859375,
+      "output": "120",
+      "fixed_code": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(5))"
+    }
+  ]
+}
