@@ -1,6 +1,11 @@
 """
 ReAct Agent
 Thought -> Action -> Observation 循环
+
+优化特性（Gemini CLI 模式）：
+- LoopDetector: 检测重复修复模式，防止无限循环
+- TokenManager: 上下文压缩，优化 Token 使用
+- 延迟加载: 按需初始化工具模块
 """
 
 import os
@@ -14,6 +19,10 @@ from openai import OpenAI
 load_dotenv()
 
 logger = logging.getLogger(__name__)
+
+# 导入优化模块
+from src.agent.loop_detector import LoopDetector
+from src.agent.token_manager import TokenManager
 
 class ReActAgent:
     """
@@ -283,8 +292,18 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
         self._code_fixer = None
         self._docker_executor = None
         self._multi_file_fixer = None
-        
-        logger.info("ReActAgent初始化完成")
+
+        # 3. 初始化优化模块
+        self.loop_detector = LoopDetector(
+            max_similar_code=2,  # 连续2次相似代码视为循环
+            max_same_error=3     # 连续3次相同错误视为循环
+        )
+        self.token_manager = TokenManager(
+            max_context_tokens=6000,
+            reserve_for_response=2000
+        )
+
+        logger.info("ReActAgent初始化完成（含LoopDetector, TokenManager）")
 
     # ============ 延迟加载Tools ============
     @property
@@ -420,6 +439,9 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
             "related_files": {}           # ⭐ 添加：相关文件字典
         }
 
+        # ⭐ 优化：重置循环检测器
+        self.loop_detector.reset()
+
         messages = [
             {
                 "role": "system",
@@ -475,7 +497,8 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
                     "success": False,
                     "error": str(e),
                     "iterations": iteration,
-                    "history": history
+                    "history": history,
+                    "loop_detector_stats": self.loop_detector.get_stats()  # ⭐ 优化统计
                 }
 
             # 4.2 解析Action
@@ -497,7 +520,8 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
                     "fixed_code": result.get("fixed_code", context.get("last_fixed_code", "")),
                     "explanation": result.get("explanation", ""),
                     "iterations": iteration,
-                    "history": history
+                    "history": history,
+                    "loop_detector_stats": self.loop_detector.get_stats()  # ⭐ 优化统计
                 }
 
             # 4.4 检查解析错误
@@ -562,7 +586,8 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
             "error": f"超过最大迭代次数 {self.max_iterations}",
             "fixed_code": context.get("last_fixed_code", ""),
             "iterations": self.max_iterations,
-            "history": history
+            "history": history,
+            "loop_detector_stats": self.loop_detector.get_stats()  # ⭐ 优化统计
         }
             
 
@@ -766,8 +791,11 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
                 except ValueError as e:
                     return f"错误：{str(e)}"
                 
+                # ⭐ 优化：使用 TokenManager 压缩上下文
+                ctx = self.token_manager.compress_context(ctx)
+
                 # 保存related_files到context，供execute_code使用
-                context["code_context"] = ctx 
+                context["code_context"] = ctx
                 context["related_files"] = ctx.get("related_files", {})
                 
                 # 格式化结果
@@ -815,8 +843,23 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
                 )
                 
                 # 保存到context供后续使用
-                context["last_fixed_code"] = result.get("fixed_code", "")
-                
+                fixed_code = result.get("fixed_code", "")
+                context["last_fixed_code"] = fixed_code
+
+                # ⭐ 优化：使用 LoopDetector 检测重复修复
+                loop_check = self.loop_detector.check({
+                    'fixed_code': fixed_code,
+                    'explanation': result.get('explanation', '')
+                })
+
+                if loop_check['is_loop']:
+                    logger.warning(f"⚠️ LoopDetector 检测到循环: {loop_check['message']}")
+                    return (
+                        f"⚠️ 循环警告: {loop_check['message']}\n"
+                        f"建议: {loop_check['suggestion']}\n"
+                        f"请尝试完全不同的修复思路。"
+                    )
+
                 return (
                     f"代码修复完成:\n"
                     f"修复说明: {result.get('explanation', '')}\n"
@@ -868,9 +911,16 @@ Final Answer: {{"fixed_code": "...", "explanation": "添加了from utils import 
                         f"输出: {result.get('stdout', '(无输出)')}"
                     )
                 else:
+                    # ⭐ 优化：记录失败错误到 LoopDetector
+                    error_msg = result.get('stderr', '未知错误')
+                    self.loop_detector.check({
+                        'fixed_code': code,
+                        'error': error_msg
+                    })
+
                     return (
                         f"❌ 执行失败\n"
-                        f"错误: {result.get('stderr', '未知错误')}\n"
+                        f"错误: {error_msg}\n"
                         f"退出码: {result.get('exit_code')}"
                     )
 
