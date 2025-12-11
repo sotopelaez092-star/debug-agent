@@ -243,15 +243,74 @@ debug-agent/
 
 ---
 
+## 系统架构
+
+```mermaid
+graph TB
+    subgraph Input
+        A[错误代码 + Traceback]
+    end
+
+    subgraph "Route 模式"
+        B[ErrorIdentifier] --> C[ErrorRouter]
+        C --> D1[NameErrorHandler]
+        C --> D2[TypeErrorHandler]
+        C --> D3[ImportErrorHandler]
+    end
+
+    subgraph "ReAct 模式"
+        E[ReActAgent] --> F{Thought}
+        F --> G[Action: 选择工具]
+        G --> H[Observation: 执行结果]
+        H --> F
+    end
+
+    subgraph "共享工具"
+        I[ContextManager<br/>跨文件上下文]
+        J[RAGSearcher<br/>知识检索]
+        K[CodeFixer<br/>LLM修复]
+        L[DockerExecutor<br/>安全验证]
+    end
+
+    subgraph "优化模块"
+        M[LoopDetector<br/>循环检测]
+        N[TokenManager<br/>上下文压缩]
+    end
+
+    A --> B
+    A --> E
+    D1 & D2 & D3 --> I & J & K
+    G --> I & J & K & L
+    K --> L
+    L --> O[修复成功?]
+    O -->|是| P[输出修复代码]
+    O -->|否| M
+    M --> F
+```
+
+---
+
 ## 性能指标
 
-### 端到端测试
-```
-成功率: 100% (5/5 cases)
-首次尝试成功: 100%
-平均耗时: 7.17秒
-支持错误类型: NameError, ImportError, AttributeError
-```
+### Route vs ReAct 模式对比测试（18个用例）
+
+| 指标 | Route 模式 | ReAct 模式 | 胜者 |
+|------|-----------|-----------|------|
+| **正确率** | 94.4% (17/18) | 94.4% (17/18) | 平手 |
+| **可运行率** | 100% (18/18) | 94.4% (17/18) | Route |
+| **平均耗时** | 15.2s | 27.1s | Route |
+| **平均迭代** | N/A | 3.4次 | - |
+
+### 按错误类别统计
+
+| 错误类型 | Route 正确率 | ReAct 正确率 |
+|----------|-------------|-------------|
+| NameError | 80% (4/5) | 80% (4/5) |
+| TypeError | 100% (3/3) | 100% (3/3) |
+| AttributeError | 100% (4/4) | 100% (4/4) |
+| IndexError | 100% (3/3) | 100% (3/3) |
+| KeyError | 100% (2/2) | 100% (2/2) |
+| RecursionError | 100% (1/1) | 100% (1/1) |
 
 ### RAG系统性能
 ```
@@ -259,6 +318,7 @@ MRR: 1.0 (完美首位命中率)
 Recall@5: 63.54%
 Recall@10: 78.86%
 平均检索时间: <500ms
+知识库规模: 5000+ Stack Overflow Q&A
 ```
 
 ### Docker沙箱测试
@@ -273,27 +333,35 @@ Recall@10: 78.86%
 
 ## 已完成功能
 
-- [x] RAG系统构建与优化（8个实验）
-- [x] CodeFixer - LLM代码修复
-- [x] ErrorIdentifier - 错误识别
-- [x] RAGSearcher - 知识检索
-- [x] DockerExecutor - 安全执行
-- [x] ContextManager - 跨文件上下文提取（懒加载）
-- [x] LoopDetector - 循环检测
-- [x] TokenManager - 上下文压缩
-- [x] ConfigLoader - 项目配置支持
-- [x] ErrorRouter - 错误类型路由
-- [x] PythonEnvDetector - 环境检测
-- [x] DebugAgent - 完整工作流编排
-- [x] 端到端集成测试
+- [x] **双模式调试**
+  - [x] Route 模式 - 快速直接路由（15.2s/case）
+  - [x] ReAct 模式 - 灵活自主决策（27.1s/case）
+- [x] **核心工具**
+  - [x] CodeFixer - LLM代码修复
+  - [x] ErrorIdentifier - 错误识别
+  - [x] RAGSearcher - 知识检索
+  - [x] DockerExecutor - 安全执行
+- [x] **上下文系统**
+  - [x] ContextManager - 跨文件上下文提取（懒加载）
+  - [x] TokenManager - 上下文压缩
+- [x] **优化模块**
+  - [x] LoopDetector - 循环检测
+  - [x] ConfigLoader - 项目配置支持
+  - [x] ErrorRouter - 错误类型路由
+- [x] **RAG系统**
+  - [x] 8个实验优化
+  - [x] Query改写策略
+  - [x] 5000+ Stack Overflow知识库
+- [x] **测试验证**
+  - [x] 18个用例批量测试
+  - [x] Docker沙箱验证
+  - [x] Route vs ReAct 对比分析
 
 ## 计划功能
 
-- [ ] Web界面
-- [ ] REST API接口
-- [ ] 更多错误类型支持（TypeError, IndexError, KeyError）
 - [ ] 增量项目扫描
 - [ ] 性能缓存优化
+- [ ] 更多 LLM 提供商支持
 
 ---
 
