@@ -70,13 +70,19 @@ class RAGSearcher:
         try:
             client = chromadb.PersistentClient(path=vectorstore_path)
 
-            # 获取collection
+            # 获取collection（兼容新旧版本API）
             collections = client.list_collections()
             if not collections:
                 raise ValueError(f"向量数据库中没有collection: {vectorstore_path}")
-            
-            # 使用第一个collection
-            self.collection = collections[0]
+
+            # 兼容新版本：list_collections() 可能返回名称字符串列表
+            first_collection = collections[0]
+            if isinstance(first_collection, str):
+                # 新版本：返回的是名称，需要用 get_collection 获取
+                self.collection = client.get_collection(name=first_collection)
+            else:
+                # 旧版本：直接返回 collection 对象
+                self.collection = first_collection
 
             # 获取文档数量
             doc_count = self.collection.count()
