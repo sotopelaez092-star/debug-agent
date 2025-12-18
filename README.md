@@ -1,44 +1,51 @@
-# 🐛 AI Debug Assistant
+# 🐛 Debug Agent
 
-> 一个支持多文件上下文的智能Python Debug系统
+> 基于 LLM 的 Python 自动调试工具，达到 85.6% 成功率
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![Docker](https://img.shields.io/badge/Docker-Required-blue.svg)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
 ## 📋 项目简介
 
-AI Debug Assistant 是一个基于LLM的自动化Python代码调试工具，能够：
+Debug Agent 是一个能够自动修复 Python 代码错误的命令行工具。用户只需运行命令，工具就会自动：
 
-- 🔍 **自动识别错误**：从traceback中提取错误类型、文件名、行号
-- 📚 **知识检索**：从5000+ Stack Overflow问答中检索相关解决方案（MRR=1.0）
-- 🤖 **智能修复**：使用DeepSeek API生成代码修复方案
-- 🐳 **安全验证**：在Docker沙箱中执行修复后的代码，验证是否成功
-- ⚡ **端到端流程**：一键完成从错误识别到修复验证的全流程
+1. 捕获错误信息
+2. 分析错误原因
+3. 定位问题代码
+4. 生成修复方案
+5. 验证修复结果
+
+**最终成绩**：在 30 个测试用例的 Benchmark 中达到 **85.6% 成功率**（DeepSeek 模型），稳定性 ±1.9%，平均耗时 39.9 秒。
 
 ---
 
 ## ✨ 核心特性
 
-### 1. 自动上下文对齐（计划中）
+### 1. 双路径架构
+- **快速路径**：简单错误（拼写、导入）无需 LLM，直接修复
+- **完整调查**：复杂错误使用 ReAct 循环深入分析
+- **置信度判断**：自动选择最合适的修复策略（阈值 0.7）
+
+### 2. 预建索引系统（ContextTools）
 - 自动扫描项目所有文件
 - 构建符号表和依赖图
 - 智能提取跨文件上下文
-- **这是ChatGPT/Claude做不到的！**
+- 增量更新机制（缓存优化）
 
-### 2. RAG知识库（已完成）
-- 索引5000+ Stack Overflow高质量问答
-- 8个实验系统优化
-- Query改写策略：MRR 从 0.733 → 1.0
-- Recall@10: 78.86%
+### 3. 策略模式（6种错误类型）
+- **NameError**: Levenshtein 匹配符号表
+- **ImportError**: 模块路径模糊匹配（置信度 0.75）
+- **AttributeError**: 搜索类方法列表
+- **KeyError**: 字典结构追踪 + 嵌套搜索
+- **TypeError**: 函数签名分析
+- **CircularImport**: 导入图环检测 + TYPE_CHECKING 方案
 
-### 3. Docker安全沙箱（已完成）
-- ⏱️ 超时限制：10秒
-- 💾 内存限制：256MB
-- 🌐 网络禁用
-- ✅ 真实执行验证
+### 4. 多层重试机制
+- **SmartRetryStrategy**: 建议下一个尝试的方法
+- **LoopDetector**: 检测重复修复（2-3-8 阈值）
+- **错误类型切换**: 新错误自动重置状态
 
 ---
 
@@ -47,7 +54,6 @@ AI Debug Assistant 是一个基于LLM的自动化Python代码调试工具，能�
 ### 环境要求
 ```bash
 Python 3.11+
-Docker
 ```
 
 ### 安装
@@ -64,100 +70,54 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # 4. 配置环境变量
-# 创建 .env 文件
 echo "DEEPSEEK_API_KEY=your_api_key_here" > .env
-
-# 5. 启动Docker
-# 确保Docker Desktop已运行
-
-# 6. 拉取Python镜像
-docker pull python:3.11-alpine
 ```
 
 ### 使用示例
 ```python
-from src.agent.tools.code_fixer import CodeFixer
-from src.agent.tools.error_identifier import ErrorIdentifier
-from src.agent.tools.rag_searcher import RAGSearcher
-from src.agent.tools.docker_executor import DockerExecutor
+from src.agent.debug_agent_new import DebugAgentNew
+from src.core.error_identifier import ErrorIdentifier
+from src.core.local_executor import LocalExecutor
 
-# 1. 识别错误
-identifier = ErrorIdentifier()
-error_info = identifier.identify(traceback)
+# 创建 agent
+agent = DebugAgentNew(project_path="./your_project")
 
-# 2. 检索解决方案
-searcher = RAGSearcher()
-solutions = searcher.search(error_info['error_type'])
+# 调试代码
+result = await agent.debug(
+    buggy_code=buggy_code,
+    error_traceback=error_traceback,
+    main_file="main.py"
+)
 
-# 3. 生成修复
-fixer = CodeFixer()
-fix_result = fixer.fix_code(buggy_code, error_traceback, solutions)
-
-# 4. Docker验证
-executor = DockerExecutor()
-verification = executor.execute(fix_result['fixed_code'])
-
-print(f"修复成功: {verification['success']}")
+print(f"修复成功: {result.success}")
+print(f"修复后的代码:\n{result.fixed_code}")
 ```
 
 ---
 
-## 📊 技术栈
-```yaml
-LLM服务: DeepSeek API
-RAG系统: 
-  - Embedding: bge-small-en-v1.5 (384维)
-  - 向量数据库: ChromaDB
-  - Query改写: 自研策略
-代码执行: Docker (安全沙箱)
-后端框架: Python 3.11 + FastAPI
-前端: React + Tailwind CSS (计划中)
-```
+## 📊 性能指标
 
----
+### V1 Benchmark（30 个基础用例）
+| 工具 | 成功率 | 稳定性 | 平均耗时 |
+|-----|--------|-------|---------|
+| **Debug Agent (DeepSeek)** | **100%** | ±0% | 35.2s |
+| Aider (DeepSeek) | 73.3% | ±8.8% | 75.6s |
+| Claude Code | 100% | - | 46.2s |
 
-## 🎯 项目进度
+### V2 Benchmark（30 个复杂用例）
+| 工具 | 成功率 | 稳定性 | 平均耗时 |
+|-----|--------|-------|---------|
+| **Debug Agent (DeepSeek)** | **85.6%** | ±1.9% | 39.9s |
+| Aider (DeepSeek) | 73.3% | ±8.8% | 75.6s |
 
-### ✅ 已完成 (Week 1-4)
+### 成本对比
+| 工具 | 单次调试成本 |
+|-----|------------|
+| Debug Agent (DeepSeek) | ~$0.01 |
+| Aider (DeepSeek) | ~$0.02 |
+| Claude Code (Claude) | ~$0.25 |
 
-- [x] RAG系统构建与优化（8个实验）
-- [x] CodeFixer - LLM代码修复
-- [x] ErrorIdentifier - 错误识别
-- [x] RAGSearcher - 知识检索
-- [x] DockerExecutor - 安全执行
-- [x] 端到端集成测试
-
-### 🚧 进行中 (Week 5)
-
-- [ ] ContextManager - 自动上下文提取（核心创新）
-- [ ] DebugAgent - 完整工作流编排
-
-### 📅 计划中 (Week 6-8)
-
-- [ ] Web界面
-- [ ] API接口
-- [ ] 评估体系
-- [ ] 文档完善
-
----
-
-## 📈 性能指标
-
-### RAG系统性能
-```
-MRR: 1.0 (完美首位命中率)
-Recall@5: 63.54%
-Recall@10: 78.86%
-平均检索时间: <500ms
-```
-
-### Docker沙箱测试
-```
-✅ 基础执行: 3/3 通过
-✅ 超时机制: 10秒精确终止
-✅ 网络隔离: 验证通过
-✅ 内存限制: 256MB生效
-```
+**Debug Agent 成本约为 Claude Code 的 1/25**
 
 ---
 
@@ -166,22 +126,97 @@ Recall@10: 78.86%
 debug-agent/
 ├── src/
 │   ├── agent/
-│   │   └── tools/
-│   │       ├── code_fixer.py          # LLM代码修复
-│   │       ├── error_identifier.py    # 错误识别
-│   │       ├── rag_searcher.py        # 知识检索
-│   │       └── docker_executor.py     # 安全执行
-│   └── rag/                            # RAG系统
-│       ├── retriever.py
-│       ├── query_rewriter.py
-│       ├── embedder.py
-│       └── ...
+│   │   ├── debug_agent_new.py    # 主调度器（双路径架构）
+│   │   ├── investigator.py       # ReAct 调查员
+│   │   └── retry_strategy.py     # 重试策略
+│   ├── core/
+│   │   ├── error_identifier.py   # 错误识别
+│   │   ├── code_fixer.py         # LLM 修复
+│   │   ├── pattern_fixer.py      # 快速修复（无需 LLM）
+│   │   ├── local_executor.py     # 本地执行
+│   │   └── loop_detector.py      # 循环检测
+│   ├── strategies/               # 错误处理策略
+│   │   ├── base.py               # 策略基类
+│   │   ├── registry.py           # 策略注册表
+│   │   ├── name_error.py         # NameError 策略
+│   │   ├── import_error.py       # ImportError 策略
+│   │   ├── attribute_error.py    # AttributeError 策略
+│   │   ├── type_error.py         # TypeError 策略
+│   │   ├── key_error.py          # KeyError 策略
+│   │   └── circular_import.py    # 循环导入策略
+│   ├── tools_new/                # 工具系统
+│   │   ├── base.py               # 工具基类
+│   │   ├── registry.py           # 工具注册表
+│   │   ├── context_tools.py      # 预建索引（核心）
+│   │   ├── search_symbol_tool.py # 符号搜索
+│   │   ├── read_file_tool.py     # 文件读取
+│   │   └── grep_tool.py          # 文本搜索
+│   ├── models/                   # 数据模型
+│   │   ├── error_context.py      # 错误上下文
+│   │   ├── investigation_report.py # 调查报告
+│   │   └── results.py            # 结果模型
+│   └── utils/                    # 工具类
+│       ├── llm_client.py         # LLM 客户端
+│       └── config.py             # 配置管理
 ├── tests/
-│   └── test_agent_integration.py      # 集成测试
-├── data/
-│   └── vectorstore/chroma_s1/         # 向量数据库
-└── docs/                               # 文档
+│   └── test_cases_30/            # 30 个测试用例（V2 Benchmark）
+├── data/                         # 数据文件
+└── docs/                         # 文档
 ```
+
+---
+
+## 🎯 核心设计
+
+### 1. 双路径架构（借鉴 Gemini CLI）
+```
+输入错误 → 错误识别 → 范围判断 → ┬─ 单文件 → 快速修复
+                              └─ 跨文件 → ┬─ 快速路径（置信度≥0.7）
+                                         └─ 完整调查（ReAct 循环）
+```
+
+### 2. 工具注册表模式
+- 统一的工具基类（`BaseTool`）
+- OpenAI function calling 格式
+- 6 个核心工具：SearchSymbol, ReadFile, Grep, GetCallers, SetPhase, CompleteInvestigation
+
+### 3. ContextTools 预建索引
+```python
+{
+    "symbol_table": {...},          # 符号定义位置
+    "import_graph": {...},          # 导入关系图
+    "class_table": {...},           # 类信息（方法列表）
+    "function_signatures": {...},   # 函数签名
+    "dict_keys": {...},             # 所有字典键
+    "call_graph": {...},            # 调用关系图
+}
+```
+
+### 4. 置信度计算
+```python
+score = edit_sim * 0.5        # 编辑距离（权重 0.5）
+      + uniqueness * 0.2      # 唯一性（权重 0.2）
+      + reachable * 0.2       # 可达性（权重 0.2）
+      + type_score * 0.1      # 类型匹配（权重 0.1）
+```
+
+### 5. PatternFixer（快速修复）
+- ~50 个常见方法拼写错误
+- ~30 个标准库拼写错误
+- ~40% 命中率（无需 LLM）
+
+---
+
+## 🔑 关键数字
+
+| 指标 | 数值 | 说明 |
+|-----|------|-----|
+| 置信度阈值 | 0.7 | 快速路径 vs 完整调查的分界 |
+| ImportError 阈值 | 0.75 | 比其他错误更严格 |
+| 相同修复阈值 | 2 | 出现 2 次切换策略 |
+| 相同错误阈值 | 3 | 出现 3 次升级调查 |
+| 最大尝试次数 | 8 | 超过则放弃 |
+| PatternFixer 命中率 | ~40% | 简单拼写错误 |
 
 ---
 
@@ -205,9 +240,8 @@ Tom - [GitHub](https://github.com/你的用户名)
 
 ## 🙏 致谢
 
-- Stack Overflow 社区提供的高质量问答数据
-- DeepSeek 提供的高性价比LLM API
-- Anthropic 的RAG最佳实践指导
+- DeepSeek 提供的高性价比 LLM API
+- Gemini CLI 的架构设计启发
 
 ---
 

@@ -1,4 +1,0 @@
-Retriever,Name,Description,Recall@1,Recall@3,Recall@5,Recall@10,MRR,AvgTime(ms),FailureRate
-R1,BaseRetriever,纯向量检索,0.106,0.402,0.587,0.749,0.733,25.6,0.00%
-R2,RerankerRetriever,向量检索 + Reranker重排序,0.071,0.161,0.281,0.460,0.570,9029.6,0.00%
-R3,HyDERetriever,LLM生成假设文档 + 向量检索,0.143,0.310,0.416,0.597,0.775,9775.9,0.00%
