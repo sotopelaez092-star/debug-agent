@@ -86,3 +86,5 @@ docker-compose.override.yml
 # === 其他 ===
 .cache/
 node_modules/
+.bashrc
+.debug_agent_cache/
