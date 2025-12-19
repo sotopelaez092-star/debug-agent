@@ -1,0 +1,347 @@
+{
+  "timestamp": "20251219_100832",
+  "model": "mimo",
+  "base_url": "https://api.xiaomimimo.com/anthropic",
+  "total": 26,
+  "success_count": 13,
+  "success_rate": 50.0,
+  "avg_duration": 0.39939571343935454,
+  "avg_confidence": 0.4613736263736264,
+  "by_type": {
+    "attribute_error": {
+      "total": 5,
+      "success": 1,
+      "durations": [
+        0.003201723098754883,
+        0.0020117759704589844,
+        0.0017049312591552734,
+        0.001664876937866211,
+        0.0013508796691894531
+      ],
+      "confidences": [
+        0.0,
+        0.0,
+        0.0,
+        0.75,
+        0.0
+      ]
+    },
+    "circular_import": {
+      "total": 5,
+      "success": 5,
+      "durations": [
+        0.002026081085205078,
+        0.0075740814208984375,
+        0.00958108901977539,
+        0.013369083404541016,
+        0.02345108985900879
+      ],
+      "confidences": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "import_error": {
+      "total": 4,
+      "success": 2,
+      "durations": [
+        0.016188859939575195,
+        0.009675025939941406,
+        0.011066913604736328,
+        0.010847091674804688
+      ],
+      "confidences": [
+        0.9,
+        0.7857142857142857,
+        0.0,
+        0.0
+      ]
+    },
+    "key_error": {
+      "total": 5,
+      "success": 0,
+      "durations": [
+        0.010535955429077148,
+        0.009501218795776367,
+        0.011416196823120117,
+        0.01228189468383789,
+        10
+      ],
+      "confidences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ]
+    },
+    "name_error": {
+      "total": 4,
+      "success": 2,
+      "durations": [
+        0.05432701110839844,
+        0.04207777976989746,
+        0.015672683715820312,
+        0.035212039947509766
+      ],
+      "confidences": [
+        0.0,
+        0.86,
+        1.0,
+        0.0
+      ]
+    },
+    "type_error": {
+      "total": 3,
+      "success": 3,
+      "durations": [
+        0.021492958068847656,
+        0.02523636817932129,
+        0.032820940017700195
+      ],
+      "confidences": [
+        0.9,
+        0.9,
+        0.9
+      ]
+    }
+  },
+  "results": [
+    {
+      "case_id": "attribute_error_v2_01_deep_inheritance",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.003201723098754883,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_02_decorator_chain",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.0020117759704589844,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_03_metaclass_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.0017049312591552734,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_04_protocol_impl",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.001664876937866211,
+      "confidence": 0.75,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "attribute_error_v2_05_dynamic_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.0013508796691894531,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "circular_import_v2_01_deep_chain",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.002026081085205078,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "circular_import_v2_02_diamond",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.0075740814208984375,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "circular_import_v2_03_lazy_import",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.00958108901977539,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "circular_import_v2_04_type_checking",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.013369083404541016,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "circular_import_v2_05_registry_pattern",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.02345108985900879,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "case_01_nested_package",
+      "error_type": "import_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.016188859939575195,
+      "confidence": 0.9,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "case_02_conditional_import",
+      "error_type": "import_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.009675025939941406,
+      "confidence": 0.7857142857142857,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "case_04_relative_import",
+      "error_type": "import_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.011066913604736328,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_05_shadowed_module",
+      "error_type": "import_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.010847091674804688,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_01_config_migration",
+      "error_type": "key_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.010535955429077148,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_02_api_response",
+      "error_type": "key_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.009501218795776367,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_03_env_loading",
+      "error_type": "key_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.011416196823120117,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_04_cache_key",
+      "error_type": "key_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.01228189468383789,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "case_05_dataclass_dict",
+      "error_type": "key_error",
+      "difficulty": "hard",
+      "success": false,
+      "reason": "Timeout",
+      "duration": 10
+    },
+    {
+      "case_id": "name_error_v2_01_refactored_function",
+      "error_type": "name_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.05432701110839844,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "name_error_v2_02_star_import",
+      "error_type": "name_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.04207777976989746,
+      "confidence": 0.86,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "name_error_v2_03_conditional_def",
+      "error_type": "name_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.015672683715820312,
+      "confidence": 1.0,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "name_error_v2_05_typo_in_chain",
+      "error_type": "name_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.035212039947509766,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "type_error_v2_01_signature_change",
+      "error_type": "type_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.021492958068847656,
+      "confidence": 0.9,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "type_error_v2_02_optional_param",
+      "error_type": "type_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.02523636817932129,
+      "confidence": 0.9,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "type_error_v2_05_decorator_args",
+      "error_type": "type_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.032820940017700195,
+      "confidence": 0.9,
+      "used_fast_path": true
+    }
+  ]
+}

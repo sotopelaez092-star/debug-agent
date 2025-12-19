@@ -1,0 +1,21 @@
+{
+  "error_type": "KeyError",
+  "case_id": "case_05_dataclass_dict",
+  "description": "The dataclass models (UserProfile, Order, Address) were updated to use camelCase keys in their to_dict() methods for API compatibility (user_id->userId, first_name->firstName, etc.), but the data_processor.py and order_processor.py modules still expect the old snake_case keys, causing KeyErrors when trying to access dictionary fields.",
+  "error_file": "data_processor.py",
+  "error_message": "KeyError: 'user_id'",
+  "expected_fix": "Update data_processor.py and order_processor.py to use the new camelCase keys from models.py: change 'user_id' to 'userId', 'first_name' to 'firstName', 'last_name' to 'lastName', 'phone_number' to 'phoneNumber', 'order_id' to 'orderId', 'total_amount' to 'totalAmount', 'order_status' to 'orderStatus', 'shipping_address' to 'shippingAddress', 'zip_code' to 'zipCode'.",
+  "difficulty": "hard",
+  "files_involved": ["data_processor.py", "order_processor.py", "models.py", "report_generator.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 18,
+  "complexity_factors": [
+    "Need to examine models.py to see the new camelCase key names in to_dict() methods",
+    "Multiple classes need updates: DataProcessor and OrderProcessor",
+    "Multiple methods within each class access different keys",
+    "Nested dictionary issue with shipping_address containing zipCode",
+    "Need to update validate_user_data() required_fields list",
+    "Both user and order processing flows are affected"
+  ],
+  "optimal_fix": "In data_processor.py: Update all dictionary key accesses in process_user_profile(), extract_user_contact(), and validate_user_data() to use camelCase (userId, firstName, lastName, phoneNumber). In order_processor.py: Update all key accesses in process_order(), calculate_order_total(), get_shipping_info(), and get_order_summary() to use camelCase (orderId, userId, totalAmount, orderStatus, shippingAddress, and zipCode within address)."
+}

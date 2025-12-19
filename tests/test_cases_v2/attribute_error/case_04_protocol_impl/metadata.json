@@ -1,0 +1,14 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v2_04_protocol_impl",
+  "description": "Property typo in adapter accessing protocol implementation",
+  "error_file": "main.py",
+  "error_message": "'JsonSerializer' object has no attribute 'contentype'",
+  "expected_fix": "contentype -> content_type in adapters/storage_adapter.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "adapters/storage_adapter.py", "implementations/json_serializer.py", "protocols/serializer.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["protocols", "adapters", "multiple_implementations", "property_access"],
+  "optimal_fix": "Fix typo 'contentype' to 'content_type' in adapters/storage_adapter.py"
+}

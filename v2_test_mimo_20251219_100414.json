@@ -1,0 +1,33 @@
+{
+  "timestamp": "20251219_100414",
+  "model": "mimo",
+  "base_url": "https://api.xiaomimimo.com/anthropic",
+  "total": 1,
+  "success_count": 0,
+  "success_rate": 0.0,
+  "avg_duration": 0.002989053726196289,
+  "avg_confidence": 0.0,
+  "by_type": {
+    "attribute_error": {
+      "total": 1,
+      "success": 0,
+      "durations": [
+        0.002989053726196289
+      ],
+      "confidences": [
+        0.0
+      ]
+    }
+  },
+  "results": [
+    {
+      "case_id": "attribute_error_v2_01_deep_inheritance",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.002989053726196289,
+      "confidence": 0.0,
+      "used_fast_path": false
+    }
+  ]
+}

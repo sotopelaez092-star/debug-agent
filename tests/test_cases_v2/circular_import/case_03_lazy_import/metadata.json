@@ -1,0 +1,14 @@
+{
+  "error_type": "CircularImport",
+  "case_id": "circular_import_v2_03_lazy_import",
+  "description": "3-way circular dependency: QueryExecutor imports Drivers, Drivers import Config and QueryOptimizer, Config imports QueryExecutor for validation",
+  "error_file": "main.py",
+  "error_message": "ImportError: cannot import name 'QueryExecutor' from partially initialized module 'engine' (most likely due to a circular import)",
+  "expected_fix": "Use lazy imports by moving import statements inside methods rather than at module level",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "engine/executor.py", "engine/optimizer.py", "drivers/postgres.py", "drivers/redis.py", "drivers/mongo.py", "config/settings.py", "config/validator.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 6,
+  "complexity_factors": ["3_way_cycle", "multiple_drivers", "config_validation_dependency", "optimizer_integration"],
+  "optimal_fix": "Move driver imports in QueryExecutor to inside methods, move QueryExecutor import in Settings to inside validate_query_settings method, move QueryOptimizer imports in drivers to inside methods"
+}

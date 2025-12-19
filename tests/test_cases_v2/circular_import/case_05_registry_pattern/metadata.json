@@ -1,0 +1,14 @@
+{
+  "error_type": "CircularImport",
+  "case_id": "circular_import_v2_05_registry_pattern",
+  "description": "Event-driven architecture circular dependency: PluginRegistry imports Handlers to register them, Handlers import Events to process them, Events import EventBus to dispatch themselves",
+  "error_file": "main.py",
+  "error_message": "ImportError: cannot import name 'EventBus' from partially initialized module 'registry' (most likely due to a circular import)",
+  "expected_fix": "Break circular dependency by using dependency injection or lazy imports in event dispatch methods",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "registry/plugin_registry.py", "registry/event_bus.py", "handlers/user_handler.py", "handlers/order_handler.py", "handlers/notification_handler.py", "events/user_events.py", "events/order_events.py", "events/notification_events.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 7,
+  "complexity_factors": ["plugin_architecture", "event_bus_pattern", "handler_registration", "event_dispatch_cycle", "multiple_event_types"],
+  "optimal_fix": "Use dependency injection to pass EventBus instance to events instead of importing it, or move EventBus import inside dispatch methods (lazy import)"
+}

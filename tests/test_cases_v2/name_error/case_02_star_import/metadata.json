@@ -1,0 +1,14 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v2_02_star_import",
+  "description": "Star import fails because 'create_session' was removed from __all__ during API refactoring, now only internal _create_session_internal exists",
+  "error_file": "session_manager.py",
+  "error_message": "name 'create_session' is not defined",
+  "expected_fix": "Change 'create_session' to '_create_session_internal' in session_manager.py line 65, or import it directly",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "sso_integration.py", "session_manager.py", "api_exports.py", "config.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["star_import", "api_refactoring", "__all__", "5_files", "indirect_usage"],
+  "optimal_fix": "In session_manager.py line 65, change 'create_session' to 'UserSession' and manually construct: 'session = UserSession(user_id, token, metadata)', or import the internal function directly with 'from api_exports import _create_session_internal'"
+}

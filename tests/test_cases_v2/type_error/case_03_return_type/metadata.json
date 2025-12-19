@@ -1,0 +1,14 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v2_03_return_type",
+  "description": "load_json_config() and load_env_config() changed from returning dict to returning tuple (dict, metadata), breaking code expecting dict",
+  "error_file": "main.py",
+  "error_message": "tuple object has no attribute 'get'",
+  "expected_fix": "Unpack tuple return values in config/config_manager.py: file_config, _ = load_json_config(...) and env_config, _ = load_env_config()",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "services/app_service.py", "config/config_manager.py", "loaders/config_loader.py", "config/app_config.json"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 2,
+  "complexity_factors": ["return_type_change", "tuple_unpacking", "multiple_functions", "metadata_addition"],
+  "optimal_fix": "Update config/config_manager.py to unpack tuples: (1) line 35: file_config, _ = load_json_config(self.config_file), (2) line 39: env_config, _ = load_env_config()"
+}

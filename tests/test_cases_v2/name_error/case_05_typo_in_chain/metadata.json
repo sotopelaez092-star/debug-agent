@@ -1,0 +1,14 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v2_05_typo_in_chain",
+  "description": "Typo in method chain - 'groupby' instead of 'group_by' in fluent interface builder pattern spanning multiple files",
+  "error_file": "report_generator.py",
+  "error_message": "'AggregationBuilder' object has no attribute 'groupby'",
+  "expected_fix": "Change 'groupby' to 'group_by' in report_generator.py line 133",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "analytics_dashboard.py", "report_generator.py", "aggregation_builder.py", "query_builder.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["method_chaining", "fluent_interface", "typo", "inheritance", "5_files"],
+  "optimal_fix": "In report_generator.py line 133, change '.groupby(period_field)' to '.group_by(period_field)' to match the correct method name from QueryBuilder"
+}

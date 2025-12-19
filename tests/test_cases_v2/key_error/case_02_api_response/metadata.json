@@ -1,0 +1,20 @@
+{
+  "error_type": "KeyError",
+  "case_id": "case_02_api_response",
+  "description": "External API was upgraded from v1 to v2, completely changing the response structure. The user_service.py module still tries to access old v1 keys like 'user_data', 'name', 'email' at the top level, but the new v2 API nests everything under 'data.user.profile.personal' and 'data.user.profile.contact', causing KeyErrors throughout.",
+  "error_file": "user_service.py",
+  "error_message": "KeyError: 'user_data'",
+  "expected_fix": "Update user_service.py to access the new v2 API structure: change 'response['user_data']' to 'response['data']['user']', extract name from 'profile.personal.firstName' and 'profile.personal.lastName', extract email from 'profile.contact.email', and extract preferences from 'settings.preferences'.",
+  "difficulty": "hard",
+  "files_involved": ["user_service.py", "api_client.py", "analytics.py", "notification_service.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 12,
+  "complexity_factors": [
+    "API response structure is deeply nested in new v2 format",
+    "Multiple methods in user_service.py need updates (get_user_info, get_user_preferences, get_user_email)",
+    "Name field split into firstName/lastName that needs concatenation",
+    "Need to trace through api_client.py to understand new response format",
+    "Preferences moved from top level to nested under settings.preferences"
+  ],
+  "optimal_fix": "In user_service.py: Update get_user_info() to access response['data']['user'], extract firstName and lastName from profile.personal and concatenate them, get email from profile.contact.email. Update get_user_preferences() to access response['data']['user']['settings']['preferences']. Update get_user_email() to access response['data']['user']['profile']['contact']['email']."
+}

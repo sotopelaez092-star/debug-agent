@@ -1,0 +1,14 @@
+{
+  "error_type": "CircularImport",
+  "case_id": "circular_import_v2_01_deep_chain",
+  "description": "4-service circular import chain: UserService -> OrderService -> ProductService -> NotificationService -> UserService",
+  "error_file": "main.py",
+  "error_message": "ImportError: cannot import name 'OrderService' from partially initialized module 'services.order_service' (most likely due to a circular import)",
+  "expected_fix": "Use lazy imports or move imports inside methods to break the cycle",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "services/user_service.py", "services/order_service.py", "services/product_service.py", "services/notification_service.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 4,
+  "complexity_factors": ["4_level_cycle", "service_dependencies", "cross_service_calls"],
+  "optimal_fix": "Move imports inside methods that need them (lazy imports)"
+}

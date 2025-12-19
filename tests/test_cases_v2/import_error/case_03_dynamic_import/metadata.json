@@ -1,0 +1,30 @@
+{
+  "error_type": "ImportError",
+  "case_id": "case_03_dynamic_import",
+  "description": "Dynamic import system with incorrect module path in plugin registry. The transformer plugin is registered as 'plugins.transformer_plugin' but the actual file is 'plugins/data_transformer_plugin.py'. The error is subtle and requires analyzing the plugin_registry dictionary and understanding the dynamic import mechanism.",
+  "error_file": "plugin_manager.py",
+  "error_message": "No module named 'plugins.transformer_plugin'",
+  "expected_fix": "Change 'plugins.transformer_plugin.DataTransformerPlugin' to 'plugins.data_transformer_plugin.DataTransformerPlugin' in the plugin_registry dictionary.",
+  "difficulty": "hard",
+  "files_involved": [
+    "main.py",
+    "plugin_manager.py",
+    "plugins/data_transformer_plugin.py",
+    "plugins/base_plugin.py"
+  ],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": [
+    "Dynamic import using importlib",
+    "Error occurs at runtime, not at parse time",
+    "Requires understanding plugin registry pattern",
+    "Need to trace through dynamic loading mechanism",
+    "Module path stored in dictionary requires careful inspection"
+  ],
+  "optimal_fix": {
+    "file": "plugin_manager.py",
+    "line": 17,
+    "original": "\"transformer\": \"plugins.transformer_plugin.DataTransformerPlugin\"",
+    "fixed": "\"transformer\": \"plugins.data_transformer_plugin.DataTransformerPlugin\""
+  }
+}

@@ -1,0 +1,20 @@
+ImportError Test Cases Summary
+================================================================================
+
+Case ID                    | Files | Error Type                    | Key Challenge
+---------------------------|-------|-------------------------------|------------------
+case_01_nested_package     | 11    | ModuleNotFoundError           | Deep nesting (4 levels)
+case_02_conditional_import | 8     | ModuleNotFoundError           | Environment-based conditional import
+case_03_dynamic_import     | 8     | ModuleNotFoundError           | Dynamic importlib loading
+case_04_relative_import    | 12    | ImportError (relative)        | Sibling package imports
+case_05_shadowed_module    | 8     | AttributeError (shadowing)    | Stdlib module shadowing
+
+All cases:
+- Difficulty: hard
+- Requires exploration: true
+- Expected lines to change: 1-5
+- Include metadata.json with complete fix information
+- Have realistic, working code (except for the intentional error)
+- Represent real-world Python import issues
+
+Total: 47 Python files + 5 metadata.json files

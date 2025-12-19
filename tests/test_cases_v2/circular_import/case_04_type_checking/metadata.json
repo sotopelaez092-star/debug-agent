@@ -1,0 +1,14 @@
+{
+  "error_type": "CircularImport",
+  "case_id": "circular_import_v2_04_type_checking",
+  "description": "Type annotation circular dependency: Domain models import DTOs for serialization, DTOs import domain models for type hints, Services import both",
+  "error_file": "main.py",
+  "error_message": "ImportError: cannot import name 'UserDTO' from partially initialized module 'dto' (most likely due to a circular import)",
+  "expected_fix": "Use TYPE_CHECKING guard for type-only imports to avoid runtime circular dependencies",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "domain/models.py", "domain/repository.py", "services/user_service.py", "services/order_service.py", "services/product_service.py", "dto/user_dto.py", "dto/order_dto.py", "dto/mapper.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 5,
+  "complexity_factors": ["type_annotation_imports", "dto_pattern", "bidirectional_conversion", "model_service_dto_cycle"],
+  "optimal_fix": "Add 'from typing import TYPE_CHECKING' and guard DTO imports in domain/models.py with 'if TYPE_CHECKING:', guard domain model imports in dto files similarly"
+}

@@ -1,0 +1,14 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v2_05_decorator_args",
+  "description": "@cache decorator changed from no-argument form to requiring ttl parameter, breaking functions using old @cache syntax",
+  "error_file": "main.py",
+  "error_message": "cache() missing 1 required positional argument: 'ttl'",
+  "expected_fix": "Update all @cache decorators to @cache(ttl=...) in services/data_service.py, services/api_service.py, and utils/helpers.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "services/data_service.py", "services/api_service.py", "utils/helpers.py", "decorators/cache_decorator.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 8,
+  "complexity_factors": ["decorator_signature_change", "multiple_call_sites", "no_args_to_required_args", "migration"],
+  "optimal_fix": "Add ttl argument to all @cache decorators: (1) services/data_service.py: 3 decorators, (2) services/api_service.py: 2 decorators, (3) utils/helpers.py: 4 decorators. Change @cache to @cache(ttl=3600) or appropriate TTL value"
+}

@@ -1,0 +1,14 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v2_02_optional_param",
+  "description": "validate_email() changed from optional 'strict' parameter (strict=False) to required parameter, breaking code that doesn't pass it",
+  "error_file": "main.py",
+  "error_message": "validate_email() missing 1 required positional argument: 'strict'",
+  "expected_fix": "Add strict=False or strict=True to all validate_email() calls in forms/user_form.py and api/user_api.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "api/user_api.py", "forms/user_form.py", "validators/email_validator.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 3,
+  "complexity_factors": ["parameter_change", "optional_to_required", "multiple_call_sites", "api_breaking_change"],
+  "optimal_fix": "Add strict parameter to validate_email() calls: (1) forms/user_form.py line 49: validate_email(email, strict=False), (2) api/user_api.py line 79: validate_email(email, strict=False), (3) api/user_api.py line 107: validate_email(new_email, strict=False)"
+}

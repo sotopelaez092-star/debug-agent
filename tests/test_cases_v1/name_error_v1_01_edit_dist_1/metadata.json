@@ -1,0 +1,12 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v1_01_edit_dist_1",
+  "description": "\u7b80\u5355\u62fc\u5199\u9519\u8bef\uff1acalculate_summ \u2192 calculate_sum (\u7f16\u8f91\u8ddd\u79bb 1)",
+  "error_file": "main.py",
+  "error_message": "name 'calculate_summ' is not defined",
+  "expected_fix": "Change 'calculate_summ' to 'calculate_sum'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 1,
+  "expected_similarity": 0.93
+}

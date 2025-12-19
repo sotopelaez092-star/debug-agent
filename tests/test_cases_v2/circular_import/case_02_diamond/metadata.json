@@ -1,0 +1,14 @@
+{
+  "error_type": "CircularImport",
+  "case_id": "circular_import_v2_02_diamond",
+  "description": "Diamond dependency pattern: Authenticator needs StorageProvider for session persistence, StorageProvider needs Authenticator for access control",
+  "error_file": "main.py",
+  "error_message": "ImportError: cannot import name 'StorageProvider' from partially initialized module 'providers.storage' (most likely due to a circular import)",
+  "expected_fix": "Use lazy imports (import inside methods) or dependency injection to break the circular dependency",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "core/manager.py", "providers/auth.py", "providers/storage.py", "consumers/api_handler.py", "consumers/task_processor.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 4,
+  "complexity_factors": ["diamond_dependency", "mutual_dependencies", "cross_module_coupling", "authentication_storage_cycle"],
+  "optimal_fix": "Move imports inside methods that need them (e.g., move StorageProvider import in Authenticator.__init__ and Authenticator import in StorageProvider.__init__)"
+}

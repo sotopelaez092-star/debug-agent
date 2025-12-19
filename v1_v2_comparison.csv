@@ -1,0 +1,15 @@
+metric,v1_cases,v2_cases
+error_type,简单拼写错误,复杂重构场景
+name_similarity,85-95% (编辑距离≤2),20-60% (大幅变更)
+file_complexity,单文件为主,跨4-5个文件
+requires_exploration,10-20%,100%
+difficulty,easy/medium,hard
+avg_complexity_factors,1-2,4.6
+fast_path_applicable,高,低
+success_rate,100%,85.6%
+fast_path_hit_rate,40%,0% (预期)
+design_goal,测试快速修复,测试完整探索
+example_1,calculate_summ → calculate_sum,process_data → transform_data_records
+example_1_similarity,92.9%,27.3%
+example_2,authentification → authentication,Metaclass + __getattr__
+example_2_similarity,87.5%,不适用(动态特性)

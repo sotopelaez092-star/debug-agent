@@ -1,0 +1,14 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v2_02_decorator_chain",
+  "description": "Method typo in handler that uses complex decorator chains (4+ decorators)",
+  "error_file": "main.py",
+  "error_message": "type object 'CallLogger' has no attribute 'get_log'",
+  "expected_fix": "get_log -> get_logs in handlers/admin_handler.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "handlers/admin_handler.py", "handlers/user_handler.py", "decorators/logging.py", "decorators/auth.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["decorator_chains", "class_methods", "multiple_decorators", "auth_context"],
+  "optimal_fix": "Fix typo 'get_log' to 'get_logs' in handlers/admin_handler.py"
+}

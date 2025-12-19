@@ -1,0 +1,12 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v1_01_method_typo",
+  "description": "\u65b9\u6cd5\u540d\u62fc\u5199\u9519\u8bef\uff1aget_confg \u2192 get_config (\u7f16\u8f91\u8ddd\u79bb 1)",
+  "error_file": "main.py",
+  "error_message": "'Config' object has no attribute 'get_confg'",
+  "expected_fix": "Change 'get_confg' to 'get_config'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 1,
+  "expected_similarity": 0.91
+}

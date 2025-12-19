@@ -1,0 +1,14 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v2_01_refactored_function",
+  "description": "Function renamed during refactoring (process_data -> transform_data_records), but old caller still uses deprecated name",
+  "error_file": "pipeline_manager.py",
+  "error_message": "name 'process_data' is not defined",
+  "expected_fix": "Change 'process_data' to 'transform_data_records' in pipeline_manager.py line 43",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "pipeline_manager.py", "data_processor.py", "config.py", "utils.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["refactoring_artifact", "local_import", "5_files", "pipeline_pattern"],
+  "optimal_fix": "In pipeline_manager.py line 43, change 'from data_processor import process_data' to 'from data_processor import transform_data_records' and update line 45 to use 'transform_data_records(data)'"
+}

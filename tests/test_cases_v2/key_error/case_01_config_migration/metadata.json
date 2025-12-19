@@ -1,0 +1,19 @@
+{
+  "error_type": "KeyError",
+  "case_id": "case_01_config_migration",
+  "description": "Configuration schema was migrated from v1 to v2, changing the nested structure. The database and cache modules still try to access old key paths like 'database.credentials.username' (now 'database.auth.user') and 'cache.redis_host' (now 'cache.backend.host'), causing KeyErrors.",
+  "error_file": "database.py",
+  "error_message": "KeyError: 'credentials'",
+  "expected_fix": "Update database.py and cache_manager.py to use the new v2 config structure: change 'config['database']['credentials']['username']' to 'config['database']['auth']['user']', 'config['database']['host']' to 'config['database']['connection']['host']', 'config['cache']['redis_host']' to 'config['cache']['backend']['host']', etc.",
+  "difficulty": "hard",
+  "files_involved": ["database.py", "cache_manager.py", "config.json", "config_schema.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 8,
+  "complexity_factors": [
+    "Multiple files need updates (database.py and cache_manager.py)",
+    "Need to understand both old and new config schema from config_schema.py",
+    "Nested dictionary structure changes across multiple levels",
+    "Both database and cache modules have similar issues to fix"
+  ],
+  "optimal_fix": "Change database.py lines 27-30 to use config['database']['connection']['host'], config['database']['connection']['port'], config['database']['auth']['user'], config['database']['auth']['password']. Change cache_manager.py lines 18-20 to use config['cache']['backend']['host'], config['cache']['backend']['port'], config['cache']['settings']['ttl']."
+}

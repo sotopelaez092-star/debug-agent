@@ -1,0 +1,14 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v2_04_scope_issue",
+  "description": "Variable 'attempt' is referenced before assignment in nested function scope - needs 'nonlocal' declaration",
+  "error_file": "request_handler.py",
+  "error_message": "local variable 'attempt' referenced before assignment",
+  "expected_fix": "Add 'nonlocal attempt' declaration at the beginning of try_process() function in request_handler.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "app.py", "request_handler.py", "middleware.py", "state_manager.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["nested_function", "variable_scope", "nonlocal_keyword", "5_files"],
+  "optimal_fix": "In request_handler.py, add 'nonlocal attempt' as the first line inside the try_process() function (around line 128) before the logger.info statement"
+}

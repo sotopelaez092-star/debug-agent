@@ -1,0 +1,12 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v1_02_edit_dist_2",
+  "description": "\u62fc\u5199\u9519\u8bef\uff1aproces_dat \u2192 process_data (\u7f16\u8f91\u8ddd\u79bb 2)",
+  "error_file": "main.py",
+  "error_message": "name 'proces_dat' is not defined",
+  "expected_fix": "Change 'proces_dat' to 'process_data'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 2,
+  "expected_similarity": 0.85
+}

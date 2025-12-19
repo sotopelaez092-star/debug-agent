@@ -1,0 +1,61 @@
+{
+  "error_type": "ImportError",
+  "case_id": "case_05_shadowed_module",
+  "description": "A local module named 'random.py' shadows the Python standard library 'random' module. Multiple files import 'random' expecting the standard library with functions like shuffle(), sample(), and seed(), but get the local module instead which only has randint() and choice(). This causes AttributeError when trying to use missing functions. The fix is to rename the local random.py to something else like 'random_utils.py'.",
+  "error_file": "game.py",
+  "error_message": "module 'random' has no attribute 'shuffle'",
+  "expected_fix": "Rename 'random.py' to 'random_utils.py' (or another name), then update all imports from 'import random' to 'import random_utils' in files that use the local module, or change them to use the standard library random module.",
+  "difficulty": "hard",
+  "files_involved": [
+    "random.py",
+    "game.py",
+    "data_processor.py",
+    "simulator.py",
+    "main.py"
+  ],
+  "requires_exploration": true,
+  "expected_lines_to_change": 5,
+  "complexity_factors": [
+    "Module shadowing of standard library",
+    "Error is AttributeError, not ImportError initially",
+    "Multiple files affected by the shadowing",
+    "Requires understanding Python's import system and module resolution",
+    "Need to decide whether to rename module or change import strategy",
+    "Could fix by renaming file OR by using absolute imports for stdlib"
+  ],
+  "optimal_fix": {
+    "approach": "Rename the local module to avoid shadowing",
+    "steps": [
+      "Rename random.py to random_utils.py",
+      "Update import in game.py from 'import random' to 'from random import randint, choice' (use stdlib)",
+      "Update import in data_processor.py to use stdlib random",
+      "Update import in simulator.py to use stdlib random"
+    ],
+    "files_to_modify": [
+      {
+        "action": "rename",
+        "from": "random.py",
+        "to": "random_utils.py"
+      },
+      {
+        "file": "game.py",
+        "line": 6,
+        "original": "import random",
+        "fixed": "from random import randint, choice, shuffle"
+      },
+      {
+        "file": "data_processor.py",
+        "line": 6,
+        "original": "import random",
+        "fixed": "import random"
+      },
+      {
+        "file": "simulator.py",
+        "line": 6,
+        "original": "import random",
+        "fixed": "import random"
+      }
+    ],
+    "note": "After renaming, game.py needs to be updated since it was using the local random module's functions"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "error_type": "KeyError",
+  "case_id": "case_04_cache_key",
+  "description": "Cache key format was upgraded from v1 (user_profile_{id}) to v2 (app:user:profile:{id}:v2). The cache_warmer.py uses the new CacheKeyGenerator with v2 format, but user_cache.py and session_cache.py still use old v1 format string literals. When trying to retrieve warmed cache data, the key mismatch causes cache misses, leading to None returns and subsequent KeyError when accessing the expected dictionary data.",
+  "error_file": "main.py",
+  "error_message": "KeyError: 'user_profile_user_123'",
+  "expected_fix": "Update user_cache.py and session_cache.py to use CacheKeyGenerator instead of hardcoded v1 key formats. Replace all string literals like 'user_profile_{user_id}' with CacheKeyGenerator().user_profile_key(user_id), 'user_settings_{user_id}' with user_settings_key(user_id), and 'session_{session_id}' with session_key(session_id).",
+  "difficulty": "hard",
+  "files_involved": ["user_cache.py", "session_cache.py", "cache_keys.py", "cache_warmer.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 14,
+  "complexity_factors": [
+    "Need to identify the key format mismatch by comparing cache_warmer.py and user_cache.py",
+    "cache_keys.py shows the new v2 format with comments about old v1 format",
+    "Multiple methods across two files need updating (user_cache.py and session_cache.py)",
+    "Need to import CacheKeyGenerator in both files",
+    "Must understand that cache misses returning None cause downstream KeyErrors"
+  ],
+  "optimal_fix": "In user_cache.py: Add 'from cache_keys import CacheKeyGenerator' import, add 'self.key_gen = CacheKeyGenerator()' in __init__, replace all cache key string literals with appropriate key_gen method calls. In session_cache.py: Add same import, add key_gen instance, replace cache_key assignments with self.key_gen.session_key(session_id)."
+}

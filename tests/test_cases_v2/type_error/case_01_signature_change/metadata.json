@@ -1,0 +1,14 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v2_01_signature_change",
+  "description": "QueryBuilder.select() refactored to use keyword-only arguments, but UserRepository still uses old positional signature",
+  "error_file": "main.py",
+  "error_message": "QueryBuilder.select() takes 1 positional argument but 4 were given",
+  "expected_fix": "Update all builder.select() calls in models/user_model.py to use keyword arguments: select(table=..., columns=..., filters=...)",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "services/user_service.py", "models/user_model.py", "database/query_builder.py", "database/connection.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 3,
+  "complexity_factors": ["signature_change", "keyword_only_args", "api_refactoring", "multiple_call_sites"],
+  "optimal_fix": "Change builder.select(table, columns, filters) to builder.select(table=table, columns=columns, filters=filters) in three locations in models/user_model.py: find_by_id(), find_by_email(), and find_all()"
+}

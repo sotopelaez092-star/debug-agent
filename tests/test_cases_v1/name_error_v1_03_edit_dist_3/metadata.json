@@ -1,0 +1,12 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v1_03_edit_dist_3",
+  "description": "\u62fc\u5199\u9519\u8bef\uff1avalidat_inpt \u2192 validate_input (\u7f16\u8f91\u8ddd\u79bb 3)",
+  "error_file": "main.py",
+  "error_message": "name 'validat_inpt' is not defined",
+  "expected_fix": "Change 'validat_inpt' to 'validate_input'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 3,
+  "expected_similarity": 0.79
+}

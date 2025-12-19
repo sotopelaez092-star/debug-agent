@@ -1,0 +1,14 @@
+{
+  "error_type": "NameError",
+  "case_id": "name_error_v2_03_conditional_def",
+  "description": "Function 'fuzzy_search' is defined conditionally based on feature flag, but not available at runtime when flag is disabled",
+  "error_file": "search_engine.py",
+  "error_message": "name 'fuzzy_search' is not defined",
+  "expected_fix": "Either enable the feature flag ENABLE_ADVANCED_SEARCH=true, or add a fallback/check before calling fuzzy_search in search_engine.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "search_engine.py", "feature_flags.py", "data_loader.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 2,
+  "complexity_factors": ["conditional_definition", "feature_flags", "runtime_configuration", "4_files"],
+  "optimal_fix": "In search_engine.py, modify the advanced_search method (around line 118) to check if fuzzy_search exists: 'if fuzzy and has_advanced_search(): return fuzzy_search(...) else: return self.basic_search(query)'"
+}

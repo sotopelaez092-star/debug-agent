@@ -1,0 +1,32 @@
+{
+  "error_type": "ImportError",
+  "case_id": "case_04_relative_import",
+  "description": "Complex relative import error across sibling packages. The ReportGenerator in package_b/submodule_y tries to import from package_a using relative imports ('from ...package_a.utilities import serialize_data'), but this fails because package_a and package_b are sibling packages, not in a parent-child relationship. The correct approach is to use absolute imports.",
+  "error_file": "package_b/submodule_y/report_generator.py",
+  "error_message": "attempted relative import beyond top-level package",
+  "expected_fix": "Change relative imports to absolute imports: 'from package_a.utilities import serialize_data' and 'from package_a.constants import VERSION, APP_NAME'",
+  "difficulty": "hard",
+  "files_involved": [
+    "main.py",
+    "package_b/submodule_y/report_generator.py",
+    "package_b/submodule_y/__init__.py",
+    "package_a/utilities.py",
+    "package_a/constants.py",
+    "package_b/helpers.py"
+  ],
+  "requires_exploration": true,
+  "expected_lines_to_change": 2,
+  "complexity_factors": [
+    "Understanding relative vs absolute imports",
+    "Multiple package levels to navigate",
+    "Sibling package relationship",
+    "Requires understanding Python package structure",
+    "Error message is about relative import scope, not missing module"
+  ],
+  "optimal_fix": {
+    "file": "package_b/submodule_y/report_generator.py",
+    "lines": [7, 8],
+    "original": "from ...package_a.utilities import serialize_data\nfrom ...package_a.constants import VERSION, APP_NAME",
+    "fixed": "from package_a.utilities import serialize_data\nfrom package_a.constants import VERSION, APP_NAME"
+  }
+}

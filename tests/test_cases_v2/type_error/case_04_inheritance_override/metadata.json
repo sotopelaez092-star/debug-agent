@@ -1,0 +1,14 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v2_04_inheritance_override",
+  "description": "DataTransformerProcessor.process() overrides base method with incompatible signature, adding 'format' parameter that breaks polymorphic calls",
+  "error_file": "main.py",
+  "error_message": "process() missing 1 required positional argument: 'format'",
+  "expected_fix": "Make 'format' parameter optional with default value in plugins/transform_processor.py: process(self, data, context, format='json')",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "runners/pipeline_runner.py", "plugins/transform_processor.py", "core/base_processor.py", "plugins/text_processor.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["inheritance", "method_override", "signature_incompatibility", "polymorphism", "liskov_substitution_principle"],
+  "optimal_fix": "Change DataTransformerProcessor.process() signature in plugins/transform_processor.py from 'def process(self, data, context, format=\"json\")' to have format as keyword-only or ensure it has a default value, matching the base class interface"
+}

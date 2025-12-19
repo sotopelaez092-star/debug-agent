@@ -1,0 +1,14 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v2_01_deep_inheritance",
+  "description": "Method typo in deeply nested inheritance chain (5+ levels) with multiple mixins",
+  "error_file": "main.py",
+  "error_message": "'SuperAdmin' object has no attribute 'get_audit_trial'",
+  "expected_fix": "get_audit_trial -> get_audit_trail in models/super_admin.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "models/super_admin.py", "models/admin.py", "models/user.py", "models/base.py", "mixins/audit_mixin.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["deep_inheritance", "multiple_mixins", "multiple_interfaces", "6_files"],
+  "optimal_fix": "Fix typo 'get_audit_trial' to 'get_audit_trail' in models/super_admin.py line 28"
+}

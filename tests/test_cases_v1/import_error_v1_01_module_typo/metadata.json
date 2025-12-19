@@ -1,0 +1,12 @@
+{
+  "error_type": "ImportError",
+  "case_id": "import_error_v1_01_module_typo",
+  "description": "\u6a21\u5757\u540d\u62fc\u5199\u9519\u8bef\uff1aauthentification \u2192 authentication (\u7f16\u8f91\u8ddd\u79bb 2)",
+  "error_file": "main.py",
+  "error_message": "No module named 'authentification'",
+  "expected_fix": "Change import from 'authentification' to 'authentication'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 2,
+  "expected_similarity": 0.87
+}

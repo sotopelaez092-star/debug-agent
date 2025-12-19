@@ -1,0 +1,14 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v2_03_metaclass_attr",
+  "description": "Method typo in metaclass-based plugin system with auto-registration",
+  "error_file": "main.py",
+  "error_message": "type object 'PluginMeta' has no attribute 'get_plugin_metdata'",
+  "expected_fix": "get_plugin_metdata -> get_plugin_metadata in registry/plugin_manager.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "registry/plugin_manager.py", "core/plugin_meta.py", "core/base_plugin.py", "plugins/transform_plugin.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["metaclass", "auto_registration", "dependency_resolution", "plugin_system"],
+  "optimal_fix": "Fix typo 'get_plugin_metdata' to 'get_plugin_metadata' in registry/plugin_manager.py"
+}

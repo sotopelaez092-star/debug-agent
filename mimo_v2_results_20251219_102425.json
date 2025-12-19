@@ -1,0 +1,93 @@
+{
+  "timestamp": "20251219_102425",
+  "model": "mimo",
+  "base_url": "https://api.xiaomimimo.com/anthropic",
+  "total": 6,
+  "success_count": 4,
+  "success_rate": 66.66666666666666,
+  "avg_duration": 14.662587801615397,
+  "min_duration": 0.15157604217529297,
+  "max_duration": 42.32413125038147,
+  "by_type": {
+    "attribute_error": {
+      "total": 5,
+      "success": 4,
+      "durations": [
+        42.32413125038147,
+        0.15830087661743164,
+        0.15292096138000488,
+        0.15157604217529297,
+        25.176652908325195
+      ]
+    },
+    "circular_import": {
+      "total": 1,
+      "success": 0,
+      "durations": [
+        20.01194477081299
+      ]
+    }
+  },
+  "by_difficulty": {
+    "hard": {
+      "total": 6,
+      "success": 4
+    }
+  },
+  "results": [
+    {
+      "case_id": "attribute_error_v2_01_deep_inheritance",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 42.32413125038147,
+      "initial_error": "Shi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_01_deep_inheritance/main.py\", line 24, in main\n    audit_log = admin.get_system_audit_log()\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_01_deep_inheritance/models/super_admin.py\", line 31, in get_system_audit_log\n    for entry in self.get_audit_trial()\n                 ^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'SuperAdmin' object has no attribute 'get_audit_trial'. Did you mean: 'get_audit_trail'?\n",
+      "final_error": "Shi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_01_deep_inheritance/main.py\", line 24, in main\n    audit_log = admin.get_system_audit_log()\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_01_deep_inheritance/models/super_admin.py\", line 31, in get_system_audit_log\n    for entry in self.get_audit_trial()\n                 ^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'SuperAdmin' object has no attribute 'get_audit_trial'. Did you mean: 'get_audit_trail'?\n"
+    },
+    {
+      "case_id": "attribute_error_v2_02_decorator_chain",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.15830087661743164,
+      "initial_error": "**kwargs)\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_02_decorator_chain/decorators/auth.py\", line 44, in wrapper\n    return func(*args, **kwargs)\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_02_decorator_chain/handlers/admin_handler.py\", line 42, in get_audit_logs\n    return CallLogger.get_log()\n           ^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'CallLogger' has no attribute 'get_log'. Did you mean: 'get_logs'?\n",
+      "final_error": null
+    },
+    {
+      "case_id": "attribute_error_v2_03_metaclass_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.15292096138000488,
+      "initial_error": "metaclass_attr/main.py\", line 18, in main\n    transform = manager.load_with_dependencies(\"transform\", {\"format\": \"json\"})\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_03_metaclass_attr/registry/plugin_manager.py\", line 24, in load_with_dependencies\n    metadata = PluginMeta.get_plugin_metdata(name)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'PluginMeta' has no attribute 'get_plugin_metdata'. Did you mean: 'get_plugin_metadata'?\n",
+      "final_error": null
+    },
+    {
+      "case_id": "attribute_error_v2_04_protocol_impl",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.15157604217529297,
+      "initial_error": "ers/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_04_protocol_impl/main.py\", line 46, in main\n    content_type = adapter.get_content_type()\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_04_protocol_impl/adapters/storage_adapter.py\", line 52, in get_content_type\n    return self._serializer.contentype\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'JsonSerializer' object has no attribute 'contentype'. Did you mean: 'content_type'?\n",
+      "final_error": null
+    },
+    {
+      "case_id": "attribute_error_v2_05_dynamic_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 25.176652908325195,
+      "initial_error": "/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_05_dynamic_attr/validators/entity_validator.py\", line 18, in validate\n    if not entity.has_attr(attr):\n           ^^^^^^^^^^^^^^^\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/attribute_error/case_05_dynamic_attr/models/dynamic_model.py\", line 20, in __getattr__\n    raise AttributeError(f\"'{type(self).__name__}' object has no attribute '{name}'\")\nAttributeError: 'EntityModel' object has no attribute 'has_attr'\n",
+      "final_error": null
+    },
+    {
+      "case_id": "circular_import_v2_01_deep_chain",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 20.01194477081299,
+      "initial_error": "est_cases_v2/circular_import/case_01_deep_chain/services/user_service.py\", line 5, in <module>\n    from services.order_service import OrderService\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/circular_import/case_01_deep_chain/services/order_service.py\", line 2, in <module>\n    from models import Order, OrderItem\nImportError: cannot import name 'OrderItem' from 'models' (/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/circular_import/case_01_deep_chain/models/__init__.py)\n",
+      "final_error": "est_cases_v2/circular_import/case_01_deep_chain/services/user_service.py\", line 5, in <module>\n    from services.order_service import OrderService\n  File \"/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/circular_import/case_01_deep_chain/services/order_service.py\", line 2, in <module>\n    from models import Order, OrderItem\nImportError: cannot import name 'OrderItem' from 'models' (/Users/FiaShi/Desktop/debug-agent/tests/test_cases_v2/circular_import/case_01_deep_chain/models/__init__.py)\n"
+    }
+  ]
+}

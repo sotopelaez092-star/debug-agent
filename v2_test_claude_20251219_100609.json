@@ -1,0 +1,96 @@
+{
+  "timestamp": "20251219_100609",
+  "model": "claude",
+  "base_url": "Anthropic Official",
+  "total": 6,
+  "success_count": 2,
+  "success_rate": 33.33333333333333,
+  "avg_duration": 0.0026726325352986655,
+  "avg_confidence": 0.2916666666666667,
+  "by_type": {
+    "attribute_error": {
+      "total": 5,
+      "success": 1,
+      "durations": [
+        0.0037529468536376953,
+        0.002048969268798828,
+        0.0019540786743164062,
+        0.003496885299682617,
+        0.002310037612915039
+      ],
+      "confidences": [
+        0.0,
+        0.0,
+        0.0,
+        0.75,
+        0.0
+      ]
+    },
+    "circular_import": {
+      "total": 1,
+      "success": 1,
+      "durations": [
+        0.0024728775024414062
+      ],
+      "confidences": [
+        1.0
+      ]
+    }
+  },
+  "results": [
+    {
+      "case_id": "attribute_error_v2_01_deep_inheritance",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.0037529468536376953,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_02_decorator_chain",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.002048969268798828,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_03_metaclass_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.0019540786743164062,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "attribute_error_v2_04_protocol_impl",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.003496885299682617,
+      "confidence": 0.75,
+      "used_fast_path": true
+    },
+    {
+      "case_id": "attribute_error_v2_05_dynamic_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 0.002310037612915039,
+      "confidence": 0.0,
+      "used_fast_path": false
+    },
+    {
+      "case_id": "circular_import_v2_01_deep_chain",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": true,
+      "duration": 0.0024728775024414062,
+      "confidence": 1.0,
+      "used_fast_path": true
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "timestamp": "20251219_102043",
+  "model": "mimo",
+  "base_url": "https://api.xiaomimimo.com/anthropic",
+  "total": 6,
+  "success_count": 0,
+  "success_rate": 0.0,
+  "avg_duration": 1.426537831624349e-05,
+  "min_duration": 1.1920928955078125e-05,
+  "max_duration": 1.71661376953125e-05,
+  "by_type": {
+    "attribute_error": {
+      "total": 5,
+      "success": 0,
+      "durations": [
+        1.6927719116210938e-05,
+        1.71661376953125e-05,
+        1.3828277587890625e-05,
+        1.2874603271484375e-05,
+        1.2874603271484375e-05
+      ]
+    },
+    "circular_import": {
+      "total": 1,
+      "success": 0,
+      "durations": [
+        1.1920928955078125e-05
+      ]
+    }
+  },
+  "by_difficulty": {
+    "hard": {
+      "total": 6,
+      "success": 0
+    }
+  },
+  "results": [
+    {
+      "case_id": "attribute_error_v2_01_deep_inheritance",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.6927719116210938e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    },
+    {
+      "case_id": "attribute_error_v2_02_decorator_chain",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.71661376953125e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    },
+    {
+      "case_id": "attribute_error_v2_03_metaclass_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.3828277587890625e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    },
+    {
+      "case_id": "attribute_error_v2_04_protocol_impl",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.2874603271484375e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    },
+    {
+      "case_id": "attribute_error_v2_05_dynamic_attr",
+      "error_type": "attribute_error",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.2874603271484375e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    },
+    {
+      "case_id": "circular_import_v2_01_deep_chain",
+      "error_type": "circular_import",
+      "difficulty": "hard",
+      "success": false,
+      "duration": 1.1920928955078125e-05,
+      "error": "DebugAgent.__init__() got an unexpected keyword argument 'error_traceback'"
+    }
+  ]
+}

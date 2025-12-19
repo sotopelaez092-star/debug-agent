@@ -1,0 +1,12 @@
+{
+  "error_type": "TypeError",
+  "case_id": "type_error_v1_01_func_typo",
+  "description": "\u51fd\u6570\u540d\u62fc\u5199\u9519\u8bef\uff1aformaat_text \u2192 format_text (\u7f16\u8f91\u8ddd\u79bb 1)",
+  "error_file": "main.py",
+  "error_message": "formaat_text() takes 1 positional argument but 2 were given",
+  "expected_fix": "Change 'formaat_text' to 'format_text'",
+  "difficulty": "easy",
+  "requires_exploration": false,
+  "edit_distance": 1,
+  "expected_similarity": 0.92
+}

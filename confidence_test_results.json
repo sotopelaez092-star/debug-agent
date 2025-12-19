@@ -1,0 +1,297 @@
+[
+  {
+    "threshold": 0.6,
+    "by_type": {
+      "attribute_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "import_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "circular_import": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "name_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "key_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "type_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      }
+    },
+    "overall": {
+      "total": 30,
+      "fast_path_count": 0,
+      "fast_path_rate": 0.0,
+      "avg_confidence": 0.0
+    }
+  },
+  {
+    "threshold": 0.65,
+    "by_type": {
+      "attribute_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "import_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "circular_import": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "name_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "key_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "type_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      }
+    },
+    "overall": {
+      "total": 30,
+      "fast_path_count": 0,
+      "fast_path_rate": 0.0,
+      "avg_confidence": 0.0
+    }
+  },
+  {
+    "threshold": 0.7,
+    "by_type": {
+      "attribute_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "import_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "circular_import": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "name_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "key_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "type_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      }
+    },
+    "overall": {
+      "total": 30,
+      "fast_path_count": 0,
+      "fast_path_rate": 0.0,
+      "avg_confidence": 0.0
+    }
+  },
+  {
+    "threshold": 0.75,
+    "by_type": {
+      "attribute_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "import_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "circular_import": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "name_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "key_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "type_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      }
+    },
+    "overall": {
+      "total": 30,
+      "fast_path_count": 0,
+      "fast_path_rate": 0.0,
+      "avg_confidence": 0.0
+    }
+  },
+  {
+    "threshold": 0.8,
+    "by_type": {
+      "attribute_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "import_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "circular_import": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "name_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "key_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      },
+      "type_error": {
+        "total": 5,
+        "fast_path_count": 0,
+        "fast_path_rate": 0.0,
+        "avg_confidence": 0.0,
+        "max_confidence": 0.0,
+        "min_confidence": 0.0
+      }
+    },
+    "overall": {
+      "total": 30,
+      "fast_path_count": 0,
+      "fast_path_rate": 0.0,
+      "avg_confidence": 0.0
+    }
+  }
+]

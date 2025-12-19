@@ -1,0 +1,31 @@
+{
+  "error_type": "ImportError",
+  "case_id": "case_02_conditional_import",
+  "description": "Conditional import fails because the imported module name doesn't match the actual filename. When APP_ENV is set to 'testing', the code tries to import from 'test_config' but the actual file is named 'testing_config.py'.",
+  "error_file": "config/__init__.py",
+  "error_message": "No module named 'config.test_config'",
+  "expected_fix": "Change 'from .test_config import TestConfig' to 'from .testing_config import TestingConfig' in config/__init__.py",
+  "difficulty": "hard",
+  "files_involved": [
+    "main.py",
+    "config/__init__.py",
+    "config/testing_config.py",
+    "config/base_config.py",
+    "app.py"
+  ],
+  "requires_exploration": true,
+  "expected_lines_to_change": 2,
+  "complexity_factors": [
+    "Conditional import based on environment variable",
+    "Error only occurs in specific runtime conditions",
+    "Module name mismatch between import and filename",
+    "Requires understanding of environment-based configuration pattern",
+    "Need to update both import statement and variable name"
+  ],
+  "optimal_fix": {
+    "file": "config/__init__.py",
+    "lines": [23, 24],
+    "original": "    from .test_config import TestConfig\n    config = TestConfig()",
+    "fixed": "    from .testing_config import TestingConfig\n    config = TestingConfig()"
+  }
+}

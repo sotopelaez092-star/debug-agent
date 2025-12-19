@@ -1,0 +1,14 @@
+{
+  "error_type": "AttributeError",
+  "case_id": "attribute_error_v2_05_dynamic_attr",
+  "description": "Method typo in validator calling dynamic model with __getattr__",
+  "error_file": "main.py",
+  "error_message": "'EntityModel' object has no attribute 'has_attr'",
+  "expected_fix": "has_attr -> has_attribute in validators/entity_validator.py",
+  "difficulty": "hard",
+  "files_involved": ["main.py", "validators/entity_validator.py", "models/entity_model.py", "models/dynamic_model.py"],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": ["__getattr__", "__setattr__", "dynamic_attributes", "deep_inheritance", "validators"],
+  "optimal_fix": "Fix typo 'has_attr' to 'has_attribute' in validators/entity_validator.py"
+}

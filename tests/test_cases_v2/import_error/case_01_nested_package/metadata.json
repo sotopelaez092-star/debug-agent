@@ -1,0 +1,31 @@
+{
+  "error_type": "ImportError",
+  "case_id": "case_01_nested_package",
+  "description": "Complex nested package structure with incorrect import path. The JSONProcessor class is located in app.services.data.processors.json_processor but is being imported from app.services.processors.json_processor (missing 'data' in the path).",
+  "error_file": "main.py",
+  "error_message": "No module named 'app.services.processors'",
+  "expected_fix": "Change 'from app.services.processors.json_processor import JSONProcessor' to 'from app.services.data.processors.json_processor import JSONProcessor'",
+  "difficulty": "hard",
+  "files_involved": [
+    "main.py",
+    "app/__init__.py",
+    "app/services/__init__.py",
+    "app/services/data/__init__.py",
+    "app/services/data/processors/__init__.py",
+    "app/services/data/processors/json_processor.py"
+  ],
+  "requires_exploration": true,
+  "expected_lines_to_change": 1,
+  "complexity_factors": [
+    "Deep nesting of packages (4 levels)",
+    "Multiple similar package names that could cause confusion",
+    "Requires understanding the full package structure",
+    "Multiple __init__.py files to navigate"
+  ],
+  "optimal_fix": {
+    "file": "main.py",
+    "line": 10,
+    "original": "from app.services.processors.json_processor import JSONProcessor",
+    "fixed": "from app.services.data.processors.json_processor import JSONProcessor"
+  }
+}

@@ -1,0 +1,457 @@
+[
+  {
+    "threshold": 0.6,
+    "results": [
+      {
+        "used_fast_path": true,
+        "confidence": 0.85,
+        "found": "get_config",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "attribute_error_v1_01_method_typo",
+        "error_type": "AttributeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.91
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.875,
+        "found": "authentication",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "import_error_v1_01_module_typo",
+        "error_type": "ModuleNotFoundError",
+        "edit_distance": 2,
+        "expected_similarity": 0.87
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.96,
+        "found": "calculate_sum",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_01_edit_dist_1",
+        "error_type": "NameError",
+        "edit_distance": 1,
+        "expected_similarity": 0.93
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.92,
+        "found": "process_data",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_02_edit_dist_2",
+        "error_type": "NameError",
+        "edit_distance": 2,
+        "expected_similarity": 0.85
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.93,
+        "found": "validate_input",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_03_edit_dist_3",
+        "error_type": "NameError",
+        "edit_distance": 3,
+        "expected_similarity": 0.79
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.9,
+        "found": "formaat_text",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "type_error_v1_01_func_typo",
+        "error_type": "TypeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.92
+      }
+    ],
+    "overall": {
+      "total": 6,
+      "fast_path_count": 6,
+      "fast_path_rate": 1.0,
+      "avg_confidence": 0.9058333333333334
+    },
+    "by_edit_distance": {
+      "1": {
+        "total": 3,
+        "fast_path_count": 3,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.9033333333333333
+      },
+      "2": {
+        "total": 2,
+        "fast_path_count": 2,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.8975
+      },
+      "3": {
+        "total": 1,
+        "fast_path_count": 1,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.93
+      }
+    }
+  },
+  {
+    "threshold": 0.65,
+    "results": [
+      {
+        "used_fast_path": true,
+        "confidence": 0.85,
+        "found": "get_config",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "attribute_error_v1_01_method_typo",
+        "error_type": "AttributeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.91
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.875,
+        "found": "authentication",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "import_error_v1_01_module_typo",
+        "error_type": "ModuleNotFoundError",
+        "edit_distance": 2,
+        "expected_similarity": 0.87
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.96,
+        "found": "calculate_sum",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_01_edit_dist_1",
+        "error_type": "NameError",
+        "edit_distance": 1,
+        "expected_similarity": 0.93
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.92,
+        "found": "process_data",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_02_edit_dist_2",
+        "error_type": "NameError",
+        "edit_distance": 2,
+        "expected_similarity": 0.85
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.93,
+        "found": "validate_input",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_03_edit_dist_3",
+        "error_type": "NameError",
+        "edit_distance": 3,
+        "expected_similarity": 0.79
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.9,
+        "found": "formaat_text",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "type_error_v1_01_func_typo",
+        "error_type": "TypeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.92
+      }
+    ],
+    "overall": {
+      "total": 6,
+      "fast_path_count": 6,
+      "fast_path_rate": 1.0,
+      "avg_confidence": 0.9058333333333334
+    },
+    "by_edit_distance": {
+      "1": {
+        "total": 3,
+        "fast_path_count": 3,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.9033333333333333
+      },
+      "2": {
+        "total": 2,
+        "fast_path_count": 2,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.8975
+      },
+      "3": {
+        "total": 1,
+        "fast_path_count": 1,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.93
+      }
+    }
+  },
+  {
+    "threshold": 0.7,
+    "results": [
+      {
+        "used_fast_path": true,
+        "confidence": 0.85,
+        "found": "get_config",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "attribute_error_v1_01_method_typo",
+        "error_type": "AttributeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.91
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.875,
+        "found": "authentication",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "import_error_v1_01_module_typo",
+        "error_type": "ModuleNotFoundError",
+        "edit_distance": 2,
+        "expected_similarity": 0.87
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.96,
+        "found": "calculate_sum",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_01_edit_dist_1",
+        "error_type": "NameError",
+        "edit_distance": 1,
+        "expected_similarity": 0.93
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.92,
+        "found": "process_data",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_02_edit_dist_2",
+        "error_type": "NameError",
+        "edit_distance": 2,
+        "expected_similarity": 0.85
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.93,
+        "found": "validate_input",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_03_edit_dist_3",
+        "error_type": "NameError",
+        "edit_distance": 3,
+        "expected_similarity": 0.79
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.9,
+        "found": "formaat_text",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "type_error_v1_01_func_typo",
+        "error_type": "TypeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.92
+      }
+    ],
+    "overall": {
+      "total": 6,
+      "fast_path_count": 6,
+      "fast_path_rate": 1.0,
+      "avg_confidence": 0.9058333333333334
+    },
+    "by_edit_distance": {
+      "1": {
+        "total": 3,
+        "fast_path_count": 3,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.9033333333333333
+      },
+      "2": {
+        "total": 2,
+        "fast_path_count": 2,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.8975
+      },
+      "3": {
+        "total": 1,
+        "fast_path_count": 1,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.93
+      }
+    }
+  },
+  {
+    "threshold": 0.75,
+    "results": [
+      {
+        "used_fast_path": true,
+        "confidence": 0.85,
+        "found": "get_config",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "attribute_error_v1_01_method_typo",
+        "error_type": "AttributeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.91
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.875,
+        "found": "authentication",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "import_error_v1_01_module_typo",
+        "error_type": "ModuleNotFoundError",
+        "edit_distance": 2,
+        "expected_similarity": 0.87
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.96,
+        "found": "calculate_sum",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_01_edit_dist_1",
+        "error_type": "NameError",
+        "edit_distance": 1,
+        "expected_similarity": 0.93
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.92,
+        "found": "process_data",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_02_edit_dist_2",
+        "error_type": "NameError",
+        "edit_distance": 2,
+        "expected_similarity": 0.85
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.93,
+        "found": "validate_input",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_03_edit_dist_3",
+        "error_type": "NameError",
+        "edit_distance": 3,
+        "expected_similarity": 0.79
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.9,
+        "found": "formaat_text",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "type_error_v1_01_func_typo",
+        "error_type": "TypeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.92
+      }
+    ],
+    "overall": {
+      "total": 6,
+      "fast_path_count": 6,
+      "fast_path_rate": 1.0,
+      "avg_confidence": 0.9058333333333334
+    },
+    "by_edit_distance": {
+      "1": {
+        "total": 3,
+        "fast_path_count": 3,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.9033333333333333
+      },
+      "2": {
+        "total": 2,
+        "fast_path_count": 2,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.8975
+      },
+      "3": {
+        "total": 1,
+        "fast_path_count": 1,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.93
+      }
+    }
+  },
+  {
+    "threshold": 0.8,
+    "results": [
+      {
+        "used_fast_path": true,
+        "confidence": 0.85,
+        "found": "get_config",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "attribute_error_v1_01_method_typo",
+        "error_type": "AttributeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.91
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.875,
+        "found": "authentication",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "import_error_v1_01_module_typo",
+        "error_type": "ModuleNotFoundError",
+        "edit_distance": 2,
+        "expected_similarity": 0.87
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.96,
+        "found": "calculate_sum",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_01_edit_dist_1",
+        "error_type": "NameError",
+        "edit_distance": 1,
+        "expected_similarity": 0.93
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.92,
+        "found": "process_data",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_02_edit_dist_2",
+        "error_type": "NameError",
+        "edit_distance": 2,
+        "expected_similarity": 0.85
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.93,
+        "found": "validate_input",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "name_error_v1_03_edit_dist_3",
+        "error_type": "NameError",
+        "edit_distance": 3,
+        "expected_similarity": 0.79
+      },
+      {
+        "used_fast_path": true,
+        "confidence": 0.9,
+        "found": "formaat_text",
+        "reason": "Fast path - confidence above threshold",
+        "case_id": "type_error_v1_01_func_typo",
+        "error_type": "TypeError",
+        "edit_distance": 1,
+        "expected_similarity": 0.92
+      }
+    ],
+    "overall": {
+      "total": 6,
+      "fast_path_count": 6,
+      "fast_path_rate": 1.0,
+      "avg_confidence": 0.9058333333333334
+    },
+    "by_edit_distance": {
+      "1": {
+        "total": 3,
+        "fast_path_count": 3,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.9033333333333333
+      },
+      "2": {
+        "total": 2,
+        "fast_path_count": 2,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.8975
+      },
+      "3": {
+        "total": 1,
+        "fast_path_count": 1,
+        "fast_path_rate": 1.0,
+        "avg_confidence": 0.93
+      }
+    }
+  }
+]
