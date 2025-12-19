@@ -142,8 +142,8 @@ PROMPT_EOF
     # 使用 claude 命令行（非交互模式）
     cd "$CASE_DIR"
 
-    # 方式1: 使用 --prompt 参数（如果支持）
-    if timeout 180 claude --prompt "$(cat .fix_prompt.txt)" > /tmp/claude_output.txt 2>&1; then
+    # 使用 -p 参数进行非交互模式
+    if timeout 180 /opt/homebrew/bin/claude -p "$(cat .fix_prompt.txt)" > /tmp/claude_output.txt 2>&1; then
         CLAUDE_EXIT=0
     else
         CLAUDE_EXIT=$?
@@ -155,9 +155,8 @@ PROMPT_EOF
 
     cd - > /dev/null
 
-    if [ $CLAUDE_EXIT -ne 0 ]; then
+    if [ $CLAUDE_EXIT -ne 0 ] && [ $CLAUDE_EXIT -ne 124 ]; then
         echo "   ⚠️  Claude Code 执行异常 (退出码: $CLAUDE_EXIT)"
-        echo "   提示: Claude Code 可能不支持非交互模式"
         echo ""
 
         # 提供手动修复选项
