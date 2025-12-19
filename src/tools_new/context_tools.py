@@ -67,12 +67,22 @@ class ContextTools:
     # ========== 索引构建 ==========
 
     def _load_or_build_indexes(self):
-        """加载或构建索引"""
+        """加载或构建索引
+
+        Raises:
+            RuntimeError: 索引构建失败
+        """
         cache_file = self.cache_dir / "indexes.pkl"
 
         if cache_file.exists():
             try:
-                cached = pickle.load(cache_file.open('rb'))
+                with cache_file.open('rb') as f:
+                    cached = pickle.load(f)
+
+                # 验证缓存数据结构
+                if not isinstance(cached, dict):
+                    raise ValueError(f"缓存数据格式错误，期望 dict，得到 {type(cached).__name__}")
+
                 current_hash = self._get_project_hash()
 
                 if cached.get('project_hash') == current_hash:
@@ -83,12 +93,22 @@ class ContextTools:
                     logger.info("项目已更新，执行增量更新")
                     self._incremental_update(cached)
                     return
+            except (pickle.UnpicklingError, EOFError) as e:
+                logger.warning(f"缓存文件损坏: {e}，删除并重新构建索引")
+                try:
+                    cache_file.unlink()
+                except Exception as del_err:
+                    logger.debug(f"删除损坏缓存失败: {del_err}")
             except Exception as e:
                 logger.warning(f"加载缓存失败: {e}，重新构建索引")
 
         logger.info("首次构建索引")
-        self._full_build()
-        self._save_cache()
+        try:
+            self._full_build()
+            self._save_cache()
+        except Exception as e:
+            logger.error(f"索引构建失败: {e}", exc_info=True)
+            raise RuntimeError(f"无法构建项目索引: {e}") from e
 
     def _get_project_hash(self) -> str:
         """计算项目哈希值（用于快速变更检测）"""
@@ -134,50 +154,70 @@ class ContextTools:
         logger.info(f"索引构建完成，符号数: {sum(len(v) for v in self.symbol_table.values())}")
 
     def _incremental_update(self, cached: dict):
-        """增量更新索引 - 只重建有变更的文件"""
-        self._load_from_cache(cached)
+        """增量更新索引 - 只重建有变更的文件
 
-        old_hashes = self.file_hashes
-        new_hashes = self._get_file_hashes()
+        Args:
+            cached: 缓存的索引数据
 
-        # 找出变更的文件
-        changed_files = []
-        deleted_files = []
+        Note:
+            更新失败时会回退到完整重建
+        """
+        try:
+            self._load_from_cache(cached)
 
-        # 检查新增和修改的文件
-        for file_path, new_hash in new_hashes.items():
-            if file_path not in old_hashes or old_hashes[file_path] != new_hash:
-                changed_files.append(file_path)
+            old_hashes = self.file_hashes
+            new_hashes = self._get_file_hashes()
 
-        # 检查删除的文件
-        for file_path in old_hashes:
-            if file_path not in new_hashes:
-                deleted_files.append(file_path)
+            # 找出变更的文件
+            changed_files = []
+            deleted_files = []
 
-        if not changed_files and not deleted_files:
-            logger.info("项目无变更，使用缓存")
-            return
+            # 检查新增和修改的文件
+            for file_path, new_hash in new_hashes.items():
+                if file_path not in old_hashes or old_hashes[file_path] != new_hash:
+                    changed_files.append(file_path)
 
-        logger.info(f"增量更新: {len(changed_files)} 个文件变更, {len(deleted_files)} 个文件删除")
+            # 检查删除的文件
+            for file_path in old_hashes:
+                if file_path not in new_hashes:
+                    deleted_files.append(file_path)
 
-        # 清理删除文件的索引
-        for file_path in deleted_files:
-            self._remove_file_symbols(file_path)
+            if not changed_files and not deleted_files:
+                logger.info("项目无变更，使用缓存")
+                return
 
-        # 重建变更文件的索引
-        for file_path in changed_files:
-            # 先清理旧索引
-            self._remove_file_symbols(file_path)
-            # 重新索引
-            full_path = self.project_path / file_path
-            if full_path.exists():
-                self._index_single_file(full_path)
+            logger.info(f"增量更新: {len(changed_files)} 个文件变更, {len(deleted_files)} 个文件删除")
 
-        # 更新文件哈希
-        self.file_hashes = new_hashes
-        self._save_cache()
+            # 清理删除文件的索引
+            for file_path in deleted_files:
+                try:
+                    self._remove_file_symbols(file_path)
+                except Exception as e:
+                    logger.warning(f"清理文件索引失败 {file_path}: {e}")
 
-        logger.info(f"增量更新完成，符号数: {sum(len(v) for v in self.symbol_table.values())}")
+            # 重建变更文件的索引
+            for file_path in changed_files:
+                try:
+                    # 先清理旧索引
+                    self._remove_file_symbols(file_path)
+                    # 重新索引
+                    full_path = self.project_path / file_path
+                    if full_path.exists():
+                        self._index_single_file(full_path)
+                except Exception as e:
+                    logger.warning(f"增量更新文件失败 {file_path}: {e}")
+
+            # 更新文件哈希
+            self.file_hashes = new_hashes
+            self._save_cache()
+
+            logger.info(f"增量更新完成，符号数: {sum(len(v) for v in self.symbol_table.values())}")
+
+        except Exception as e:
+            logger.error(f"增量更新失败: {e}，回退到完整重建", exc_info=True)
+            # 回退到完整重建
+            self._full_build()
+            self._save_cache()
 
     def _remove_file_symbols(self, relative_path: str):
         """清理指定文件的所有索引数据"""
@@ -211,41 +251,80 @@ class ContextTools:
         logger.debug(f"已清理文件索引: {relative_path}")
 
     def _index_single_file(self, file_path: Path):
-        """索引单个文件"""
+        """索引单个文件
+
+        Args:
+            file_path: 要索引的文件路径
+
+        Note:
+            遇到错误会记录日志但不抛出异常，确保部分文件失败不影响整体索引
+        """
         try:
-            content = file_path.read_text(encoding='utf-8')
-            tree = ast.parse(content, filename=str(file_path))
+            # 读取文件内容
+            try:
+                content = file_path.read_text(encoding='utf-8')
+            except UnicodeDecodeError:
+                # 尝试其他编码
+                try:
+                    content = file_path.read_text(encoding='latin-1')
+                    logger.debug(f"使用 latin-1 编码读取文件: {file_path}")
+                except Exception as e:
+                    logger.warning(f"无法读取文件 {file_path}: {e}")
+                    return
+            except FileNotFoundError:
+                logger.debug(f"文件不存在（可能已被删除）: {file_path}")
+                return
+            except PermissionError:
+                logger.warning(f"无权限读取文件: {file_path}")
+                return
+
+            # 解析 AST
+            try:
+                tree = ast.parse(content, filename=str(file_path))
+            except SyntaxError as e:
+                logger.debug(f"跳过语法错误文件: {file_path}:{e.lineno} - {e.msg}")
+                return
+            except ValueError as e:
+                logger.debug(f"AST 解析失败（可能包含空字节）: {file_path} - {e}")
+                return
 
             relative_path = str(file_path.relative_to(self.project_path))
 
-            for node in ast.walk(tree):
-                # 函数定义
-                if isinstance(node, ast.FunctionDef):
-                    self._add_symbol(node.name, relative_path, node.lineno, "function")
-                    self._extract_signature(node, relative_path)
-                    self._extract_calls(node, relative_path)
-                    # 新增：提取函数返回的字典结构
-                    self._extract_return_dict_structure(node, relative_path)
+            # 遍历 AST 节点
+            try:
+                for node in ast.walk(tree):
+                    try:
+                        # 函数定义
+                        if isinstance(node, ast.FunctionDef):
+                            self._add_symbol(node.name, relative_path, node.lineno, "function")
+                            self._extract_signature(node, relative_path)
+                            self._extract_calls(node, relative_path)
+                            # 新增：提取函数返回的字典结构
+                            self._extract_return_dict_structure(node, relative_path)
 
-                # 类定义
-                elif isinstance(node, ast.ClassDef):
-                    self._add_symbol(node.name, relative_path, node.lineno, "class")
-                    self._extract_class_info(node, relative_path)
+                        # 类定义
+                        elif isinstance(node, ast.ClassDef):
+                            self._add_symbol(node.name, relative_path, node.lineno, "class")
+                            self._extract_class_info(node, relative_path)
 
-                # 导入
-                elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                    self._extract_import(node, relative_path)
+                        # 导入
+                        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                            self._extract_import(node, relative_path)
 
-                # 字典 key
-                elif isinstance(node, ast.Dict):
-                    for key in node.keys:
-                        if isinstance(key, ast.Constant) and isinstance(key.value, str):
-                            self.dict_keys.add(key.value)
+                        # 字典 key
+                        elif isinstance(node, ast.Dict):
+                            for key in node.keys:
+                                if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                                    self.dict_keys.add(key.value)
+                    except Exception as e:
+                        logger.debug(f"处理节点失败 {type(node).__name__} in {file_path}: {e}")
+                        continue
 
-        except SyntaxError as e:
-            logger.debug(f"跳过语法错误文件: {file_path} - {e}")
+            except Exception as e:
+                logger.warning(f"遍历 AST 失败: {file_path} - {e}")
+
         except Exception as e:
-            logger.debug(f"索引文件失败: {file_path} - {e}")
+            logger.error(f"索引文件时发生未预期错误: {file_path} - {e}", exc_info=True)
 
     def _extract_return_dict_structure(self, func_node: ast.FunctionDef, file_path: str):
         """提取函数返回的字典结构（用于 KeyError 分析）"""
@@ -791,33 +870,79 @@ class ContextTools:
     # ========== 缓存 ==========
 
     def _save_cache(self):
-        """保存缓存"""
+        """保存缓存
+
+        Note:
+            保存失败不会抛出异常，只记录警告日志
+        """
         cache_file = self.cache_dir / "indexes.pkl"
-        data = {
-            'project_hash': self._get_project_hash(),
-            'file_hashes': self.file_hashes,
-            'symbol_table': self.symbol_table,
-            'import_graph': self.import_graph,
-            'class_table': self.class_table,
-            'function_signatures': self.function_signatures,
-            'dict_keys': self.dict_keys,
-            'call_graph': self.call_graph,
-            'function_return_keys': self.function_return_keys,  # 新增
-        }
+        temp_file = cache_file.with_suffix('.pkl.tmp')
+
         try:
-            pickle.dump(data, cache_file.open('wb'))
+            data = {
+                'project_hash': self._get_project_hash(),
+                'file_hashes': self.file_hashes,
+                'symbol_table': self.symbol_table,
+                'import_graph': self.import_graph,
+                'class_table': self.class_table,
+                'function_signatures': self.function_signatures,
+                'dict_keys': self.dict_keys,
+                'call_graph': self.call_graph,
+                'function_return_keys': self.function_return_keys,
+            }
+
+            # 先写入临时文件，成功后再重命名（原子操作）
+            with temp_file.open('wb') as f:
+                pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+            # 原子重命名
+            temp_file.replace(cache_file)
             logger.info(f"缓存已保存到 {cache_file}")
+
+        except PermissionError as e:
+            logger.warning(f"保存缓存失败（权限不足）: {e}")
+        except OSError as e:
+            logger.warning(f"保存缓存失败（磁盘空间/IO错误）: {e}")
         except Exception as e:
-            logger.warning(f"保存缓存失败: {e}")
+            logger.warning(f"保存缓存失败: {e}", exc_info=True)
+        finally:
+            # 清理临时文件
+            if temp_file.exists():
+                try:
+                    temp_file.unlink()
+                except Exception:
+                    pass
 
     def _load_from_cache(self, cached: dict):
-        """从缓存加载"""
-        self.file_hashes = cached.get('file_hashes', {})
-        self.symbol_table = cached.get('symbol_table', {})
-        self.import_graph = cached.get('import_graph', {})
-        self.class_table = cached.get('class_table', {})
-        self.function_signatures = cached.get('function_signatures', {})
-        self.dict_keys = cached.get('dict_keys', set())
-        self.call_graph = cached.get('call_graph', {})
-        self.function_return_keys = cached.get('function_return_keys', {})  # 新增
-        logger.info("缓存加载完成")
+        """从缓存加载
+
+        Args:
+            cached: 缓存字典
+
+        Note:
+            缺失的键会使用默认值
+        """
+        try:
+            self.file_hashes = cached.get('file_hashes', {})
+            self.symbol_table = cached.get('symbol_table', {})
+            self.import_graph = cached.get('import_graph', {})
+            self.class_table = cached.get('class_table', {})
+            self.function_signatures = cached.get('function_signatures', {})
+            self.dict_keys = cached.get('dict_keys', set())
+            self.call_graph = cached.get('call_graph', {})
+            self.function_return_keys = cached.get('function_return_keys', {})
+
+            # 验证数据类型
+            if not isinstance(self.symbol_table, dict):
+                logger.warning(f"symbol_table 类型错误，重置为空字典")
+                self.symbol_table = {}
+
+            if not isinstance(self.dict_keys, set):
+                logger.warning(f"dict_keys 类型错误，重置为空集合")
+                self.dict_keys = set()
+
+            logger.info("缓存加载完成")
+
+        except Exception as e:
+            logger.error(f"加载缓存数据时出错: {e}", exc_info=True)
+            raise

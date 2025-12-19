@@ -9,6 +9,13 @@ from src.models.results import FixResult
 from src.utils.config import get_settings
 from src.core.pattern_fixer import PatternFixer
 from src.core.llm_cache import LLMCache
+from src.core.llm_error_handler import (
+    call_llm_with_retry,
+    LLMError,
+    LLMAuthError,
+    LLMRateLimitError,
+    LLMTimeoutError
+)
 
 logger = logging.getLogger(__name__)
 
@@ -130,8 +137,9 @@ class CodeFixer:
         prompt = self._build_prompt(buggy_code, error_message, context, rag_solutions)
 
         try:
-            # 调用 LLM
-            response = await self.client.chat.completions.create(
+            # 调用 LLM（带重试机制）
+            response = await call_llm_with_retry(
+                client=self.client,
                 model=self.model,
                 messages=[
                     {
@@ -144,7 +152,9 @@ class CodeFixer:
                     }
                 ],
                 temperature=self.temperature,
-                max_tokens=self.max_tokens
+                max_tokens=self.max_tokens,
+                max_retries=3,
+                timeout=60.0
             )
 
             # 记录 token 使用
@@ -172,9 +182,25 @@ class CodeFixer:
 
             return result
 
-        except Exception as e:
+        except LLMAuthError as e:
+            logger.error(f"API 认证失败: {e}")
+            raise RuntimeError(f"API 认证失败，请检查 API Key: {e}")
+
+        except LLMRateLimitError as e:
+            logger.error(f"API 速率限制: {e}")
+            raise RuntimeError(f"API 速率限制，请稍后重试: {e}")
+
+        except LLMTimeoutError as e:
+            logger.error(f"请求超时: {e}")
+            raise RuntimeError(f"LLM 请求超时，请检查网络连接: {e}")
+
+        except LLMError as e:
             logger.error(f"LLM 调用失败: {e}", exc_info=True)
             raise RuntimeError(f"代码修复失败: {e}")
+
+        except Exception as e:
+            logger.error(f"未预期的错误: {e}", exc_info=True)
+            raise RuntimeError(f"代码修复过程中发生错误: {e}")
 
     def _build_prompt(
         self,

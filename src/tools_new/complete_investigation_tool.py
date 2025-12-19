@@ -1,7 +1,10 @@
 """调查完成工具"""
 from pydantic import ValidationError
+import logging
 from .base import BaseTool
 from src.models.investigation_report import InvestigationReport
+
+logger = logging.getLogger(__name__)
 
 
 class CompleteInvestigationTool(BaseTool):
@@ -31,10 +34,28 @@ class CompleteInvestigationTool(BaseTool):
 - code_snippet: 代码片段（可选）"""
 
     async def execute(self, report: dict) -> dict:
-        """执行调查完成"""
+        """执行调查完成
+
+        Args:
+            report: 调查报告字典
+
+        Returns:
+            执行结果字典
+
+        Raises:
+            ValueError: 参数验证失败
+        """
+        # 参数验证
+        if not report or not isinstance(report, dict):
+            raise ValueError(f"report 必须是非空字典，得到: {type(report).__name__}")
+
         try:
             # 使用 Pydantic 验证报告格式
             validated = InvestigationReport(**report)
+            logger.info(
+                f"调查完成，置信度: {validated.confidence:.2f}，"
+                f"相关位置数: {len(validated.relevant_locations)}"
+            )
             return {
                 "success": True,
                 "report": validated
@@ -47,10 +68,16 @@ class CompleteInvestigationTool(BaseTool):
                 msg = error['msg']
                 errors.append(f"{field}: {msg}")
 
+            error_msg = "报告格式错误:\n" + "\n".join(errors)
+            logger.warning(f"调查报告验证失败: {error_msg}")
+
             return {
                 "success": False,
-                "error": "报告格式错误:\n" + "\n".join(errors)
+                "error": error_msg
             }
+        except Exception as e:
+            logger.error(f"处理调查报告时出错: {e}", exc_info=True)
+            raise
 
     def get_parameters_schema(self) -> dict:
         return {

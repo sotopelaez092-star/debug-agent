@@ -137,243 +137,286 @@ class DebugAgent:
 
         Returns:
             DebugResult
+
+        Raises:
+            ValueError: 参数验证失败
+            RuntimeError: 调试过程中出现不可恢复的错误
         """
+        # 参数验证
+        if not buggy_code or not isinstance(buggy_code, str):
+            raise ValueError(f"buggy_code 必须是非空字符串，得到: {type(buggy_code).__name__}")
+
+        if not error_traceback or not isinstance(error_traceback, str):
+            raise ValueError(f"error_traceback 必须是非空字符串，得到: {type(error_traceback).__name__}")
+
+        if not isinstance(error_file, str):
+            raise ValueError(f"error_file 必须是字符串，得到: {type(error_file).__name__}")
+
+        if not isinstance(max_retries, int) or max_retries < 1:
+            raise ValueError(f"max_retries 必须是正整数，得到: {max_retries}")
+
         logger.info("=" * 60)
         logger.info("开始调试流程")
         logger.info("=" * 60)
 
         # 开始结构化日志会话
         slog.start_session()
-        slog.start_phase(DebugPhase.ERROR_PARSE)
 
-        # 1. 识别错误
-        progress.step(1, 5, "识别错误类型", "📋")
-        logger.info("[Step 1] 识别错误")
-        error = self.error_identifier.identify(error_traceback)
-        # 如果提供了 error_file，覆盖识别的文件
-        if error_file:
-            error.error_file = error_file
-        logger.info(f"错误类型: {error.error_type}")
-        logger.info(f"错误消息: {error.error_message}")
-        progress.success(f"检测到: {error.error_type}")
+        try:
+            # === Phase 1: 错误识别 ===
+            slog.start_phase(DebugPhase.ERROR_PARSE)
+            progress.step(1, 5, "识别错误类型", "📋")
+            logger.info("[Step 1] 识别错误")
+            error = self.error_identifier.identify(error_traceback)
+            # 如果提供了 error_file，覆盖识别的文件
+            if error_file:
+                error.error_file = error_file
+            logger.info(f"错误类型: {error.error_type}")
+            logger.info(f"错误消息: {error.error_message}")
+            progress.success(f"检测到: {error.error_type}")
 
-        # 记录错误信息
-        slog.set_error_info(error.error_type, error.error_message, error.error_file)
-        slog.end_phase(success=True, error_type=error.error_type)
+            # 记录错误信息
+            slog.set_error_info(error.error_type, error.error_message, error.error_file)
+            slog.end_phase(success=True, error_type=error.error_type)
 
-        # 2. 判断是否跨文件
-        slog.start_phase(DebugPhase.SCOPE_DETECT)
-        progress.step(2, 5, "分析错误范围", "🔍")
-        logger.info("[Step 2] 判断是否跨文件错误")
-        is_cross_file = self._is_cross_file(error, buggy_code)
-        logger.info(f"跨文件错误: {is_cross_file}")
-        progress.success('跨文件错误（需要调查项目结构）' if is_cross_file else '单文件错误（快速修复）')
-        slog.set_cross_file(is_cross_file)
-        slog.end_phase(success=True, is_cross_file=is_cross_file)
+            # === Phase 2: 范围检测 ===
+            slog.start_phase(DebugPhase.SCOPE_DETECT)
+            progress.step(2, 5, "分析错误范围", "🔍")
+            logger.info("[Step 2] 判断是否跨文件错误")
+            is_cross_file = self._is_cross_file(error, buggy_code)
+            logger.info(f"跨文件错误: {is_cross_file}")
+            progress.success('跨文件错误（需要调查项目结构）' if is_cross_file else '单文件错误（快速修复）')
+            slog.set_cross_file(is_cross_file)
+            slog.end_phase(success=True, is_cross_file=is_cross_file)
 
-        if not is_cross_file:
-            # 单文件直接修复
-            progress.step(3, 5, "快速修复模式", "⚡")
-            logger.info("单文件错误，直接修复")
-            slog.set_fix_method(FixMethod.LLM_CALL)
-            result = await self._fix_single_file(buggy_code, error, max_retries=3)  # 单文件最多3次
+            if not is_cross_file:
+                # 单文件直接修复
+                progress.step(3, 5, "快速修复模式", "⚡")
+                logger.info("单文件错误，直接修复")
+                slog.set_fix_method(FixMethod.LLM_CALL)
+                result = await self._fix_single_file(buggy_code, error, max_retries=3)  # 单文件最多3次
 
-            if result.success:
-                self.code_fixer.save_token_stats()
-                slog.end_session(success=True)
-                return result
+                if result.success:
+                    self.code_fixer.save_token_stats()
+                    slog.end_session(success=True)
+                    return result
 
-            # 关键：单文件修复失败，回退到跨文件模式
-            progress.warning("单文件修复失败，回退到跨文件调查模式...")
-            logger.info("⚠️ 单文件修复失败，启动跨文件调查作为保底")
-            is_cross_file = True  # 强制进入跨文件流程
+                # 关键：单文件修复失败，回退到跨文件模式
+                progress.warning("单文件修复失败，回退到跨文件调查模式...")
+                logger.info("⚠️ 单文件修复失败，启动跨文件调查作为保底")
+                is_cross_file = True  # 强制进入跨文件流程
 
-        # 3. 尝试快速路径
-        slog.start_phase(DebugPhase.INVESTIGATION)
-        progress.step(3, 5, "尝试快速路径（索引查找）", "⚡")
-        logger.info("[Step 3] 尝试快速路径")
-        report = self._try_fast_path(error)
+            # === Phase 3: 调查阶段 ===
+            slog.start_phase(DebugPhase.INVESTIGATION)
+            progress.step(3, 5, "尝试快速路径（索引查找）", "⚡")
+            logger.info("[Step 3] 尝试快速路径")
+            report = self._try_fast_path(error)
 
-        # 4. 快速路径失败，完整探索
-        if not report or report.confidence < self.confidence_threshold:
-            if report:
-                logger.info(f"快速路径置信度不足: {report.confidence:.2f} < {self.confidence_threshold}")
-                progress.warning(f"快速路径置信度不足 ({report.confidence:.0%})，启动完整调查...")
+            # 4. 快速路径失败，完整探索
+            if not report or report.confidence < self.confidence_threshold:
+                if report:
+                    logger.info(f"快速路径置信度不足: {report.confidence:.2f} < {self.confidence_threshold}")
+                    progress.warning(f"快速路径置信度不足 ({report.confidence:.0%})，启动完整调查...")
+                else:
+                    logger.info("快速路径未找到结果")
+                    progress.warning("快速路径未找到结果，启动完整调查...")
+
+                progress.step(4, 5, "LLM 完整调查（可能需要 30-60 秒）", "🤖")
+                logger.info("[Step 4] 启动完整调查")
+                report = await self.investigator.investigate(error)
+                logger.info(f"调查完成，置信度: {report.confidence:.2f}")
+                progress.success(f"调查完成（置信度: {report.confidence:.0%})")
+                slog.set_fix_method(FixMethod.LLM_CALL)
             else:
-                logger.info("快速路径未找到结果")
-                progress.warning("快速路径未找到结果，启动完整调查...")
+                logger.info(f"快速路径成功，置信度: {report.confidence:.2f}")
+                progress.success(f"快速路径成功（置信度: {report.confidence:.0%})")
+                slog.set_fix_method(FixMethod.TRACEBACK_FAST)
+            slog.end_phase(success=True, confidence=report.confidence)
 
-            progress.step(4, 5, "LLM 完整调查（可能需要 30-60 秒）", "🤖")
-            logger.info("[Step 4] 启动完整调查")
-            report = await self.investigator.investigate(error)
-            logger.info(f"调查完成，置信度: {report.confidence:.2f}")
-            progress.success(f"调查完成（置信度: {report.confidence:.0%})")
-            slog.set_fix_method(FixMethod.LLM_CALL)
-        else:
-            logger.info(f"快速路径成功，置信度: {report.confidence:.2f}")
-            progress.success(f"快速路径成功（置信度: {report.confidence:.0%})")
-            slog.set_fix_method(FixMethod.TRACEBACK_FAST)
-        slog.end_phase(success=True, confidence=report.confidence)
+            # === Phase 4: 修复阶段 ===
+            slog.start_phase(DebugPhase.CODE_FIX)
+            progress.step(5, 5, "生成并验证修复", "🔧")
+            logger.info(f"[Step 5] 基于调查报告修复代码（最多 {max_retries} 次尝试）")
 
-        # 5. 基于报告修复（最多 max_retries 次）
-        slog.start_phase(DebugPhase.CODE_FIX)
-        progress.step(5, 5, "生成并验证修复", "🔧")
-        logger.info(f"[Step 5] 基于调查报告修复代码（最多 {max_retries} 次尝试）")
+            current_error = error
+            current_report = report
+            accumulated_files = {}  # 累积所有修复的文件
+            force_llm = False  # 当 PatternFixer 失败时强制使用 LLM
 
-        current_error = error
-        current_report = report
-        accumulated_files = {}  # 累积所有修复的文件
-        force_llm = False  # 当 PatternFixer 失败时强制使用 LLM
+            for attempt in range(max_retries):
+                slog.increment_attempt()
 
-        for attempt in range(max_retries):
-            slog.increment_attempt()
-
-            # 循环检测：检查是否陷入重复失败模式
-            loop_check = self.loop_detector.check_loop()
-            if loop_check.action == LoopAction.ABORT:
-                logger.warning(f"循环检测触发终止: {loop_check.reason}")
-                progress.warning(f"检测到循环: {loop_check.reason}")
-                break
-            elif loop_check.action == LoopAction.ESCALATE:
-                logger.info(f"循环检测建议升级: {loop_check.reason}")
-                force_llm = True  # 升级到 LLM 修复
-            elif loop_check.action == LoopAction.SWITCH_STRATEGY:
-                logger.info(f"循环检测建议切换策略: {loop_check.reason}")
-                force_llm = True
-
-            progress.progress(f"尝试 {attempt + 1}/{max_retries}: 生成修复代码...")
-            logger.info(f"--- 尝试 {attempt + 1}/{max_retries}, force_llm={force_llm} ---")
-
-            fix_result = await self._fix_with_report(buggy_code, current_error, current_report, accumulated_files, force_llm=force_llm)
-
-            # 累积修复的文件
-            if fix_result.related_files:
-                accumulated_files.update(fix_result.related_files)
-
-            # 合并累积的修复到 fix_result，确保 Docker 使用所有已修复的文件
-            if accumulated_files:
-                if fix_result.related_files is None:
-                    fix_result.related_files = {}
-                for fname, fcontent in accumulated_files.items():
-                    if fname not in fix_result.related_files:
-                        fix_result.related_files[fname] = fcontent
-                        logger.debug(f"合并累积修复: {fname}")
-
-            # 6. 验证修复
-            progress.progress(f"尝试 {attempt + 1}/{max_retries}: 本地验证中...")
-            # 使用实际的错误文件作为执行入口
-            # 如果是 main.py 或错误文件为空，使用 main.py；否则使用错误文件本身
-            verify_file = error.error_file if error.error_file and error.error_file != "main.py" else "main.py"
-            # 确保使用最终修复的文件作为入口
-            if fix_result.target_file:
-                verify_file = fix_result.target_file
-            logger.debug(f"验证入口文件: {verify_file}")
-            exec_result = await self._verify_fix(fix_result, verify_file)
-
-            if exec_result.success:
-                logger.info(f"✅ 修复成功！(第 {attempt + 1} 次尝试)")
-                # 记录成功尝试到循环检测器
-                self.loop_detector.record_attempt(
-                    fixed_code=fix_result.fixed_code,
-                    error_type=current_error.error_type,
-                    error_message=current_error.error_message,
-                    layer=3 if force_llm else 1,
-                    success=True
-                )
-                # 记录成功尝试
-                approach = "pattern_fix" if fix_result.used_pattern_fixer else "llm_fix"
-                self.retry_strategy.record_attempt(
-                    error_type=current_error.error_type,
-                    approach=approach,
-                    fix_content=fix_result.fixed_code,
-                    success=True
-                )
-                self.code_fixer.save_token_stats()  # 保存 token 统计
-                slog.end_phase(success=True, attempt=attempt + 1)
-                slog.end_session(success=True)
-                # 合并所有修复的文件
-                all_files = accumulated_files.copy()
-                if fix_result.related_files:
-                    all_files.update(fix_result.related_files)
-                return DebugResult(
-                    success=True,
-                    original_error=error.dict(),
-                    fixed_code=fix_result.fixed_code,
-                    explanation=fix_result.explanation,
-                    attempts=attempt + 1,
-                    investigation_summary=current_report.summary,
-                    related_files=all_files
-                )
-            else:
-                logger.warning(f"❌ 验证失败:\n{exec_result.stderr}")
-
-                # 记录失败尝试到循环检测器
-                self.loop_detector.record_attempt(
-                    fixed_code=fix_result.fixed_code,
-                    error_type=current_error.error_type,
-                    error_message=exec_result.stderr[:200] if exec_result.stderr else current_error.error_message,
-                    layer=3 if force_llm else 1,
-                    success=False
-                )
-
-                # 记录失败尝试到重试策略
-                approach = "pattern_fix" if fix_result.used_pattern_fixer else "llm_fix"
-                self.retry_strategy.record_attempt(
-                    error_type=current_error.error_type,
-                    approach=approach,
-                    fix_content=fix_result.fixed_code,
-                    success=False,
-                    error_message=exec_result.stderr[:200] if exec_result.stderr else ""
-                )
-
-                # 关键：如果 PatternFixer 失败了，下次强制使用 LLM
-                if fix_result.used_pattern_fixer:
-                    logger.info("PatternFixer 修复不完整，下次尝试使用 LLM")
+                # 循环检测：检查是否陷入重复失败模式
+                loop_check = self.loop_detector.check_loop()
+                if loop_check.action == LoopAction.ABORT:
+                    logger.warning(f"循环检测触发终止: {loop_check.reason}")
+                    progress.warning(f"检测到循环: {loop_check.reason}")
+                    break
+                elif loop_check.action == LoopAction.ESCALATE:
+                    logger.info(f"循环检测建议升级: {loop_check.reason}")
+                    force_llm = True  # 升级到 LLM 修复
+                elif loop_check.action == LoopAction.SWITCH_STRATEGY:
+                    logger.info(f"循环检测建议切换策略: {loop_check.reason}")
                     force_llm = True
 
-                # 检查是否应该换策略
-                alternative = self.retry_strategy.suggest_alternative(current_error.error_type)
-                if alternative:
-                    progress.warning(f"建议: {alternative}")
-                    logger.info(f"重试策略建议: {alternative}")
+                progress.progress(f"尝试 {attempt + 1}/{max_retries}: 生成修复代码...")
+                logger.info(f"--- 尝试 {attempt + 1}/{max_retries}, force_llm={force_llm} ---")
 
-                # 检查是否是新错误（不同于当前错误）
-                if exec_result.stderr:
-                    try:
-                        new_error = self.error_identifier.identify(exec_result.stderr)
-                        # 如果错误文件不同，说明是新错误，需要更新上下文
-                        if new_error.error_file != current_error.error_file:
-                            logger.info(f"检测到新错误: {new_error.error_file} (之前: {current_error.error_file})")
-                            current_error = new_error
-                            # 重置重试策略和循环检测器（新错误需要新策略）
-                            self.retry_strategy.reset()
-                            self.loop_detector.reset()
-                            # 快速路径尝试获取新报告
-                            new_report = self._try_fast_path(new_error)
-                            if new_report:
-                                current_report = new_report
-                                logger.info(f"已更新调查报告 (置信度: {new_report.confidence:.0%})")
-                    except Exception as e:
-                        logger.debug(f"解析新错误失败: {e}")
+                fix_result = await self._fix_with_report(buggy_code, current_error, current_report, accumulated_files, force_llm=force_llm)
 
-        # 失败
-        logger.error(f"修复失败（已尝试 {max_retries} 次）")
-        self.code_fixer.save_token_stats()  # 保存 token 统计
-        slog.end_phase(success=False, attempts=max_retries)
-        slog.end_session(success=False)
-        # 合并所有修复的文件
-        all_files = accumulated_files.copy()
-        if fix_result.related_files:
-            all_files.update(fix_result.related_files)
-        return DebugResult(
-            success=False,
-            original_error=error.dict(),
-            fixed_code=fix_result.fixed_code,
-            explanation=f"修复失败，已尝试 {max_retries} 次",
-            attempts=max_retries,
-            investigation_summary=current_report.summary,
-            related_files=all_files
-        )
+                # 累积修复的文件
+                if fix_result.related_files:
+                    accumulated_files.update(fix_result.related_files)
+
+                # 合并累积的修复到 fix_result，确保 Docker 使用所有已修复的文件
+                if accumulated_files:
+                    if fix_result.related_files is None:
+                        fix_result.related_files = {}
+                    for fname, fcontent in accumulated_files.items():
+                        if fname not in fix_result.related_files:
+                            fix_result.related_files[fname] = fcontent
+                            logger.debug(f"合并累积修复: {fname}")
+
+                # 6. 验证修复
+                progress.progress(f"尝试 {attempt + 1}/{max_retries}: 本地验证中...")
+                # 使用实际的错误文件作为执行入口
+                # 如果是 main.py 或错误文件为空，使用 main.py；否则使用错误文件本身
+                verify_file = error.error_file if error.error_file and error.error_file != "main.py" else "main.py"
+                # 确保使用最终修复的文件作为入口
+                if fix_result.target_file:
+                    verify_file = fix_result.target_file
+                logger.debug(f"验证入口文件: {verify_file}")
+                exec_result = await self._verify_fix(fix_result, verify_file)
+
+                if exec_result.success:
+                    logger.info(f"✅ 修复成功！(第 {attempt + 1} 次尝试)")
+                    # 记录成功尝试到循环检测器
+                    self.loop_detector.record_attempt(
+                        fixed_code=fix_result.fixed_code,
+                        error_type=current_error.error_type,
+                        error_message=current_error.error_message,
+                        layer=3 if force_llm else 1,
+                        success=True
+                    )
+                    # 记录成功尝试
+                    approach = "pattern_fix" if fix_result.used_pattern_fixer else "llm_fix"
+                    self.retry_strategy.record_attempt(
+                        error_type=current_error.error_type,
+                        approach=approach,
+                        fix_content=fix_result.fixed_code,
+                        success=True
+                    )
+                    self.code_fixer.save_token_stats()  # 保存 token 统计
+                    slog.end_phase(success=True, attempt=attempt + 1)
+                    slog.end_session(success=True)
+                    # 合并所有修复的文件
+                    all_files = accumulated_files.copy()
+                    if fix_result.related_files:
+                        all_files.update(fix_result.related_files)
+                    return DebugResult(
+                        success=True,
+                        original_error=error.dict(),
+                        fixed_code=fix_result.fixed_code,
+                        explanation=fix_result.explanation,
+                        attempts=attempt + 1,
+                        investigation_summary=current_report.summary,
+                        related_files=all_files
+                    )
+                else:
+                    logger.warning(f"❌ 验证失败:\n{exec_result.stderr}")
+
+                    # 记录失败尝试到循环检测器
+                    self.loop_detector.record_attempt(
+                        fixed_code=fix_result.fixed_code,
+                        error_type=current_error.error_type,
+                        error_message=exec_result.stderr[:200] if exec_result.stderr else current_error.error_message,
+                        layer=3 if force_llm else 1,
+                        success=False
+                    )
+
+                    # 记录失败尝试到重试策略
+                    approach = "pattern_fix" if fix_result.used_pattern_fixer else "llm_fix"
+                    self.retry_strategy.record_attempt(
+                        error_type=current_error.error_type,
+                        approach=approach,
+                        fix_content=fix_result.fixed_code,
+                        success=False,
+                        error_message=exec_result.stderr[:200] if exec_result.stderr else ""
+                    )
+
+                    # 关键：如果 PatternFixer 失败了，下次强制使用 LLM
+                    if fix_result.used_pattern_fixer:
+                        logger.info("PatternFixer 修复不完整，下次尝试使用 LLM")
+                        force_llm = True
+
+                    # 检查是否应该换策略
+                    alternative = self.retry_strategy.suggest_alternative(current_error.error_type)
+                    if alternative:
+                        progress.warning(f"建议: {alternative}")
+                        logger.info(f"重试策略建议: {alternative}")
+
+                    # 检查是否是新错误（不同于当前错误）
+                    if exec_result.stderr:
+                        try:
+                            new_error = self.error_identifier.identify(exec_result.stderr)
+                            # 如果错误文件不同，说明是新错误，需要更新上下文
+                            if new_error.error_file != current_error.error_file:
+                                logger.info(f"检测到新错误: {new_error.error_file} (之前: {current_error.error_file})")
+                                current_error = new_error
+                                # 重置重试策略和循环检测器（新错误需要新策略）
+                                self.retry_strategy.reset()
+                                self.loop_detector.reset()
+                                # 快速路径尝试获取新报告
+                                new_report = self._try_fast_path(new_error)
+                                if new_report:
+                                    current_report = new_report
+                                    logger.info(f"已更新调查报告 (置信度: {new_report.confidence:.0%})")
+                        except Exception as e:
+                            logger.debug(f"解析新错误失败: {e}")
+
+            # 所有尝试均失败
+            logger.error(f"修复失败（已尝试 {max_retries} 次）")
+            self.code_fixer.save_token_stats()
+            slog.end_phase(success=False, attempts=max_retries)
+            slog.end_session(success=False)
+            # 合并所有修复的文件
+            all_files = accumulated_files.copy()
+            if fix_result.related_files:
+                all_files.update(fix_result.related_files)
+            return DebugResult(
+                success=False,
+                original_error=error.dict(),
+                fixed_code=fix_result.fixed_code,
+                explanation=f"修复失败，已尝试 {max_retries} 次",
+                attempts=max_retries,
+                investigation_summary=current_report.summary,
+                related_files=all_files
+            )
+
+        except ValueError as e:
+            # 参数验证错误
+            logger.error(f"参数验证失败: {e}")
+            slog.end_session(success=False)
+            raise
+
+        except RuntimeError as e:
+            # LLM 调用失败、修复生成失败等
+            logger.error(f"调试过程中出现运行时错误: {e}", exc_info=True)
+            slog.end_session(success=False)
+            raise
+
+        except Exception as e:
+            # 未预期的错误
+            logger.error(f"调试过程中出现未预期错误: {e}", exc_info=True)
+            slog.end_session(success=False)
+            raise RuntimeError(f"调试过程失败: {e}") from e
+
+        finally:
+            # 确保保存 token 统计
+            try:
+                self.code_fixer.save_token_stats()
+            except Exception as e:
+                logger.warning(f"保存 token 统计失败: {e}")
 
     def _is_cross_file(self, error: ErrorContext, code: str) -> bool:
         """

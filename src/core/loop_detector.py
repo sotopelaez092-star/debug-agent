@@ -66,33 +66,67 @@ class LoopDetector:
         layer: int,
         success: bool
     ):
-        """记录一次修复尝试"""
-        code_hash = self._hash_content(fixed_code)
-        error_hash = self._hash_content(f"{error_type}:{error_message[:200]}")
+        """记录一次修复尝试
 
-        attempt = FixAttempt(
-            code_hash=code_hash,
-            error_hash=error_hash,
-            error_type=error_type,
-            error_message=error_message[:500],
-            layer=layer,
-            success=success
-        )
-        self.attempts.append(attempt)
+        Args:
+            fixed_code: 修复后的代码
+            error_type: 错误类型
+            error_message: 错误消息
+            layer: 当前层级
+            success: 是否成功
 
-        if not success:
-            # 更新计数
-            self.fix_hashes[code_hash] = self.fix_hashes.get(code_hash, 0) + 1
-            self.error_hashes[error_hash] = self.error_hashes.get(error_hash, 0) + 1
+        Raises:
+            ValueError: 参数验证失败
+        """
+        # 参数验证
+        if not isinstance(fixed_code, str):
+            raise ValueError(f"fixed_code 必须是字符串，得到: {type(fixed_code).__name__}")
 
-            logger.debug(
-                f"记录失败尝试: layer={layer}, "
-                f"fix_count={self.fix_hashes[code_hash]}, "
-                f"error_count={self.error_hashes[error_hash]}, "
-                f"total={len(self.attempts)}"
+        if not isinstance(error_type, str):
+            raise ValueError(f"error_type 必须是字符串，得到: {type(error_type).__name__}")
+
+        if not isinstance(error_message, str):
+            raise ValueError(f"error_message 必须是字符串，得到: {type(error_message).__name__}")
+
+        if not isinstance(layer, int) or layer < 1:
+            raise ValueError(f"layer 必须是正整数，得到: {layer}")
+
+        if not isinstance(success, bool):
+            raise ValueError(f"success 必须是布尔值，得到: {type(success).__name__}")
+
+        try:
+            code_hash = self._hash_content(fixed_code)
+            error_hash = self._hash_content(f"{error_type}:{error_message[:200]}")
+
+            attempt = FixAttempt(
+                code_hash=code_hash,
+                error_hash=error_hash,
+                error_type=error_type,
+                error_message=error_message[:500],
+                layer=layer,
+                success=success
             )
+            self.attempts.append(attempt)
 
-        self.current_layer = layer
+            if not success:
+                # 更新计数
+                self.fix_hashes[code_hash] = self.fix_hashes.get(code_hash, 0) + 1
+                self.error_hashes[error_hash] = self.error_hashes.get(error_hash, 0) + 1
+
+                logger.debug(
+                    f"记录失败尝试: layer={layer}, "
+                    f"fix_count={self.fix_hashes[code_hash]}, "
+                    f"error_count={self.error_hashes[error_hash]}, "
+                    f"total={len(self.attempts)}"
+                )
+            else:
+                logger.debug(f"记录成功尝试: layer={layer}, total={len(self.attempts)}")
+
+            self.current_layer = layer
+
+        except Exception as e:
+            logger.error(f"记录尝试失败: {e}", exc_info=True)
+            raise
 
     def check_loop(self, proposed_fix: str = "") -> LoopCheckResult:
         """

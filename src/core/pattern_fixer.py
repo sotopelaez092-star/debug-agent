@@ -110,44 +110,78 @@ class PatternFixer:
 
         Returns:
             (fixed_code, explanation) 如果能修复，否则 None
+
+        Raises:
+            不抛出异常，所有错误都会被捕获并记录
         """
-        fixed_code = code
-        all_explanations = []
+        # 参数验证
+        if not code or not isinstance(code, str):
+            logger.warning(f"try_fix: 无效的代码参数 (type={type(code).__name__})")
+            return None
 
-        # 尝试所有修复方法，不只是当前错误类型
-        # 这样可以一次修复多个不同类型的错误
+        if not error_type or not isinstance(error_type, str):
+            logger.warning(f"try_fix: 无效的错误类型参数 (type={type(error_type).__name__})")
+            return None
 
-        # 1. 尝试修复属性错误 (AttributeError)
-        result = self._fix_attribute_error(fixed_code, error_message)
-        if result:
-            fixed_code, explanation = result
-            all_explanations.append(explanation)
+        if not error_message or not isinstance(error_message, str):
+            logger.warning(f"try_fix: 无效的错误消息参数 (type={type(error_message).__name__})")
+            return None
 
-        # 2. 尝试修复导入错误 (ImportError/ModuleNotFoundError)
-        result = self._fix_import_error(fixed_code, error_message)
-        if result:
-            fixed_code, explanation = result
-            all_explanations.append(explanation)
+        try:
+            fixed_code = code
+            all_explanations = []
 
-        # 3. 尝试修复名称错误 (NameError) - 只在代码有变化时才尝试
-        if error_type == "NameError":
-            result = self._fix_name_error(fixed_code, error_message)
-            if result:
-                fixed_code, explanation = result
-                all_explanations.append(explanation)
+            # 尝试所有修复方法，不只是当前错误类型
+            # 这样可以一次修复多个不同类型的错误
 
-        # 4. 尝试修复键错误 (KeyError)
-        if error_type == "KeyError":
-            result = self._fix_key_error(fixed_code, error_message)
-            if result:
-                fixed_code, explanation = result
-                all_explanations.append(explanation)
+            # 1. 尝试修复属性错误 (AttributeError)
+            try:
+                result = self._fix_attribute_error(fixed_code, error_message)
+                if result:
+                    fixed_code, explanation = result
+                    all_explanations.append(explanation)
+            except Exception as e:
+                logger.debug(f"修复属性错误失败: {e}")
 
-        # 如果有修复，返回合并的结果
-        if all_explanations and fixed_code != code:
-            return fixed_code, "; ".join(all_explanations)
+            # 2. 尝试修复导入错误 (ImportError/ModuleNotFoundError)
+            try:
+                result = self._fix_import_error(fixed_code, error_message)
+                if result:
+                    fixed_code, explanation = result
+                    all_explanations.append(explanation)
+            except Exception as e:
+                logger.debug(f"修复导入错误失败: {e}")
 
-        return None
+            # 3. 尝试修复名称错误 (NameError) - 只在代码有变化时才尝试
+            if error_type == "NameError":
+                try:
+                    result = self._fix_name_error(fixed_code, error_message)
+                    if result:
+                        fixed_code, explanation = result
+                        all_explanations.append(explanation)
+                except Exception as e:
+                    logger.debug(f"修复名称错误失败: {e}")
+
+            # 4. 尝试修复键错误 (KeyError)
+            if error_type == "KeyError":
+                try:
+                    result = self._fix_key_error(fixed_code, error_message)
+                    if result:
+                        fixed_code, explanation = result
+                        all_explanations.append(explanation)
+                except Exception as e:
+                    logger.debug(f"修复键错误失败: {e}")
+
+            # 如果有修复，返回合并的结果
+            if all_explanations and fixed_code != code:
+                logger.info(f"PatternFixer 成功修复: {'; '.join(all_explanations)}")
+                return fixed_code, "; ".join(all_explanations)
+
+            return None
+
+        except Exception as e:
+            logger.error(f"PatternFixer 意外错误: {e}", exc_info=True)
+            return None
 
     def _fix_name_error(self, code: str, error_message: str) -> Optional[Tuple[str, str]]:
         """修复 NameError"""
