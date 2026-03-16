@@ -1,248 +1,189 @@
-# 🐛 Debug Agent
+# Debug Agent
 
-> 基于 LLM 的 Python 自动调试工具，达到 85.6% 成功率
+AI-powered Python debugging tool. Automatically finds and fixes bugs using LLM agents and pattern matching.
 
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
----
-
-## 📋 项目简介
-
-Debug Agent 是一个能够自动修复 Python 代码错误的命令行工具。用户只需运行命令，工具就会自动：
-
-1. 捕获错误信息
-2. 分析错误原因
-3. 定位问题代码
-4. 生成修复方案
-5. 验证修复结果
-
-**最终成绩**：在 30 个测试用例的 Benchmark 中达到 **85.6% 成功率**（DeepSeek 模型），稳定性 ±1.9%，平均耗时 39.9 秒。
+**85.6% success rate** on complex test cases | **~$0.01 per fix** (DeepSeek) | **~40s average**
 
 ---
 
-## ✨ 核心特性
+## Quick Start
 
-### 1. 双路径架构
-- **快速路径**：简单错误（拼写、导入）无需 LLM，直接修复
-- **完整调查**：复杂错误使用 ReAct 循环深入分析
-- **置信度判断**：自动选择最合适的修复策略（阈值 0.7）
-
-### 2. 预建索引系统（ContextTools）
-- 自动扫描项目所有文件
-- 构建符号表和依赖图
-- 智能提取跨文件上下文
-- 增量更新机制（缓存优化）
-
-### 3. 策略模式（6种错误类型）
-- **NameError**: Levenshtein 匹配符号表
-- **ImportError**: 模块路径模糊匹配（置信度 0.75）
-- **AttributeError**: 搜索类方法列表
-- **KeyError**: 字典结构追踪 + 嵌套搜索
-- **TypeError**: 函数签名分析
-- **CircularImport**: 导入图环检测 + TYPE_CHECKING 方案
-
-### 4. 多层重试机制
-- **SmartRetryStrategy**: 建议下一个尝试的方法
-- **LoopDetector**: 检测重复修复（2-3-8 阈值）
-- **错误类型切换**: 新错误自动重置状态
-
----
-
-## 🚀 快速开始
-
-### 环境要求
 ```bash
-Python 3.11+
-```
-
-### 安装
-```bash
-# 1. 克隆项目
-git clone https://github.com/你的用户名/debug-agent.git
+# Clone & install
+git clone https://github.com/sotopelaez092-star/debug-agent.git
 cd debug-agent
-
-# 2. 创建虚拟环境
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# 3. 安装依赖
 pip install -r requirements.txt
 
-# 4. 配置环境变量
-echo "DEEPSEEK_API_KEY=your_api_key_here" > .env
+# Set your API key
+echo "DEEPSEEK_API_KEY=your_key_here" > .env
 ```
 
-### 使用示例
+## CLI Usage
+
+```bash
+# Run a file, auto-detect and fix errors
+python cli.py run ./my_project main.py
+
+# Provide error message manually
+python cli.py fix ./my_project main.py --error "NameError: name 'foo' is not defined"
+
+# Interactive demo with built-in test cases
+python cli.py demo
+```
+
+### Example: Fix a NameError
+
+```bash
+$ python cli.py run tests/test_cases_v1/name_error_v1_01_edit_dist_1 main.py
+
+运行 main.py ...
+  捕获到错误:
+  NameError: name 'calculate_summ' is not defined
+
+============================================================
+  Debug Agent - AI 自动调试
+============================================================
+
+[1/3] 分析错误中...
+   ✓ 检测到: NameError
+   ✓ 单文件错误（快速修复）
+   ✓ 验证成功！
+
+============================================================
+  ✅ 修复成功!
+  尝试次数: 1
+  说明: 修复变量名拼写: calculate_summ → calculate_sum
+============================================================
+```
+
+### Python API
+
 ```python
-from src.agent.debug_agent_new import DebugAgentNew
-from src.core.error_identifier import ErrorIdentifier
-from src.core.local_executor import LocalExecutor
+import asyncio
+from src.agent.debug_agent_new import DebugAgent
 
-# 创建 agent
-agent = DebugAgentNew(project_path="./your_project")
+async def main():
+    agent = DebugAgent(project_path="./my_project")
+    result = await agent.debug(
+        buggy_code=open("main.py").read(),
+        error_traceback="NameError: name 'calculate_summ' is not defined",
+        error_file="main.py",
+    )
+    if result.success:
+        print(result.fixed_code)
 
-# 调试代码
-result = await agent.debug(
-    buggy_code=buggy_code,
-    error_traceback=error_traceback,
-    main_file="main.py"
-)
-
-print(f"修复成功: {result.success}")
-print(f"修复后的代码:\n{result.fixed_code}")
+asyncio.run(main())
 ```
 
 ---
 
-## 📊 性能指标
+## How It Works
 
-### V1 Benchmark（30 个基础用例）
-| 工具 | 成功率 | 稳定性 | 平均耗时 |
-|-----|--------|-------|---------|
-| **Debug Agent (DeepSeek)** | **100%** | ±0% | 35.2s |
-| Aider (DeepSeek) | 73.3% | ±8.8% | 75.6s |
-| Claude Code | 100% | - | 46.2s |
+```
+Input Error → Error Identification → Confidence Score
+                                      │
+                              ┌───────┴────────┐
+                              │                 │
+                        score >= 0.7       score < 0.7
+                              │                 │
+                        Fast Path         Full Investigation
+                     (Pattern Match,      (ReAct Loop with
+                      no LLM needed)      LLM deep analysis)
+```
 
-### V2 Benchmark（30 个复杂用例）
-| 工具 | 成功率 | 稳定性 | 平均耗时 |
-|-----|--------|-------|---------|
-| **Debug Agent (DeepSeek)** | **85.6%** | ±1.9% | 39.9s |
-| Aider (DeepSeek) | 73.3% | ±8.8% | 75.6s |
+**Fast Path (~40% of cases):** Simple typos and common errors are fixed instantly via pattern matching — no API call needed.
 
-### 成本对比
-| 工具 | 单次调试成本 |
-|-----|------------|
-| Debug Agent (DeepSeek) | ~$0.01 |
-| Aider (DeepSeek) | ~$0.02 |
-| Claude Code (Claude) | ~$0.25 |
+**Full Investigation:** Complex bugs trigger a ReAct loop that reads files, searches symbols, traces imports, and reasons about the fix.
 
-**Debug Agent 成本约为 Claude Code 的 1/25**
+### Supported Error Types
+
+| Error Type | Strategy |
+|---|---|
+| `NameError` | Levenshtein distance matching against symbol table |
+| `ImportError` | Module path fuzzy matching (threshold 0.75) |
+| `AttributeError` | Class method list search across inheritance chain |
+| `TypeError` | Function signature analysis |
+| `KeyError` | Dictionary structure tracking + nested key search |
+| `CircularImport` | Import graph cycle detection + TYPE_CHECKING fix |
 
 ---
 
-## 🏗️ 项目结构
+## Benchmarks
+
+### V2 (30 complex multi-file cases)
+
+| Tool | Success Rate | Stability | Avg Time | Cost/Fix |
+|---|---|---|---|---|
+| **Debug Agent (DeepSeek)** | **85.6%** | ±1.9% | 39.9s | ~$0.01 |
+| Aider (DeepSeek) | 73.3% | ±8.8% | 75.6s | ~$0.02 |
+| Claude Code | - | - | - | ~$0.25 |
+
+### V1 (30 basic single-file cases)
+
+| Tool | Success Rate |
+|---|---|
+| **Debug Agent** | **100%** |
+| Claude Code | 100% |
+| Aider | 73.3% |
+
+---
+
+## Project Structure
+
 ```
 debug-agent/
-├── src/
-│   ├── agent/
-│   │   ├── debug_agent_new.py    # 主调度器（双路径架构）
-│   │   ├── investigator.py       # ReAct 调查员
-│   │   └── retry_strategy.py     # 重试策略
-│   ├── core/
-│   │   ├── error_identifier.py   # 错误识别
-│   │   ├── code_fixer.py         # LLM 修复
-│   │   ├── pattern_fixer.py      # 快速修复（无需 LLM）
-│   │   ├── local_executor.py     # 本地执行
-│   │   └── loop_detector.py      # 循环检测
-│   ├── strategies/               # 错误处理策略
-│   │   ├── base.py               # 策略基类
-│   │   ├── registry.py           # 策略注册表
-│   │   ├── name_error.py         # NameError 策略
-│   │   ├── import_error.py       # ImportError 策略
-│   │   ├── attribute_error.py    # AttributeError 策略
-│   │   ├── type_error.py         # TypeError 策略
-│   │   ├── key_error.py          # KeyError 策略
-│   │   └── circular_import.py    # 循环导入策略
-│   ├── tools_new/                # 工具系统
-│   │   ├── base.py               # 工具基类
-│   │   ├── registry.py           # 工具注册表
-│   │   ├── context_tools.py      # 预建索引（核心）
-│   │   ├── search_symbol_tool.py # 符号搜索
-│   │   ├── read_file_tool.py     # 文件读取
-│   │   └── grep_tool.py          # 文本搜索
-│   ├── models/                   # 数据模型
-│   │   ├── error_context.py      # 错误上下文
-│   │   ├── investigation_report.py # 调查报告
-│   │   └── results.py            # 结果模型
-│   └── utils/                    # 工具类
-│       ├── llm_client.py         # LLM 客户端
-│       └── config.py             # 配置管理
-├── tests/
-│   └── test_cases_30/            # 30 个测试用例（V2 Benchmark）
-├── data/                         # 数据文件
-└── docs/                         # 文档
+├── cli.py                  # CLI entry point
+├── requirements.txt
+├── .env.example
+│
+├── src/                    # Source code
+│   ├── agent/              #   Orchestrator, investigator, retry
+│   ├── core/               #   Error ID, code fixer, executor
+│   ├── models/             #   Data models (Pydantic)
+│   ├── strategies/         #   6 error-type strategies
+│   ├── tools_new/          #   Code analysis tools (symbol search, grep, etc.)
+│   └── utils/              #   LLM client, config, logging
+│
+├── tests/                  # Test cases
+│   ├── test_cases_v1/      #   Simple single-file cases
+│   ├── test_cases_v2/      #   Complex multi-file cases
+│   └── test_cases_30/      #   V2 benchmark set
+│
+├── benchmarks/             # Evaluation
+│   ├── scripts/            #   Benchmark runner scripts
+│   ├── results/            #   Raw results (JSON/CSV)
+│   ├── reports/            #   Analysis reports
+│   └── evaluation/         #   Historical evaluation data
+│
+├── data/                   # External datasets
+│   ├── BugsInPy-master/    #   BugsInPy dataset
+│   └── vectorstore/        #   ChromaDB vector stores
+│
+└── docs/                   # Weekly development notes
 ```
 
 ---
 
-## 🎯 核心设计
+## Configuration
 
-### 1. 双路径架构（借鉴 Gemini CLI）
-```
-输入错误 → 错误识别 → 范围判断 → ┬─ 单文件 → 快速修复
-                              └─ 跨文件 → ┬─ 快速路径（置信度≥0.7）
-                                         └─ 完整调查（ReAct 循环）
-```
+Copy `.env.example` to `.env` and set your API key:
 
-### 2. 工具注册表模式
-- 统一的工具基类（`BaseTool`）
-- OpenAI function calling 格式
-- 6 个核心工具：SearchSymbol, ReadFile, Grep, GetCallers, SetPhase, CompleteInvestigation
-
-### 3. ContextTools 预建索引
-```python
-{
-    "symbol_table": {...},          # 符号定义位置
-    "import_graph": {...},          # 导入关系图
-    "class_table": {...},           # 类信息（方法列表）
-    "function_signatures": {...},   # 函数签名
-    "dict_keys": {...},             # 所有字典键
-    "call_graph": {...},            # 调用关系图
-}
+```bash
+cp .env.example .env
 ```
 
-### 4. 置信度计算
-```python
-score = edit_sim * 0.5        # 编辑距离（权重 0.5）
-      + uniqueness * 0.2      # 唯一性（权重 0.2）
-      + reachable * 0.2       # 可达性（权重 0.2）
-      + type_score * 0.1      # 类型匹配（权重 0.1）
-```
+Key settings:
 
-### 5. PatternFixer（快速修复）
-- ~50 个常见方法拼写错误
-- ~30 个标准库拼写错误
-- ~40% 命中率（无需 LLM）
+| Variable | Default | Description |
+|---|---|---|
+| `DEEPSEEK_API_KEY` | (required) | DeepSeek API key |
+| `LLM_PROVIDER` | `deepseek` | LLM provider (deepseek/openai/anthropic) |
+| `LLM_MODEL` | `deepseek-chat` | Model name |
+| `LLM_TEMPERATURE` | `0.7` | Sampling temperature |
+| `MAX_RETRY_ATTEMPTS` | `3` | Max fix attempts |
 
 ---
 
-## 🔑 关键数字
+## License
 
-| 指标 | 数值 | 说明 |
-|-----|------|-----|
-| 置信度阈值 | 0.7 | 快速路径 vs 完整调查的分界 |
-| ImportError 阈值 | 0.75 | 比其他错误更严格 |
-| 相同修复阈值 | 2 | 出现 2 次切换策略 |
-| 相同错误阈值 | 3 | 出现 3 次升级调查 |
-| 最大尝试次数 | 8 | 超过则放弃 |
-| PatternFixer 命中率 | ~40% | 简单拼写错误 |
-
----
-
-## 🤝 贡献
-
-欢迎提Issue和PR！
-
----
-
-## 📝 License
-
-MIT License
-
----
-
-## 👨‍💻 作者
-
-Tom - [GitHub](https://github.com/你的用户名)
-
----
-
-## 🙏 致谢
-
-- DeepSeek 提供的高性价比 LLM API
-- Gemini CLI 的架构设计启发
-
----
-
-**Star ⭐ 如果这个项目对你有帮助！**
+MIT
