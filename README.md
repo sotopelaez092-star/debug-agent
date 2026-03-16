@@ -77,23 +77,38 @@ asyncio.run(main())
 
 ---
 
-## How It Works
+## Architecture
 
 ```
-Input Error → Error Identification → Confidence Score
-                                      │
-                              ┌───────┴────────┐
-                              │                 │
-                        score >= 0.7       score < 0.7
-                              │                 │
-                        Fast Path         Full Investigation
-                     (Pattern Match,      (ReAct Loop with
-                      no LLM needed)      LLM deep analysis)
+输入错误 → ErrorIdentifier 解析 → ScopeAnalyzer 判断范围
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+                 单文件                            跨文件
+                    │                               │
+            PatternFixer                     FastPath 快速路径
+          （不用 LLM，~15ms）                       │
+                    │                        Investigator
+                    ↓                      （ReAct 深度调查）
+               CodeFixer                        │
+             （调 LLM 修复）                     ↓
+                    │                       CodeFixer
+                    └───────────┬───────────────┘
+                                │
+                         LocalExecutor
+                           本地验证
+                                │
+                        ┌───────┴───────┐
+                        │               │
+                      成功           重试
+                                 (RetryStrategy)
 ```
 
-**Fast Path (~40% of cases):** Simple typos and common errors are fixed instantly via pattern matching — no API call needed.
+### Key Design
 
-**Full Investigation:** Complex bugs trigger a ReAct loop that reads files, searches symbols, traces imports, and reasons about the fix.
+- **双路径分流:** 简单错误走 PatternFixer（~15ms，无 LLM 调用），复杂错误才走 LLM 路径
+- **策略模式:** 6 种错误类型各有专门策略（NameError / ImportError / AttributeError / TypeError / KeyError / CircularImport）
+- **预建索引:** ContextTools 启动时扫描项目，建立符号表，为后续查找提供毫秒级响应
 
 ### Supported Error Types
 
@@ -137,11 +152,16 @@ debug-agent/
 ├── .env.example
 │
 ├── src/                    # Source code
-│   ├── agent/              #   Orchestrator, investigator, retry
-│   ├── core/               #   Error ID, code fixer, executor
+│   ├── agent/              #   Core agent modules
+│   │   ├── debug_agent.py  #     Main orchestrator / dispatch
+│   │   ├── scope_analyzer.py #   Single-file vs cross-file scope detection
+│   │   ├── fast_path.py    #     Fast path for high-confidence fixes
+│   │   ├── investigator.py #     ReAct investigation loop
+│   │   └── retry_strategy.py #   Retry logic on validation failure
+│   ├── core/               #   Error ID, code fixer, executor, pattern fixer
 │   ├── models/             #   Data models (Pydantic)
 │   ├── strategies/         #   6 error-type strategies
-│   ├── tools_new/          #   Code analysis tools (symbol search, grep, etc.)
+│   ├── tools/              #   Code analysis tools (symbol search, grep, etc.)
 │   └── utils/              #   LLM client, config, logging
 │
 ├── tests/                  # Test cases
@@ -153,13 +173,9 @@ debug-agent/
 │   ├── scripts/            #   Benchmark runner scripts
 │   ├── results/            #   Raw results (JSON/CSV)
 │   ├── reports/            #   Analysis reports
-│   └── evaluation/         #   Historical evaluation data
+│   └── test_queries/       #   Test query sets
 │
-├── data/                   # External datasets
-│   ├── BugsInPy-master/    #   BugsInPy dataset
-│   └── vectorstore/        #   ChromaDB vector stores
-│
-└── docs/                   # Weekly development notes
+└── data/                   # Test data (JSON reports)
 ```
 
 ---
