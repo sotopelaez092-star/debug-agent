@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.tools_new.context_tools import ContextTools
+    from src.tools.context_tools import ContextTools
     from src.models.results import SearchResult
 
 

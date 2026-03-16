@@ -39,7 +39,7 @@ def run_and_capture(project_path: str, file_path: str) -> tuple[bool, str, str]:
 
 async def do_debug(project_path: str, file_path: str, error_traceback: str, auto_apply: bool = False):
     """执行调试流程"""
-    from src.agent.debug_agent_new import DebugAgent
+    from src.agent.debug_agent import DebugAgent
 
     full_path = Path(project_path) / file_path
     buggy_code = full_path.read_text()

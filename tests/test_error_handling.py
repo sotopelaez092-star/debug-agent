@@ -39,7 +39,7 @@ def test_imports():
         print("✅ Phase 3 模块导入成功")
 
         # Phase 4: Agent
-        from src.agent.debug_agent_new import DebugAgent
+        from src.agent.debug_agent import DebugAgent
         print("✅ Phase 4 模块导入成功")
 
         # Phase 5: Context Tools

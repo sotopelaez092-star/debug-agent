@@ -55,7 +55,7 @@ if __name__ == "__main__":
         print(f"\n错误信息:\n{error_traceback}")
 
         # 初始化 Debug Agent
-        from src.agent.debug_agent_new import DebugAgent
+        from src.agent.debug_agent import DebugAgent
 
         print("\n初始化 Debug Agent...")
         agent = DebugAgent(project_path=str(temp_dir))
@@ -153,7 +153,7 @@ if __name__ == "__main__":
         print(f"\n错误信息:\n{error_traceback[:200]}...")
 
         # 初始化 Debug Agent
-        from src.agent.debug_agent_new import DebugAgent
+        from src.agent.debug_agent import DebugAgent
 
         print("\n初始化 Debug Agent...")
         agent = DebugAgent(project_path=str(temp_dir))

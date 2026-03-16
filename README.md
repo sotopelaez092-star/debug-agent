@@ -60,7 +60,7 @@ $ python cli.py run tests/test_cases_v1/name_error_v1_01_edit_dist_1 main.py
 
 ```python
 import asyncio
-from src.agent.debug_agent_new import DebugAgent
+from src.agent.debug_agent import DebugAgent
 
 async def main():
     agent = DebugAgent(project_path="./my_project")

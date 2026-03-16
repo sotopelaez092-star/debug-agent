@@ -1,4 +1,4 @@
-"""核心工具包（新架构）"""
+"""核心工具包"""
 from .error_identifier import ErrorIdentifier
 from .code_fixer import CodeFixer
 from .local_executor import LocalExecutor

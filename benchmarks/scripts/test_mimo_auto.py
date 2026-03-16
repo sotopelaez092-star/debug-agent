@@ -13,7 +13,7 @@ from collections import defaultdict
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.core.error_identifier import ErrorIdentifier
-from src.agent.debug_agent_new import DebugAgent
+from src.agent.debug_agent import DebugAgent
 
 
 class MiMoAutoTester:

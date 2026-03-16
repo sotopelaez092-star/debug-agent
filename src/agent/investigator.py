@@ -9,11 +9,11 @@ from typing import List, Optional, TYPE_CHECKING
 from src.models.error_context import ErrorContext
 from src.models.investigation_report import InvestigationReport, RelevantLocation
 from src.models.scratchpad import Scratchpad
-from src.tools_new.registry import ToolRegistry
+from src.tools.registry import ToolRegistry
 from src.utils.conversation_compressor import ConversationCompressor
 
 if TYPE_CHECKING:
-    from src.tools_new.context_tools import ContextTools
+    from src.tools.context_tools import ContextTools
 
 logger = logging.getLogger(__name__)
 
